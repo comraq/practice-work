@@ -1,0 +1,17 @@
+{
+  "name": "timestamp",
+  "version": "1.0.0",
+  "description": "A small server that responds back with unix timestamp of the passed in date query",
+  "main": "timeServer.js",
+  "dependencies": {
+    "body-parser": "^1.14.2",
+    "express": "^4.13.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node timeServer.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "adam",
+  "license": "MIT"
+}
