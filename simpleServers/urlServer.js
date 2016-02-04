@@ -1,34 +1,35 @@
 var express = require("express"),
     app = express();
 
-var shortUrl = "";
-
-app.get(shortUrl, function(req, res) {
-  console.log("Redirected!");
-});
-
+var db = {};
 app.get("*", function(req, res) {
+  var old = null
+      changed = "Invalid url!";
   var url = req.url.slice(1);
-  var result = url.match(/https?:\/\//),
-      old = (result != null)? url : null;
-  var changed;
-  if (result != null) {
-    shortUrl = "/" + getRandomURL(5);
-    changed = "http://" + req.headers.host + shortUrl;
-  } else
-    changed = "Invalid url!";
+  if (db[url] === undefined) {
+    var result = url.match(/https?:\/\//);
+    if (result != null) {
+      // URL entered is valid, saves a shortened url and returns it
+      shortUrl = getRandomURL(5);
+      old = url;
+      changed = "http://" + req.headers.host + "/" + shortUrl;
+      db[shortUrl] = url; 
+    }
 
-  console.log(result);
-
-  var reply = {
-    original: old,
-    shortened: changed
-  };
-  res.writeHead(200, {"Content-Type": "application/json"});
-  res.end(JSON.stringify(reply));
+    var reply = {
+      original: old,
+      shortened: changed
+    };
+    res.writeHead(200, {"Content-Type": "application/json"});
+    res.end(JSON.stringify(reply));
+  } else {
+    // Saved shortened URL found, redirect accordingly
+    res.redirect(db[url]);
+  }
 });
 app.listen(7777);
 
+// Generate a shortened URL consisting of 5 random capital letters
 function getRandomURL(len) {
   len = (len === undefined)? 5 : len;
   var result = "";
