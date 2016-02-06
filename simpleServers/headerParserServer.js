@@ -1,3 +1,7 @@
+/**
+ * A simple server taking processing the client's ip, 
+ * device and language information, returning it as JSON. 
+ */
 var express = require("express"),
     app = express();
 

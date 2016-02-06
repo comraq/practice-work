@@ -1,3 +1,7 @@
+/**
+ * A simple server taking a date string as Url params
+ * and returns the time in unix timestamp and regular format.
+ */
 var express = require("express"),
     app = express();
 

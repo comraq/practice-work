@@ -1,3 +1,7 @@
+/**
+ * A simple server taking another Url as Url params
+ * and returns a shortened Url encoded by 5 random letters.
+ */
 var express = require("express"),
     app = express();
 
