@@ -1,2 +1,4 @@
 /video_tutorials
 /notes-app
+*.class
+*.swp
