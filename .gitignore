@@ -2,3 +2,4 @@
 /notes-app
 *.class
 *.swp
+/**/node_modules

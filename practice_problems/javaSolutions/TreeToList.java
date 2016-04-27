@@ -49,11 +49,19 @@ public class TreeToList {
                       "wermm31k4t",  
                       "ehsdf"));
 
-    int[] a = {198,-3,38,0,1,-1,3,2,0};
+    List<Integer> nodeList = new ArrayList<>(Arrays.asList(
+      4,5,null,4,6,null,null,7,null,8,null,null,9,10));
+    TreeNode tree = TreeNode.deserialize(nodeList);
+    TreeNode.printTree(tree);
+    System.out.println(TreeNode.serialize(tree));
 
-    int n = 7;
-    int[][] testCase = {{1,0},{1,2},{1,3},{2,4},{0,5},{4,6}};
     TreeToList sol = new TreeToList();
-    Heap heap = new Heap(a);
+    TreeNode head = sol.toList(tree);
+    List<Integer> result = new ArrayList<>();
+    while (head != null) {
+      result.add(head.val);
+      head = head.right;
+    }
+    System.out.println(result);
   }
 }
