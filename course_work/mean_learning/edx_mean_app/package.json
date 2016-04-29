@@ -1,0 +1,17 @@
+{
+  "name": "mean_server",
+  "version": "1.0.0",
+  "description": "A full stack web application developed using the MEAN stack used in the EDX online course",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha gulp_mocha_tests/test.js",
+    "watch": "gulp watch"
+  },
+  "author": "adam",
+  "license": "MIT",
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "gulp-mocha": "^2.2.0",
+    "mocha": "^2.4.5"
+  }
+}

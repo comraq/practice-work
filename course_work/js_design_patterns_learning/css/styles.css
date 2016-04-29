@@ -1,0 +1,12 @@
+.groups {
+  position: relative;
+  max-width: 40%;
+}
+
+.cat-list {
+  float: left;
+}
+
+#display-group {
+  float: right;
+}

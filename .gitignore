@@ -3,3 +3,6 @@
 *.class
 *.swp
 /**/node_modules
+/**/bower_components
+/**/ionic
+/**/companies.json
