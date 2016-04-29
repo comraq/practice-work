@@ -1,0 +1,13 @@
+.groups {
+  position: relative;
+  display: inline-block;
+}
+
+#display-group {
+  float: right;
+}
+
+#list li:hover {
+  color: #6b6;
+  text-decoration: underline;
+}
