@@ -3,11 +3,29 @@
   display: inline-block;
 }
 
+#list li:hover {
+  color: #6b6;
+  text-decoration: underline;
+}
+
+#list-group {
+  float: left;
+}
+
 #display-group {
   float: right;
 }
 
-#list li:hover {
-  color: #6b6;
-  text-decoration: underline;
+#admin-group {
+  float: left;
+  clear: left;
+}
+
+#names-group {
+  float: left;
+  clear: left;
+}
+
+#admin-form {
+  float: right;
 }
