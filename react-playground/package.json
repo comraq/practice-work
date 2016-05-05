@@ -1,0 +1,50 @@
+{
+  "name": "gulp-setup",
+  "version": "0.0.0",
+  "description": "Skeleton project with my preferred gulp, browserify setup",
+  "main": "index.js",
+  "scripts": {
+    "test": "gulp sanity",
+    "watch": "gulp watch-css watchify-js minify-vendor-css --production",
+    "watchd": "gulp watch-css watchify-js minify-vendor-css"
+  },
+  "dependencies": {
+    "bootstrap": "*",
+    "jquery": "*",
+    "http-status": "*",
+    "react": "*",
+    "react-dom": "*",
+    "wagner-core": "*"
+  },
+  "devDependencies": {
+    "babel-core": "*",
+    "babel-preset-react": "*",
+    "babel-preset-es2015": "*",
+    "babel-preset-stage-0": "*",
+    "babelify": "*",
+    "browserify": "*",
+    "chai": "*",
+    "gulp": "*",
+    "gulp-clean-css": "*",
+    "gulp-concat": "*",
+    "gulp-load-plugins": "*",
+    "gulp-mocha": "*",
+    "gulp-newer": "*",
+    "gulp-rename": "*",
+    "gulp-sourcemaps": "*",
+    "gulp-tap": "*",
+    "gulp-uglify": "*",
+    "gulp-util": "*",
+    "karma": "*",
+    "karma-chai": "*",
+    "karma-chrome-launcher": "*",
+    "karma-mocha": "*",
+    "mocha": "*",
+    "superagent": "*",
+    "vinyl-buffer": "*",
+    "vinyl-source-stream": "*",
+    "watchify": "*"
+  },
+  "author": "Adam",
+  "license": "ISC"
+}
