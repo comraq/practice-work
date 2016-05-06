@@ -1,16 +1,24 @@
 {
-  "name": "gulp-setup",
+  "name": "messaging-webrtc",
   "version": "0.0.0",
-  "description": "Skeleton project with my preferred gulp, browserify setup",
+  "description": "a messaging app using webrtc following a react tutorial",
+  "main": "server/server-transpiled.js",
+  "scripts": {
+    "start": "node server/server-transpiled.js",
+    "test": "gulp sanity",
+    "watch": "../node_modules/gulp/bin/gulp.js watch-css watchify-js minify-vendor-css watch-server-js --production",
+    "watchd": "../node_modules/gulp/bin/gulp.js watch-css watchify-js minify-vendor-css watch-server-js"
+  },
   "dependencies": {
     "bootstrap": "*",
-    "express": "*",
     "http-status": "*",
     "jquery": "*",
-    "morgan": "*",
     "react": "*",
     "react-dom": "*",
-    "wagner-core": "*"
+    "simple-peer": "^6.0.3",
+    "simple-websocket": "^4.0.3",
+    "wagner-core": "*",
+    "ws": "^1.1.0"
   },
   "devDependencies": {
     "babel-core": "*",

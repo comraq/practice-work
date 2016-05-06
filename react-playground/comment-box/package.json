@@ -1,12 +1,19 @@
 {
-  "name": "gulp-setup",
+  "name": "comment-box",
   "version": "0.0.0",
-  "description": "Skeleton project with my preferred gulp, browserify setup",
+  "description": "Comment box react tutorial",
+  "scripts": {
+    "start": "php server/ext-php-server/server.php",
+    "test": "gulp sanity",
+    "watch": "../node_modules/gulp/bin/gulp.js watch-css watchify-js minify-vendor-css watch-server-js --production",
+    "watchd": "../node_modules/gulp/bin/gulp.js watch-css watchify-js minify-vendor-css watch-server-js"
+  },
   "dependencies": {
     "bootstrap": "*",
     "express": "*",
     "http-status": "*",
     "jquery": "*",
+    "marked": "^0.3.5",
     "morgan": "*",
     "react": "*",
     "react-dom": "*",
