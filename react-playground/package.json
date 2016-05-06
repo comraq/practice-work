@@ -4,27 +4,32 @@
   "description": "Skeleton project with my preferred gulp, browserify setup",
   "main": "index.js",
   "scripts": {
+    "start": "node server/bin/server.js",
     "test": "gulp sanity",
-    "watch": "gulp watch-css watchify-js minify-vendor-css --production",
-    "watchd": "gulp watch-css watchify-js minify-vendor-css"
+    "watch": "gulp watch-css watchify-js minify-vendor-css watch-server-js --production",
+    "watchd": "gulp watch-css watchify-js minify-vendor-css watch-server-js"
   },
   "dependencies": {
     "bootstrap": "*",
-    "jquery": "*",
     "http-status": "*",
+    "jquery": "*",
     "react": "*",
     "react-dom": "*",
-    "wagner-core": "*"
+    "simple-peer": "^6.0.3",
+    "simple-websocket": "^4.0.3",
+    "wagner-core": "*",
+    "ws": "^1.1.0"
   },
   "devDependencies": {
     "babel-core": "*",
-    "babel-preset-react": "*",
     "babel-preset-es2015": "*",
+    "babel-preset-react": "*",
     "babel-preset-stage-0": "*",
     "babelify": "*",
     "browserify": "*",
     "chai": "*",
     "gulp": "*",
+    "gulp-babel": "*",
     "gulp-clean-css": "*",
     "gulp-concat": "*",
     "gulp-load-plugins": "*",

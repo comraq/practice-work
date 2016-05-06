@@ -1,4 +1,5 @@
 module.exports = function(wagner) {
+  // Client JS Paths
   wagner.constant("BIN_PATH", "./client/bin");
   wagner.constant("JS_SRC", "./client/app/app.js");
   wagner.constant("JS_SRC_GLOB", [
@@ -6,6 +7,7 @@ module.exports = function(wagner) {
                   ]);
   wagner.constant("JS_DEST", "scripts.min.js");
   
+  // Client CSS Paths
   wagner.constant("CSS_SRC_GLOB", [
                     "./client/css/*.css",
                     "./client/app/**/*.css"
@@ -17,6 +19,15 @@ module.exports = function(wagner) {
                     "./node_modules/bootstrap/dist/**/*.css"
                   ]);
   wagner.constant("CSS_VEND_DEST", "vendors.min.css");
+
+  // Server JS Paths
+  wagner.constant("SERV_BIN_PATH", "./server/bin");
+  wagner.constant("SERV_JS_SRC", "./server/index.js");
+  wagner.constant("SERV_JS_SRC_GLOB", [
+                    "./server/**/*.js",
+                    "!./server/bin/**/*.js"
+                  ]);
+  wagner.constant("SERV_JS_DEST", "server.js");
 
   // Test Paths
   wagner.constant("TESTS_PATH", "./test/*.js");

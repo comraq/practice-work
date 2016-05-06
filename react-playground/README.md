@@ -1,7 +1,7 @@
-A skeleton node project with my preferred gulp-setup to build front end
-javascript     
+A practice/learning react app using my skeleton node + gulp project.      
 
-Custom project/app directories are defined in gulp/paths.js      
+An ES6/7 react adaptation following a series tutorial found here:    
+http://codeutopia.net/blog/2016/01/17/learning-react-basics-and-building-a-basic-application-prototype/     
 
 Commands:     
 npm run watchd - watches for src js and css changes, then auto rebuild with

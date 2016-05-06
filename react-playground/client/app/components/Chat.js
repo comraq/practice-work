@@ -1,41 +1,61 @@
 import React from "react";
 
-import ChatMessage from "./ChatMessage";
+import MessageList from "./MessageList";
+import MessageForm from "./MessageForm";
+import ConnectionForm from "./ConnectionForm";
+
+import * as MessageStore from "../messageStore";
+import * as ConnectionManager from "../connection/connectionManager";
 
 class Chat extends React.Component {
   constructor(props) {
     super(props);
+
+    // Originally in getInitialState
     this.state = {
-      text: "",
-      messages: []
+      messages: MessageStore.getMessages(),
+      connected: ConnectionManager.isConnected()
     };
+
+    // Originally in componentWillMount
+    MessageStore.subscribe(this.updateMessages);
+    ConnectionManager.onStatusChange(this.updateConnection);
+    ConnectionManager.onMessage(MessageStore.newMessage);
+  }
+
+  componentWillUnmount() {
+    MessageStore.unsubscribe(this.updateMessages);
+    ConnectionManager.offStatusChange(this.updateConnection);
+    ConnectionManager.offMessage(MessageStore.newMessage);
+  }
+
+  updateMessages = () => {
+    this.setState({
+      messages: MessageStore.getMessages()
+    });
+  }
+
+  updateConnection = () => {
+    this.setState({
+      connected: ConnectionManager.isConnected()
+    });
+  }
+
+  onSend(newMsg) {
+    ConnectionManager.sendMessage(newMsg);
+    MessageStore.newMessage(newMsg);
   }
 
   render() {
     return <div>
       <h3>Messages</h3>
-      <div>{ this.state.messages }</div>
-      <form onSubmit={ this.submit }>
-        <input type="text" placeholder="Enter any message here"
-          onChange={ this.updateInput } value={ this.state.text }/>
-        <input type="submit" value="Submit Message" />
-      </form>
+      <MessageList messages={ this.state.messages } />
+      <MessageForm onSend={ this.onSend } />
+      <ConnectionForm connected={ this.state.connected }
+        onHost={ ConnectionManager.host }
+        onJoin={ ConnectionManager.join }
+        />
     </div>;
-  }
-
-  submit = (event) => {
-    event.preventDefault();
-
-    let newMsg = <ChatMessage key={ this.state.messages.length }
-                              message={ this.state.text } />
-    this.setState({
-      text: "",
-      messages: this.state.messages.concat(newMsg)
-    });
-  }
-
-  updateInput = (event) => {
-    this.setState({ text: event.target.value });
   }
 }
 
