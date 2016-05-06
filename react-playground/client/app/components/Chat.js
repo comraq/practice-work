@@ -11,6 +11,9 @@ class Chat extends React.Component {
   constructor(props) {
     super(props);
 
+    this.updateConnection = this.updateConnection.bind(this);
+    this.updateMessages = this.updateMessages.bind(this);
+
     // Originally in getInitialState
     this.state = {
       messages: MessageStore.getMessages(),
@@ -29,19 +32,22 @@ class Chat extends React.Component {
     ConnectionManager.offMessage(MessageStore.newMessage);
   }
 
-  updateMessages = () => {
+  updateMessages() {
     this.setState({
       messages: MessageStore.getMessages()
     });
   }
 
-  updateConnection = () => {
+  updateConnection() {
     this.setState({
       connected: ConnectionManager.isConnected()
     });
   }
 
   onSend(newMsg) {
+    console.log("onSend new message:");
+    console.log(newMsg);
+
     ConnectionManager.sendMessage(newMsg);
     MessageStore.newMessage(newMsg);
   }

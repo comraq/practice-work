@@ -2,9 +2,9 @@
   "name": "gulp-setup",
   "version": "0.0.0",
   "description": "Skeleton project with my preferred gulp, browserify setup",
-  "main": "index.js",
+  "main": "server/server-transpiled.js",
   "scripts": {
-    "start": "node server/bin/server.js",
+    "start": "node server/server-transpiled.js",
     "test": "gulp sanity",
     "watch": "gulp watch-css watchify-js minify-vendor-css watch-server-js --production",
     "watchd": "gulp watch-css watchify-js minify-vendor-css watch-server-js"
@@ -24,7 +24,6 @@
     "babel-core": "*",
     "babel-preset-es2015": "*",
     "babel-preset-react": "*",
-    "babel-preset-stage-0": "*",
     "babelify": "*",
     "browserify": "*",
     "chai": "*",

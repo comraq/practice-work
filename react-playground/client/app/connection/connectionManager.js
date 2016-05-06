@@ -1,7 +1,7 @@
 import { EventEmitter } from "events";
 
-import ClientConnection from "./clientConnection";
-import HostConnection from "./hostConnection";
+import getClientConnection from "./clientConnection";
+import getHostConnection from "./hostConnection";
 
 const emitter = new EventEmitter();
 let connection = null;
@@ -30,9 +30,17 @@ const offMessage = callback => emitter.removeListener("message", callback);
 const offStatusChange = callback =>
                           emitter.removeListener("status", callback);
 
-const host = () => setupConnection(HostConnection());
+const host = () => {
+  getHostConnection()
+    .then(setupConnection)
+    .catch(console.log.bind(console));
+};
 
-const join = () => setupConnection(ClientConnection());
+const join = () => {
+  getClientConnection()
+    .then(setupConnection)
+    .catch(console.log.bind(console));
+};
 
 export { isConnected, sendMessage, onMessage, onStatusChange, offMessage,
          offStatusChange, host, join };

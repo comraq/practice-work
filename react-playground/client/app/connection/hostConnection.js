@@ -7,13 +7,7 @@ const emitter = new EventEmitter();
 
 export default () => {
   let socket = new SimpleWebsocket("ws://localhost:3210");
-  socket.on("close", () => console.log("Socket Closed!"));
-  socket.on("error", (err) => {
-    console.log("Socket Error!")
-    console.log(err);
-  });
-  socket.on("connect", () => console.log("Socket Connected!"));
-
+  socket.on("close", () => console.log("Host Socket Closed!"));
   socket.on("data", (data) => {
     let rtc = new SimplePeer({
       initiator: false,
@@ -21,7 +15,7 @@ export default () => {
     });
 
     rtc.signal(data);
-    rtc.on("signal", data => socket.send(data));
+    rtc.on("signal", data => socket.send(JSON.stringify(data)));
     rtc.on("connect", () => peers.push(rtc));
  
     rtc.on("data", msg => {
@@ -37,13 +31,23 @@ export default () => {
     });
   });
 
-  return {
-    onReady: callback => callback(),
-
-    send: msg => {
-      peers.forEach(p => p.send(msg));
-    },
-
-    onMessage: callback => emitter.addListener("message", callback)
-  };
+  return new Promise((resolve, reject) => {
+    socket.on("error", (err) => {
+      console.log("Host Socket Error!")
+      reject(err);
+    });
+  
+    socket.on("connect", () => {
+      console.log("Host Socket Connected!")
+      resolve({
+        onReady: callback => callback(),
+  
+        send: msg => {
+          peers.forEach(p => p.send(msg));
+        },
+  
+        onMessage: callback => emitter.addListener("message", callback)
+      })
+    });
+  });
 }

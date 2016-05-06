@@ -21,13 +21,13 @@ module.exports = function(wagner) {
   wagner.constant("CSS_VEND_DEST", "vendors.min.css");
 
   // Server JS Paths
-  wagner.constant("SERV_BIN_PATH", "./server/bin");
+  wagner.constant("SERV_BASE_PATH", "./server");
   wagner.constant("SERV_JS_SRC", "./server/index.js");
   wagner.constant("SERV_JS_SRC_GLOB", [
                     "./server/**/*.js",
-                    "!./server/bin/**/*.js"
+                    "!./server/server-transpiled.js"
                   ]);
-  wagner.constant("SERV_JS_DEST", "server.js");
+  wagner.constant("SERV_JS_DEST", "server-transpiled.js");
 
   // Test Paths
   wagner.constant("TESTS_PATH", "./test/*.js");

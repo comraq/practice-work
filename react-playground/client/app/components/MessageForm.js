@@ -3,6 +3,10 @@ import React from "react";
 class MessageForm extends React.Component {
   constructor(props) {
     super(props);
+
+    this.submit = this.submit.bind(this);
+    this.updateInput = this.updateInput.bind(this);
+
     this.state = {
       input: ""
     };
@@ -16,7 +20,7 @@ class MessageForm extends React.Component {
     </form>;
   }
 
-  submit = (event) => {
+  submit(event) {
     event.preventDefault();
 
     this.props.onSend(this.state.input);
@@ -25,7 +29,7 @@ class MessageForm extends React.Component {
     });
   };
 
-  updateInput = (event) => {
+  updateInput(event) {
     this.setState({ input: event.target.value });
   };
 }

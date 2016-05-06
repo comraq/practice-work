@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 "use strict";
 
 var _ws = require("ws");
@@ -8,6 +9,9 @@ new Promise(function (resolve, reject) {
     socket.on("message", resolve);
   });
 }).then(function (msg) {
+  console.log("got msg:");
+  console.log(msg);
+
   server.clients.forEach(function (other) {
     if (other === socket) return;
 
