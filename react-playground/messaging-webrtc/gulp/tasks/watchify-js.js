@@ -19,7 +19,8 @@ module.exports = function(gulp, plugins, production,
   for (var prop in browserifyOpts)
     allOptions[prop] = browserifyOpts[prop];
   
-  var b = watchify(browserify(allOptions));
+  var b = watchify(browserify(allOptions))
+            .transform(babelify);
 
   b.on("update", bundleFunc);
   b.on("log", function() {
@@ -33,7 +34,6 @@ module.exports = function(gulp, plugins, production,
 
   function bundleFunc() {
     return b
-      .transform(babelify)
       .bundle()
       .on("error", function(err) {
         plugins.util.log(err);

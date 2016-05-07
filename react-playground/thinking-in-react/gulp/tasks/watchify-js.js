@@ -20,7 +20,7 @@ module.exports = function(gulp, plugins, production,
     allOptions[prop] = browserifyOpts[prop];
   
   var b = watchify(browserify(allOptions))
-          .transform(babelify);
+            .transform(babelify);
 
   b.on("update", bundleFunc);
   b.on("log", function() {
