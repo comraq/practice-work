@@ -3,25 +3,27 @@ import React from "react";
 class SearchBar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      searchText: "",
-      inStock: false
-    };
 
-    this.searchChanged = this.searchChanged.bind(this);
+    this.textChanged = this.textChanged.bind(this);
+    this.inStockChanged = this.inStockChanged.bind(this);
   }
 
-  searchChanged() {
-    console.log("searchChanged");
+  textChanged(event) {
+    this.props.applyTextFilter(event.target.value);
+  }
+
+  inStockChanged(event) {
+    this.props.applyInStockFilter(event.target.checked);
   }
 
   render() {
     return <div>
       <form>
         <input type="text" placeholder="Search..."
-          value={ this.state.searchText } onChange={ this.searchChanged } />
+          onChange={ this.textChanged } />
         <br />
-        <input type="checkbox" checked={ this.state.inStock } />
+        <input type="checkbox"
+          onChange={ this.inStockChanged } />
           Only show products in stock<br/>
       </form>
     </div>;

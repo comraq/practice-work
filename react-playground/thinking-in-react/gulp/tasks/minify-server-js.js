@@ -1,9 +1,8 @@
 module.exports = function(gulp, plugins,
-                          SERV_BASE_PATH, SERV_JS_SRC, SERV_JS_DEST) {
+                          SERV_BASE_PATH, SERV_JS_SRC_GLOB) {
   return function() {
-    return gulp.src(SERV_JS_SRC)
+    return gulp.src(SERV_JS_SRC_GLOB)
       .pipe(plugins.babel())
-      .pipe(plugins.rename(SERV_JS_DEST))
-      .pipe(gulp.dest(SERV_BASE_PATH));
+      .pipe(gulp.dest(SERV_BASE_PATH))
   };
 };

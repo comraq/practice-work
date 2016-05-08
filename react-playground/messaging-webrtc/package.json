@@ -2,9 +2,9 @@
   "name": "messaging-webrtc",
   "version": "0.0.0",
   "description": "a messaging app using webrtc following a react tutorial",
-  "main": "server/server-transpiled.js",
+  "main": "server-transpiled/index.js",
   "scripts": {
-    "start": "node server/server-transpiled.js",
+    "start": "node server-transpiled/index.js",
     "test": "gulp sanity",
     "watch": "../node_modules/gulp/bin/gulp.js watch-css watchify-js minify-vendor-css watch-server-js --production",
     "watchd": "../node_modules/gulp/bin/gulp.js watch-css watchify-js minify-vendor-css watch-server-js"
