@@ -1,0 +1,75 @@
+{
+  "name": "gulp-setup",
+  "version": "0.0.0",
+  "description": "Skeleton project with my preferred gulp, browserify setup",
+  "main": "server-transpiled/index.js",
+  "scripts": {
+    "start": "node server-transpiled/index.js 7777",
+    "test": "../node_modules/gulp/bin/gulp.js sanity",
+    "build": "../node_modules/gulp/bin/gulp.js build-all --production",
+    "buildd": "../node_modules/gulp/bin/gulp.js build-all",
+    "watchd": "../node_modules/gulp/bin/gulp.js watch-all",
+    "watchrs": "../node_modules/gulp/bin/gulp.js watch-reload",
+    "watchr": "../node_modules/gulp/bin/gulp.js watch-reload --host=localhost --port=7777"
+  },
+  "browser": {
+    "bootstrap": "./client/vendors/bootstrap.js",
+    "jquery": "./client/vendors/jquery.js"
+  },
+  "browserify": {
+    "transform": [
+      "browserify-shim"
+    ]
+  },
+  "browserify-shim": {
+    "bootstrap": {
+      "depends": [
+        "jquery:jQuery"
+      ]
+    }
+  },
+  "dependencies": {
+    "bootstrap": "*",
+    "express": "*",
+    "http-status": "*",
+    "jquery": "*",
+    "morgan": "*",
+    "react": "*",
+    "react-dom": "*",
+    "react-router": "*",
+    "wagner-core": "*"
+  },
+  "devDependencies": {
+    "babel-core": "*",
+    "babel-preset-es2015": "*",
+    "babel-preset-react": "*",
+    "babelify": "*",
+    "browser-sync": "*",
+    "browserify-shim": "*",
+    "browserify": "*",
+    "chai": "*",
+    "gulp": "*",
+    "gulp-babel": "*",
+    "gulp-clean-css": "*",
+    "gulp-concat": "*",
+    "gulp-load-plugins": "*",
+    "gulp-mocha": "*",
+    "gulp-newer": "*",
+    "gulp-rename": "*",
+    "gulp-sourcemaps": "*",
+    "gulp-tap": "*",
+    "gulp-uglify": "*",
+    "gulp-util": "*",
+    "karma": "*",
+    "karma-chai": "*",
+    "karma-chrome-launcher": "*",
+    "karma-mocha": "*",
+    "mocha": "*",
+    "superagent": "*",
+    "vinyl-buffer": "*",
+    "vinyl-source-stream": "*",
+    "watchify": "*"
+  },
+  "author": "Adam",
+  "license": "ISC"
+}
