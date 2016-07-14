@@ -11,7 +11,7 @@ take5 :: String -> String
 take5 =  take 5 . filter (`elem` ['a'..'e'])
 
 prop_revapp       :: [Int] -> [Int] -> Bool
-prop_revapp xs ys =  reverse (xs++ys) == reverse ys ++ reverse xs
+prop_revapp xs ys =  reverse (xs++ys) == reverse xs ++ reverse ys
 
 prop_split_length    :: [a] -> Bool
 prop_split_length xs =  length xs >= (length $ Countdown.split xs)
