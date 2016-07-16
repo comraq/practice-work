@@ -64,3 +64,6 @@ chain i
 
 gt15 :: [[Int]]
 gt15 = filter (\xs -> length xs > 15) (map chain [1..100])
+
+reduce        :: Foldable t => (b -> a -> b) -> b -> t a -> b
+reduce f i xs =  foldr (\n g -> \acc -> g $ f acc n) id xs i
