@@ -57,3 +57,52 @@ instance MyMonad [] where
   myReturn x = [x]
   xs `myBind` f = concat (map f xs)
   myFail _ = []
+
+-- listOfTuples == [ (n, ch) | n <- [ 4, 5, 6 ], ch <- [ 'a', 'b', 'c' ] ]
+listOfTuples :: [(Int, Char)]
+listOfTuples =  do
+  n <- [ 4, 5, 6 ]
+  ch <- [ 'a', 'b', 'c' ]
+  return (n, ch)
+
+class MyMonad m => MyMonadPlus m where
+  myMzero :: m a
+  myMplus :: m a -> m a -> m a
+
+-- Near analogous to monoids for monads
+-- http://stackoverflow.com/questions/17056881/monoid-vs-monadplus
+instance MyMonadPlus [] where
+  myMzero = []
+  myMplus = (++)
+
+guard       :: (MyMonadPlus m) => Bool -> m ()
+guard True  =  myReturn ()
+guard False =  myMzero
+
+sevensOnly :: [Int]  
+sevensOnly = do
+  x <- [1..50]
+  guard ('7' `elem` show x)
+  return x
+
+type KnightPos = (Int, Int)
+
+moveKnight        :: KnightPos -> [KnightPos]
+moveKnight (c, r) =  do
+  (c', r') <- [ (c+2,r-1),(c+2,r+1),(c-2,r-1),(c-2,r+1)
+              , (c+1,r-2),(c+1,r+2),(c-1,r-2),(c-1,r+2)  
+              ]
+  guard (c' `elem` [1..8] && r' `elem` [1..8])
+  return (c', r')
+
+moveKn3       :: KnightPos -> [KnightPos]
+moveKn3 start =  do
+  first <- moveKnight start
+  second <- moveKnight first
+  moveKnight second
+
+canReach3     :: KnightPos -> KnightPos -> Bool
+canReach3 s e =  e `elem` moveKn3 s
+
+composeK     :: (MyMonad m) => (b -> m c) -> (a -> m b) -> (a -> m c)
+composeK f g =  (\x -> g x `myBind` f)
