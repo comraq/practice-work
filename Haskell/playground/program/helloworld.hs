@@ -5,6 +5,7 @@ import Control.Monad
 import System.IO
 import System.Directory
 
+main2 :: IO ()
 main2 = do  
   return ()  
   l2 <- return "HAHAHA"
