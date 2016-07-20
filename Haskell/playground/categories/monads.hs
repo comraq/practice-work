@@ -1,4 +1,5 @@
 import Data.Monoid
+import System.Random
 
 class MyMonad m where
   myReturn :: a -> m a
@@ -299,6 +300,10 @@ instance Applicative (State s) where
 
 instance Monad (State s) where
   return        = pure
+
+  -- (>>=) :: State s a -> (a -> State s b) -> State s b
+  -- Note: (State s) represents a state monad, if s is changed then it would
+  --       be two DIFFERENT monads
   State h >>= f = State $ \s -> let (a, newState) = h s
                                     (State g)     = f a
                                 in  g newState
@@ -318,6 +323,154 @@ stackManipS =  do
   popS
   popS
 
+-- stackManipS = pushS 3 >> popS >> popS >> popS
+-- runState stackManipS [5, 8, 2, 1] == (8, [2, 1])      --True
+--
+-- pushS 3                   >>= \_ -> popS >> popS >> popS
+-- State $ \xs -> ((), 3:xs) >>= \_ -> popS >> popS >> popS
+--
+-- State $ \s -> let (a, newState) = (\xs -> ((), 3:xs)) s
+--                   (State g)     = (\_ -> popS >> popS >> popS) a
+--               in g newState
+--
+-- State $ \s -> let (a, newState) = (\xs -> ((), 3:xs)) s
+--                   (State g)     = popS >> popS >> popS
+--               in g newState
+--
+-- State $ \s -> let (a, newState) = (\xs -> ((), 3:xs)) s
+--                   (State g)     = State $ \(x':xs') -> (x', xs') >>= \_ -> popS >> popS
+--               in g newState
+--
+-- State $ \s -> let (a, newState) = (\xs -> ((), 3:xs)) s
+--                   (State g)     = State $ \s' -> let (b, newState') = (\(x':xs') -> (x', xs')) s'
+--                                                      (State g')     = (\_ -> popS >> popS) b
+--                                                  in g' newState'
+--               in g newState
+--
+-- State $ \s -> let (a, newState) = (\xs -> ((), 3:xs)) s
+--               in  (\s' -> let (b, newState') = (\(x':xs') -> (x', xs')) s'
+--                               (State g')     = (\_ -> popS >> popS) b
+--                           in g' newState'
+--                   ) newState
+--
+-- State $ \s -> let (a, newState) = (\xs -> ((), 3:xs)) s
+--               in  (\s' -> let (b, newState') = (\(x':xs') -> (x', xs')) s'
+--                               (State g')     = popS >> popS
+--                           in g' newState'
+--                   ) newState
+--
+-- State $ \s -> let (a, newState) = (\xs -> ((), 3:xs)) s
+--               in  (\s' -> let (b, newState') = (\(x':xs') -> (x', xs')) s'
+--                               (State g')     = State $ \(x'':xs'') -> (x'', xs'') >>= \_ -> popS
+--                           in g' newState'
+--                   ) newState
+--
+-- State $ \s -> let (a, newState) = (\xs -> ((), 3:xs)) s
+--               in  (\s' -> let (b, newState') = (\(x':xs') -> (x', xs')) s'
+--                               (State g')     = State $ \s'' -> let (c, newState'') = (\(x'':xs'') -> (x'', xs'')) s''
+--                                                                    (State g'')     = (\_ -> popS) c
+--                           in g' newState'
+--                   ) newState
+--
+-- State $ \s -> let (a, newState) = (\xs -> ((), 3:xs)) s
+--               in  (\s' -> let (b, newState') = (\(x':xs') -> (x', xs')) s'
+--                           in (\s'' -> let (c, newState'') = (\(x'':xs'') -> (x'', xs'')) s''
+--                                           (State g'')     = (\_ -> popS) c
+--                                       in  g'' newState''
+--                              ) newState'
+--                   ) newState
+--
+-- State $ \s -> let (a, newState) = (\xs -> ((), 3:xs)) s
+--               in  (\s' -> let (b, newState') = State $ \(x':xs') -> (x', xs') s'
+--                           in (\s'' -> let (c, newState'') = (\(x'':xs'') -> (x'', xs'')) s''
+--                                           (State g'')     = popS
+--                                       in  g'' newState''
+--                              ) newState'
+--                   ) newState
+--
+-- State $ \s -> let (a, newState) = (\xs -> ((), 3:xs)) s
+--               in  (\s' -> let (b, newState') = State $ \(x':xs') -> (x', xs') s'
+--                           in (\s'' -> let (c, newState'') = (\(x'':xs'') -> (x'', xs'')) s''
+--                                           (State g'')     = State $ \(x''':xs''') -> (x''', xs''')
+--                                       in  g'' newState''
+--                              ) newState'
+--                   ) newState
+--
+-- State $ \s -> let (a, newState) = (\xs -> ((), 3:xs)) s
+--               in  (\s' -> let (b, newState') = (\(x':xs') -> (x', xs')) s'
+--                           in (\s'' -> let (c, newState'') = (\(x'':xs'') -> (x'', xs'')) s''
+--                                       in  (\(x''':xs''') -> (x''', xs''')) newState''
+--                              ) newState'
+--                   ) newState
+--
+--
+-- runState stateManipS [5, 8, 2, 1] 
+-- (\s -> let (a, newState) = (\xs -> ((), 3:xs)) s
+--        in  (\s' -> let (b, newState') = (\(x':xs') -> (x', xs')) s'
+--                    in (\s'' -> let (c, newState'') = (\(x'':xs'') -> (x'', xs'')) s''
+--                                in  (\(x''':xs''') -> (x''', xs''')) newState''
+--                        ) newState'
+--            ) newState
+-- ) [5,8,2,1]
+--
+-- \[5,8,2,1] -> let (a, newState) = (\xs -> ((), 3:xs)) [5,8,2,1]
+--               in  (\s' -> let (b, newState') = (\(x':xs') -> (x', xs')) s'
+--                           in (\s'' -> let (c, newState'') = (\(x'':xs'') -> (x'', xs'')) s''
+--                                       in  (\(x''':xs''') -> (x''', xs''')) newState''
+--                              ) newState'
+--                   ) newState
+--
+-- let (a, newState) = \[5,8,2,1] -> ((), 3:[5,8,2,1])
+-- in  (\s' -> let (b, newState') = (\(x':xs') -> (x', xs')) s'
+--             in (\s'' -> let (c, newState'') = (\(x'':xs'') -> (x'', xs'')) s''
+--                         in  (\(x''':xs''') -> (x''', xs''')) newState''
+--                ) newState'
+--     ) newState
+--
+-- let (a, newState) = ((), [3,5,8,2,1])
+-- in  (\s' -> let (b, newState') = (\(x':xs') -> (x', xs')) s'
+--             in (\s'' -> let (c, newState'') = (\(x'':xs'') -> (x'', xs'')) s''
+--                         in  (\(x''':xs''') -> (x''', xs''')) newState''
+--                ) newState'
+--     ) newState
+--
+-- let ((), [3,5,8,2,1])
+-- in  (\s' -> let (b, newState') = (\(x':xs') -> (x', xs')) s'
+--             in (\s'' -> let (c, newState'') = (\(x'':xs'') -> (x'', xs'')) s''
+--                         in  (\(x''':xs''') -> (x''', xs''')) newState''
+--                ) newState'
+--     ) [3,5,8,2,1]
+--
+-- \[3,5,8,2,1] -> let (b, newState') = (\(x':xs') -> (x', xs')) [3,5,8,2,1]
+--                 in (\s'' -> let (c, newState'') = (\(x'':xs'') -> (x'', xs'')) s''
+--                             in  (\(x''':xs''') -> (x''', xs''')) newState''
+--                    ) newState'
+--
+-- let (b, newState') = \(3:[5,8,2,1]) -> (3, [5,8,2,1])
+-- in (\s'' -> let (c, newState'') = (\(x'':xs'') -> (x'', xs'')) s''
+--             in  (\(x''':xs''') -> (x''', xs''')) newState''
+--    ) newState'
+--
+-- let (3, [5,8,2,1])
+-- in (\s'' -> let (c, newState'') = (\(x'':xs'') -> (x'', xs'')) s''
+--             in  (\(x''':xs''') -> (x''', xs''')) newState''
+--    ) [5,8,2,1]
+-- 
+-- \[5,8,2,1] -> let (c, newState'') = (\(x'':xs'') -> (x'', xs'')) [5,8,2,1]
+--               in  (\(x''':xs''') -> (x''', xs''')) newState''
+--
+-- let (c, newState'') = \(5:[8,2,1]) -> (5, [8,2,1])
+-- in  (\(x''':xs''') -> (x''', xs''')) newState''
+--
+-- let (5, [8,2,1])
+-- in  (\(x''':xs''') -> (x''', xs''')) [8,2,1]
+--
+-- \(8:[2,1]) -> (8:[2,1])
+--
+-- (8:[2,1])
+
+
+
 -- runState stackStuff $ snd $ runState stackStuff [9, 0, 2, 1, 0] 
 -- = ((),[8,3,3,0,2,1,0])
 stackStuff :: State Stack ()
@@ -328,3 +481,38 @@ stackStuff =  do
     else do
       pushS 3
       pushS 8
+
+moreStack :: State Stack ()
+moreStack =  do
+  a <- stackManipS
+  if a == 100
+    then stackStuff
+    else return ()
+
+get :: State a a
+get =  State $ \s -> (s, s)
+
+put          :: s -> State s ()
+put newState =  State $ \s -> ((), newState)
+
+stackyStack :: State Stack ()
+stackyStack =  do
+  stackNow <- get
+  if stackNow == [ 1, 2, 3 ]
+    then put [ 8, 3, 1 ]
+    else put [ 9, 2, 1 ]
+
+-- random :: (RandomGen g, Random a) => g -> (a, g)
+randomSt :: (RandomGen g, Random a) => State g a
+randomSt =  State random
+
+-- runState threeCoins $ snd $ runState threeCoins (mkStdGen 7)
+-- example of tossing 'threeCoins' twice where '7' was the initial seed for
+-- mkStdGen and the returned StdGen instance is passed to the second
+-- 'threeCoins' call
+threeCoins :: State StdGen (Bool, Bool, Bool)
+threeCoins =  do
+  a <- randomSt
+  b <- randomSt
+  c <- randomSt
+  return (a, b, c)
