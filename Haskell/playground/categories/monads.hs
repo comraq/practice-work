@@ -1,5 +1,7 @@
 import Data.Monoid
 import System.Random
+import qualified Data.List as L
+import Data.Ratio
 
 class MyMonad m where
   myReturn :: a -> m a
@@ -107,8 +109,11 @@ moveKn3 start =  do
 canReach3     :: KnightPos -> KnightPos -> Bool
 canReach3 s e =  e `elem` moveKn3 s
 
-composeK     :: (MyMonad m) => (b -> m c) -> (a -> m b) -> (a -> m c)
-composeK f g =  (\x -> g x `myBind` f)
+(<=<)   :: (Monad m) => (b -> m c) -> (a -> m b) -> (a -> m c)
+f <=< g =  \x -> g x >>= f
+
+(<-<)   :: (MyMonad m) => (b -> m c) -> (a -> m b) -> (a -> m c)
+f <-< g =  \x -> g x `myBind` f
 
 isBigGang   :: Int -> (Bool, String)
 isBigGang x =  (x > 9, "Compared gang size to 9.")
@@ -516,3 +521,129 @@ threeCoins =  do
   b <- randomSt
   c <- randomSt
   return (a, b, c)
+
+instance MyMonad (Either e) where
+  myReturn x         = Right x
+  Right x `myBind` f = f x
+  Left e `myBind`  f = Left e
+  myFail msg         = Left $ error msg
+
+myLiftM     :: (MyMonad m) => (a -> b) -> m a -> m b
+myLiftM f m =  m `myBind` \a -> myReturn $ f a
+
+liftM     :: (Monad m) => (a -> b) -> m a -> m b
+liftM f m =  m >>= \a -> return $ f a
+
+myAp     :: (MyMonad m) => m (a -> b) -> m a -> m b
+myAp f m =  f `myBind` \g -> myLiftM g m
+
+ap     :: (Monad m) => m (a -> b) -> m a -> m b
+ap f m =  f >>= \g -> liftM g m
+
+liftA2       :: (Applicative f) => (a -> b -> c) -> f a -> f b -> f c
+liftA2 f x y =  f <$> x <*> y
+
+myJoin   :: (MyMonad m) => m (m a) -> m a
+myJoin m =  m `myBind` id
+
+join   :: (Monad m) => m (m a) -> m a
+join m =  m >>= id
+
+filterM   :: (Monad m) => (a -> m Bool) -> [a] -> m [a]
+filterM f =
+  foldr pred (return [])
+    where pred = \x acc -> ((f x) >>= \b -> case b of
+                   True  -> (acc >>= \xs -> return $ x:xs)
+                   False -> acc)
+
+myFilterM   :: (MyMonad m) => (a -> m Bool) -> [a] -> m [a]
+myFilterM f =
+  foldr pred (myReturn [])
+    where pred = \x acc -> ((f x) `myBind` \b -> case b of
+                   True  -> (acc `myBind` \xs -> myReturn $ x:xs)
+                   False -> acc)
+
+keepSmall   :: Int -> Writer [String] Bool
+keepSmall x
+  | x < 4 = do
+    tell [ "Keeping " ++ show x ]
+    return True
+
+  | otherwise = do
+    tell [ show x ++ " is too large, throwing it away" ]
+    return False
+
+powerset :: [a] -> [[a]]
+powerset =  filterM (\x -> [True, False])
+
+foldM       :: (Monad m, Foldable t) => (a -> b -> m a) -> a -> t b -> m a
+foldM f acc =  L.foldl' g (return acc)
+  where g = (\ma b -> ma >>= \a -> f a b)
+
+binSmalls       :: Int -> Int -> Maybe Int
+binSmalls acc x
+  | x > 9     = Nothing
+  | otherwise = Just (acc + x)
+
+solveRPN     :: String -> Maybe Double
+solveRPN str =  (foldM foldingFunction [] $ words str) >>= onlyOne 
+
+onlyOne     :: [a] -> Maybe a 
+onlyOne [x] =  Just x
+onlyOne _   =  Nothing
+
+foldingFunction              :: [Double] -> String -> Maybe [Double]
+foldingFunction (x:y:ys) "*" =  return $ (x * y):ys
+foldingFunction (x:y:ys) "+" =  return $ (x + y):ys
+foldingFunction (x:y:ys) "-" =  return $ (y - x):ys
+foldingFunction xs numStr    =  liftM (:xs) $ readMaybe numStr
+
+readMaybe    :: (Read a) => String -> Maybe a
+readMaybe st =  case reads st of
+  [(x, "")] -> Just x
+  _         -> Nothing
+
+inMany         :: Int -> KnightPos -> [KnightPos]
+inMany x start =  return start >>= foldr (<=<) return (replicate x moveKnight)
+
+canReachIn             :: Int -> KnightPos -> KnightPos -> Bool
+canReachIn x start end =  end `elem` inMany x start
+
+newtype Prob a = Prob { getProb :: [(a, Rational)] } deriving Show
+
+instance Functor Prob where
+  fmap f (Prob xs) = Prob $ map (\(x, p) -> (f x, p)) xs
+
+testCase :: Prob (Prob Char)
+testCase =  Prob
+  [ ( Prob [ ('a', 1%2), ('b', 1%2) ], 1%4 )
+  , ( Prob [ ('c', 1%2), ('d', 1%2) ], 3%4 )
+  ]
+
+flatten           :: Prob (Prob a) -> Prob a
+flatten (Prob xs) =  Prob $ concat $ map f xs
+  where f = \( (Prob ys), p ) ->
+              map (\(x, p') -> (x, p' * p)) ys
+
+instance Applicative Prob where
+  pure x  = Prob [(x, 1%1)]
+
+  -- (<*>) :: (Applicative f) => f (a -> b) -> f a -> f b
+  f <*> a = f >>= \f' -> fmap f' a
+
+instance Monad Prob where
+  return  = pure
+  m >>= f = flatten $ fmap f m
+  fail _  = Prob []
+
+data Coin = Heads | Tails
+  deriving (Show, Eq)
+
+coin :: Prob Coin
+coin =  Prob [ (Heads, 1%2), (Tails, 1%2) ]
+
+loadedCoin :: Prob Coin
+loadedCoin =  Prob [ (Heads, 1%10), (Tails, 9%10) ]
+
+flipThree :: Prob Bool
+flipThree =  coin >>= \a -> coin >>= \b -> loadedCoin >>= \c -> return $ all (== Tails) [a, b, c]
