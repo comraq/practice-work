@@ -42,20 +42,20 @@ data Direction = LD | RD | SD
 
 type Point = (Double, Double)
 
-slope                 :: Point -> Point -> Double
-slope (x, y) (x', y') =  (y' - y) / (x' - x)
+ccw                            :: Point -> Point -> Point -> Double
+ccw (x1, y1) (x2, y2) (x3, y3) =  (x2 - x1) * (y3 - y1) - (y2 - y1) * (x3 - x1)
 
-cmpSlope     :: Double -> Double -> Direction
-cmpSlope x y
-  | x > y     = RD
-  | x < y     = LD
+ccwTurn   :: Double -> Direction
+ccwTurn d
+  | d > 0     = LD
+  | d < 0     = RD
   | otherwise = SD
 
 calcTurn       :: Point -> Point -> Point -> Direction
-calcTurn a b c =  cmpSlope (slope b a) (slope c b)
-
+calcTurn a b c =  ccwTurn $ ccw a b c
+  
 calcTurns            :: [Point] -> [Direction]
-calcTurns (a:b:c:ps) =  (calcTurn a b c) : calcTurns ps
+calcTurns (a:b:c:ps) =  (calcTurn a b c) : calcTurns (b:c:ps)
 calcTurns _          =  []
 
 cmpByLowY                 :: Point -> Point -> Ordering
@@ -71,6 +71,30 @@ extractLowestY (x:xs) =  checkAll [] x xs
           LT -> checkAll (r:ls) x rs
         checkAll ls x [] = (x, ls)
 
+sortByDir         :: (Point, [Point]) -> (Point, [Point])
+sortByDir (p, ps) =  (p, L.sortBy slopeWithX ps)
+  where slopeWithX a b = case calcTurn a p b of
+          RD -> LT
+          LD -> GT
+          SD -> EQ
+
+noRDPoints                    :: [(Point, Point, Point, Direction)] -> [Point]
+noRDPoints ((_, m, _, RD):xs) =  m : noRDPoints xs
+noRDPoints (_:xs)             =  noRDPoints xs
+noRDPoints _                  =  []
+
+program :: [Point] -> [Point]
+program =  filterPoints . merge . sortByDir . extractLowestY
+  where merge (p, ps) = p:ps
+        filterPoints ps =
+          let ds    = calcTurns ps
+              ms    = tail ps
+              es    = tail ms
+              psDs  = L.zip4 ps ms es ds
+              badPs = noRDPoints psDs
+          in  filter (\p -> not $ p `elem` badPs) ps
+
+
 -- y - y1 = m(x - x1)
 -- 0 - y1 = m(x - x1)
 --    -y1 = mx - mx1
@@ -79,18 +103,22 @@ extractLowestY (x:xs) =  checkAll [] x xs
 xIntercept          :: Double -> Point -> Point
 xIntercept m (x, y) =  ((m * x - y) / m, 0)
 
-sortByDir         :: (Point, [Point]) -> (Point, [Point])
-sortByDir (p, ps) =  (p, L.sortBy slopeWithX ps)
-  where slopeWithX a b =
-          let xa = xIntercept (slope p a) a
-              xb = xIntercept (slope p b) b
-          in case cmpSlope (slope p xa) (slope xb p) of
-               RD -> LT
-               LD -> GT
-               SD -> EQ
-     --case cmpSlope (slope p a) (slope b p) of 
-     --     RD -> LT
-     --     LD -> GT
-     --     SD -> EQ
+slope                 :: Point -> Point -> Double
+slope (x, y) (x', y') =  (y' - y) / (x' - x)
 
--- IM BAD AT MATH T_T
+cmpSlope     :: Double -> Double -> Direction
+cmpSlope x y
+  | x > y     = RD
+  | x < y     = LD
+  | otherwise = SD
+
+data List a = Cons a (List a)
+            | Nil
+              deriving (Show)
+
+fromList               :: List a -> [a]
+fromList Nil           =  []
+fromList (Cons a rest) =  a : fromList rest
+
+data MTree a = MNode a (Maybe (MTree a)) (Maybe (MTree a))
+
