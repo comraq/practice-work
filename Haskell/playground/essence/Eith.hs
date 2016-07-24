@@ -2,6 +2,12 @@ module Eith where
 
 newtype Eith b = Eith { runEith :: Either String b }
 
+instance (Show b) => Show (Eith b) where
+  show x = case runEith x of
+    Left e  -> "<error: " ++ e ++ ">"
+    Right s -> show s
+
+
 instance Monad Eith where
   return    = Eith . Right
   fail      = Eith . Left

@@ -1,17 +1,6 @@
-module Main where
+module NonDetermine where
 
-import Ident
-import Eith
-import qualified State as S
-import qualified NonDetermine as ND
-import qualified Reader as R
-
-{-
- - Essence of Functional Programming
- - @link - http://www.eliza.ch/doc/wadler92essence_of_FP.pdf
- -
- - Sample Abstract Syntax Tree (ADT)
- -}
+import Control.Monad
 
 type Name = String
 
@@ -20,6 +9,8 @@ data Term = Var Name
           | Add Term Term
           | Lam Name Term
           | App Term Term
+          | Fail
+          | Amb Term Term
   deriving (Show)
 
 data Value m = Wrong
@@ -38,7 +29,7 @@ type Environment m = [(Name, Value m)]
 
 {- Parsing Functions -}
 
-interp             :: (Monad m) => Term -> Environment m -> m (Value m)
+interp             :: (MonadPlus m) => Term -> Environment m -> m (Value m)
 interp (Var x) e   =  lookup' x e
 interp (Con i) e   =  return $ Num i
 interp (Add u v) e =  interp u e >>= (\a ->
@@ -48,20 +39,22 @@ interp (Lam x v) e =  return $ Fun (\a -> interp v $ (x, a):e)
 interp (App t u) e =  interp t e >>= (\f ->
                       interp u e >>= (\a ->
                       apply f a))
+interp (Amb x y) e =  interp x e `mplus` interp y e
+interp Fail e      =  mzero
 
 lookup'              :: (Monad m) => Name -> Environment m -> m (Value m)
-lookup' x []         =  fail $ "Invalid lookup: " ++ x ++ "!"
+lookup' x []         =  return Wrong
 lookup' x ((y, b):e)
   | x == y    = return b
   | otherwise = lookup' x e
 
 add                 :: (Monad m) => Value m -> Value m -> m (Value m)
 add (Num i) (Num j) =  return $ Num $ i + j
-add a b             =  fail $ "Invalid args to add: " ++ show a ++ " and " ++ show b ++ "!"
+add a b             =  return Wrong
 
 apply           :: (Monad m) => Value m -> Value m -> m (Value m)
 apply (Fun k) a =  k a
-apply f a       =  fail $ "Invalid function: " ++ show f ++ " and arguments: " ++ show a ++ " to apply!"
+apply f a       =  return Wrong
 
 
 
@@ -74,31 +67,31 @@ term42 =  (App (Lam "x" (Add (Var "x") (Var "x")))
                (Add (Con 10) (Con 11)))
 
 termE :: Term
-termE =  App (Con 1) (Con 2)
+termE =  (App (Con 1) (Con 2))
 
 termF :: Term
 termF =  (Lam "x" (Lam "y" (Lam "z" (Add (Var "x") 
                                          (Add (Var "y") (Var "z"))))))
+
+termND :: Term
+termND =  (App (Lam "x" (Add (Var "x") (Var "x")))
+               (Amb (Con 4)
+                    (Amb (Con 3)
+                         (Amb (Con 2)
+                              (Con 1)))))
 
 
 
 
 {- Test Functions for Different Monads/Contexts -}
 
-testIdent   :: Term -> String
-testIdent t =  show . runIdent $ interp t []
-
-testEith   :: Term -> String
-testEith t =  show $ (interp t [] :: Eith (Value Eith))
-
-
-
-
-
-
+testND :: Term -> String
+testND t = show (interp t [] :: [ Value [] ])
 
 runMain   :: (Term -> String) -> IO ()
 runMain f =  do
   putStrLn $ f term42
   putStrLn $ f termF
   putStrLn $ f termE
+  putStrLn $ f Fail
+  putStrLn $ f termND

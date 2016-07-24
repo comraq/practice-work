@@ -258,7 +258,7 @@ stackManip stack =  let
 stackManip' :: Stack -> (Int, Stack)
 stackManip' =  do
   push 3
-  pop
+  nop
   pop
   pop
 
