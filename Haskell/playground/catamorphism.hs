@@ -183,3 +183,45 @@ lengthCata =  cata' phi where
   phi Nil'        = 0
 
 -- lengthCata $ cons 'a' . cons 'a' . cons 'a' $ nil == 3
+
+data NatF a = S a | Z deriving (Eq, Show)
+
+type NatFT = Mu NatF
+
+instance Functor NatF where
+  fmap f Z     = Z
+  fmap f (S a) = S (f a)
+
+plusN   :: NatFT -> NatFT -> NatFT
+plusN n =  cata' phi where
+  phi Z     = n
+  phi (S a) = sF a
+
+timesN   :: NatFT -> NatFT -> NatFT
+timesN n =  cata' phi where
+  phi Z     = zF
+  phi (S a) = plusN n a
+
+zF :: NatFT
+zF =  InF Z
+
+sF :: NatFT -> NatFT
+sF =  InF . S
+
+{-# LANGUAGE RankNTypes #-}
+
+type MendlerAlgebra f c = forall a. (a -> c) -> f a -> c
+
+mcata     :: MendlerAlgebra f c -> Mu f -> c
+mcata phi =  phi (mcata phi) . outF
+
+-- cata     :: (Functor f) => Algebra f c -> Mu f -> c
+-- cata phi =  mcata (\f -> phi . fmap f)
+
+data CoYoneda f a = forall b. CoYoneda (b -> a) (f b)
+
+toCoYoneda :: f a -> CoYoneda f a
+toCoYoneda =  CoYoneda id
+
+fromCoyoneda                :: (Functor f) => CoYoneda f a -> f a
+fromCoyoneda (CoYoneda f v) =  fmap f v
