@@ -67,3 +67,16 @@ gt15 = filter (\xs -> length xs > 15) (map chain [1..100])
 
 reduce        :: Foldable t => (b -> a -> b) -> b -> t a -> b
 reduce f i xs =  foldr (\n g -> \acc -> g $ f acc n) id xs i
+
+{-
+ - foldr :: (Foldable t) => (a -> b -> b) -> b -> t a -> b
+ - id    :: a -> a
+ -
+ - foldr id :: (Foldable t) => b -> t (b -> b) -> b
+ -
+ - id === (a -> b -> b) if and only if a :: (b -> b)
+ - ie: id :: (   a     ->    a    )
+ -     id :: ((b -> b) -> (b -> b))
+ - since a === (b -> b), (Foldable t) => t a === (Foldable t) t (b -> b)
+ - therefore, foldr id :: (Foldable t) => b -> t (b -> b) -> b
+ -}

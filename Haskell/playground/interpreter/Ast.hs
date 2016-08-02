@@ -1,4 +1,4 @@
-module Main where
+module Ast where
 
 {-
  - Following an interpreter tutorial
@@ -7,9 +7,13 @@ module Main where
 
 data Exp =  Constant Int
            | Variable String
+           | Plus Exp Exp
            | Minus Exp Exp
-           | Greater Exp Exp
            | Times Exp Exp
+           | Div Exp Exp
+           | Greater Exp Exp
+           | Less Exp Exp
+           | Equal Exp Exp
            deriving Show
 
 data Com =  Assign String Exp
