@@ -36,7 +36,7 @@ data Label = A | B | C deriving Show
 type Path = [ ( Label, Int ) ]
 
 roadStep                                              :: (Path, Path, Int, Int) -> Section -> (Path, Path, Int, Int)
-roadStep (pathA, pathB, timeA, timeB) (Section a b c) = 
+roadStep (pathA, pathB, timeA, timeB) (Section a b c) =
   let toA    = timeA + a
       crossA = timeB + b + c
       toB    = timeB + b
