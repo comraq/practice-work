@@ -18,7 +18,7 @@ instance MyMonad Maybe where
 
   Nothing `myBind` f = Nothing
   Just x `myBind` f = f x
- 
+
   myFail _ = Nothing
 
 type Birds = Int
@@ -84,7 +84,7 @@ guard       :: (MyMonadPlus m) => Bool -> m ()
 guard True  =  myReturn ()
 guard False =  myMzero
 
-sevensOnly :: [Int]  
+sevensOnly :: [Int]
 sevensOnly = do
   x <- [1..50]
   guard ('7' `elem` show x)
@@ -95,7 +95,7 @@ type KnightPos = (Int, Int)
 moveKnight        :: KnightPos -> [KnightPos]
 moveKnight (c, r) =  do
   (c', r') <- [ (c+2,r-1),(c+2,r+1),(c-2,r-1),(c-2,r+1)
-              , (c+1,r-2),(c+1,r+2),(c-1,r-2),(c-1,r+2)  
+              , (c+1,r-2),(c+1,r+2),(c-1,r-2),(c-1,r+2)
               ]
   guard (c' `elem` [1..8] && r' `elem` [1..8])
   return (c', r')
@@ -217,13 +217,13 @@ addStuff =  do
   return (a + b)
 
 addStuff' :: Int -> Int
-addStuff' = (*2) `myBind` \a -> (+10) `myBind` \b -> return $ a + b
+addStuff' = (*2) `myBind` \a -> (+10) `myBind` \b -> myReturn $ a + b
 
 -- addStuff = (*2) >>= \a -> (+10) >>= \b -> return $ a + b
 -- addStuff 3 == 19   --True
 --
 -- 1) \a' -> (\a -> (+10) >>= \b -> return $ a + b) (2 * a') a'
--- 2)  3  -> (\a -> (+10) >>= \b -> return $ a + b) (2 * 3 ) 3 
+-- 2)  3  -> (\a -> (+10) >>= \b -> return $ a + b) (2 * 3 ) 3
 -- 3)        ( 6 -> (+10) >>= \b -> return $ 6 + b)          3
 -- 4)        (\b' -> (\b  -> return $ 6 + b ) (10 + b') b')  3
 -- 5)          3  -> (\b  -> return $ 6 + b ) (10 + 3 ) 3
@@ -258,7 +258,7 @@ stackManip stack =  let
 stackManip' :: Stack -> (Int, Stack)
 stackManip' =  do
   push 3
-  nop
+  pop
   pop
   pop
 
@@ -409,7 +409,7 @@ stackManipS =  do
 --                   ) newState
 --
 --
--- runState stateManipS [5, 8, 2, 1] 
+-- runState stateManipS [5, 8, 2, 1]
 -- (\s -> let (a, newState) = (\xs -> ((), 3:xs)) s
 --        in  (\s' -> let (b, newState') = (\(x':xs') -> (x', xs')) s'
 --                    in (\s'' -> let (c, newState'') = (\(x'':xs'') -> (x'', xs'')) s''
@@ -460,7 +460,7 @@ stackManipS =  do
 -- in (\s'' -> let (c, newState'') = (\(x'':xs'') -> (x'', xs'')) s''
 --             in  (\(x''':xs''') -> (x''', xs''')) newState''
 --    ) [5,8,2,1]
--- 
+--
 -- \[5,8,2,1] -> let (c, newState'') = (\(x'':xs'') -> (x'', xs'')) [5,8,2,1]
 --               in  (\(x''':xs''') -> (x''', xs''')) newState''
 --
@@ -476,7 +476,7 @@ stackManipS =  do
 
 
 
--- runState stackStuff $ snd $ runState stackStuff [9, 0, 2, 1, 0] 
+-- runState stackStuff $ snd $ runState stackStuff [9, 0, 2, 1, 0]
 -- = ((),[8,3,3,0,2,1,0])
 stackStuff :: State Stack ()
 stackStuff =  do
@@ -586,9 +586,9 @@ binSmalls acc x
   | otherwise = Just (acc + x)
 
 solveRPN     :: String -> Maybe Double
-solveRPN str =  (foldM foldingFunction [] $ words str) >>= onlyOne 
+solveRPN str =  (foldM foldingFunction [] $ words str) >>= onlyOne
 
-onlyOne     :: [a] -> Maybe a 
+onlyOne     :: [a] -> Maybe a
 onlyOne [x] =  Just x
 onlyOne _   =  Nothing
 

@@ -1,0 +1,7 @@
+Functors - Morphisms between categories (structure-preserving map between categories)
+Natural Transformations - Morphisms (maps) between Functors
+- Definition: Given categories and functors
+  - C -F-> D
+       |
+       v
+    C -G-> D

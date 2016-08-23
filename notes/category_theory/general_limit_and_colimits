@@ -1,0 +1,73 @@
+------
+Limits
+
+Taking the Categorical Limit is taking the limit of a diagram. A limit for a
+diagram in category C is a universal cone over the digram (where the
+universal cone means the best possible cone).
+
+Consider the following diagram:
+
+
+       + --------------------+
+       |                     |
+       |                     |
+       u ----------> .       |
+       |             ^       |
+       |             |       |
+       |             |       |
+       +-------+     |       |
+       |       |     |       |
+       |       |     |       |
+       V       V     |       |
+       . ----> . ----+       |
+               |     |       |
+               |     |       |
+               |     V       |
+               |     . <-----+
+               |     ^       |
+               |     |       |
+               V     |       |
+               . ----+       |
+               ^             |
+               |             |
+               |             |
+               +-------------+
+
+  where:
+    - every '.' (or x) is an object in the category
+    - 'u' is a vertex/object that has a projection map to every 'x'
+      and every 'triangle' formed by the projection maps (morphisms) to other
+      projection maps is commutative
+      - ie: for all morphisms u ---> x and such that for all morphisms f in
+            the following diagram
+              u ---> x
+              |      |
+              |      |
+              |      f
+              |      |
+              |      |
+              |      V
+              +----> y
+            are commutative
+            - where x and y are objects in the category
+
+    - suppose there exists another vertex 'v' that has projection maps to
+      all objects ('.'s, or 'x's) in the diagram, there exists an unique
+      factorization from 'v' to 'u' that commutes with each vertex's
+      projection map to the objects
+
+    - the best possible 'cone' (ie: vertex u) is one where all other vertices'
+      projection maps all factors uniquely through the morphisms from u to all
+      objects
+      - ie: 'Universal cone' means given any cone there exists an unique
+            v --- h ---> u (factorization)
+            - v ------> u
+              |         |
+              |         |
+              |         |
+              +--> x <--+
+              must commute
+
+    - the best possible 'cone' (formed by the vertex 'u'), sums up/captures
+      the 'entirety' of the diagram
+

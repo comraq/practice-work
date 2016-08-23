@@ -1,0 +1,18 @@
+Definition:
+
+A Monad is given by a functor T: C -> C thats equipped with 2 natural
+transformations
+
+(=>) Natural Transformation
+
+Generic:
+n : 1 => T
+(unit)
+
+u : T^2 => T
+(multiplication)
+
+Parametarized:
+n x : x => T x
+
+u x : T^2 => T x

@@ -35,7 +35,7 @@ instance MyFunctor CMaybe where
 
 class (MyFunctor f) => MyAppli f where
   mypure :: a -> f a
-  myap   :: f (a -> b) -> f a -> f b 
+  myap   :: f (a -> b) -> f a -> f b
 
 instance MyAppli Maybe where
   mypure          = Just
