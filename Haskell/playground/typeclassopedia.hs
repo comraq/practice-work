@@ -73,7 +73,7 @@ class Functor' f => Applicative' f where
   ap'   :: f (a -> b) -> f a -> f b
 
 {-
- - ($)        :: (a -> b) -> a -> b 
+ - ($)        :: (a -> b) -> a -> b
  - flip       :: (a -> b -> c) -> b -> a -> c
  - (flip ($)) :: a -> (a -> b) -> b
  -
@@ -104,7 +104,7 @@ instance Applicative' ZipList where
   (ZipList gs) `ap'` (ZipList xs) = ZipList (zipWith ($) gs xs)
 
 {-
- - Monoidal Laws 
+ - Monoidal Laws
  -
  - 1) Left Identity
  -    unit ** v ~= v
@@ -201,14 +201,14 @@ instance Applicative' [] where
 
 instance Monad' [] where
   return'          = pure'
-  (x:xs) `bind'` f = (f x) ++ (xs `bind'` f) 
+  (x:xs) `bind'` f = (f x) ++ (xs `bind'` f)
   [] `bind'` _     = []
 
 data Free f a = Var a | NodeF (f (Free f a))
 
 instance (Functor' f) => Functor' (Free f) where
   fmap' f (Var a)    = Var $ f a
-  fmap' f (NodeF fa) = NodeF $ fmap' (fmap' f) fa 
+  fmap' f (NodeF fa) = NodeF $ fmap' (fmap' f) fa
 
 instance (Functor' f) => Applicative' (Free f) where
   pure'     = Var
@@ -265,7 +265,7 @@ distribT :: (Monad' m, Monad' n) => n (m a) -> m (n a)
 distribT =  undefined
 
 joinT      :: (Monad' m, Monad' n) => m (n (m (n a))) -> m (n a)
-joinT mnmn =  mnmn `bind'` \nmn -> fmap' join' $ distribT nmn 
+joinT mnmn =  mnmn `bind'` \nmn -> fmap' join' $ distribT nmn
 
 fix'   :: (a -> a) -> a
 fix' f =  f (fix' f)
@@ -293,7 +293,7 @@ class Semigroup' a where
 
 class Semigroup' a => Monoid' a where
   unit' :: a
- 
+
   concat' :: [a] -> a
   concat' =  foldr (<>) unit'
 
@@ -350,7 +350,7 @@ class Category' arr' => Arrow' arr' where
     where swap (x, y) = (y, x)
 
   fanout'     :: (arr' b c) -> (arr' b c') -> (arr' b (c, c'))
-  fanout' f g =  parallel' f g `comp'` arr' (\b -> (b, b)) 
+  fanout' f g =  parallel' f g `comp'` arr' (\b -> (b, b))
 
 {-
  - parallel' :: (arr' b c) -> (arr' b' c') -> (arr' (b, b') (c, c'))
