@@ -56,8 +56,5 @@ data Options = Options { cells :: [[Possible Value]]
 -- initOptions :: Options
 -- initOptions = Options {
 --   cells = [[ values | _ <- [0..dimensions - 1] ] | _ <- [0..dimensions - 1] ],
---   rows  = 
+--   rows  =
 -- }
-
-
-
