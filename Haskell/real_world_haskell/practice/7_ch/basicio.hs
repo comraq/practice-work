@@ -30,3 +30,9 @@ main2 = do
   name <- getLine
   let reply = name2reply name
   putStrLn reply
+
+main3 :: IO ()
+main3 =
+  putStrLn "Greetings! What is your name?" >>
+  getLine >>=
+  putStrLn . (++) "Welcome to Haskell, " . (++ "!")

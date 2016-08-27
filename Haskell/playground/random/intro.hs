@@ -7,23 +7,23 @@ lucky 7 = "lucky number seven!"
 lucky x = "Sorry, you're out of luck, pal!"
 
 sayMe :: (Integral a) => a -> String
-sayMe 1 = "One!"  
-sayMe 2 = "Two!"  
-sayMe 3 = "Three!"  
-sayMe 4 = "Four!"  
-sayMe 5 = "Five!"  
+sayMe 1 = "One!"
+sayMe 2 = "Two!"
+sayMe 3 = "Three!"
+sayMe 4 = "Four!"
+sayMe 5 = "Five!"
 sayMe x = "Not between 1 and 5"
 
 fact :: (Integral a) => a -> a
 fact 0 = 1
 fact n = n * fact (n - 1)
 
-sum' :: (Num a) => [a] -> a  
-sum' [] = 0  
-sum' (x:xs) = x + sum' xs  
+sum' :: (Num a) => [a] -> a
+sum' [] = 0
+sum' (x:xs) = x + sum' xs
 
-initials :: String -> String -> String  
-initials (f:fs) (l:ls) = [f] ++ ". " ++ [l] ++ "." 
+initials :: String -> String -> String
+initials (f:fs) (l:ls) = [f] ++ ". " ++ [l] ++ "."
 
 myMax :: (Ord a) => [a] -> a
 myMax [] = error "myMax cannot be applied to an empty list!"
