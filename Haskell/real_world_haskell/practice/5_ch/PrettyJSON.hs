@@ -13,6 +13,8 @@ import Prettify ( docConcat
                 , compact
                 , (</>)
                 , pretty
+                , fill
+                , nest
                 )
 import Data.Bits (shiftR, (.&.))
 import Data.Char (ord)
