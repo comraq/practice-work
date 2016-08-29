@@ -1,6 +1,6 @@
 module GlobRegex
-  ( globToRegex
-  , matchesGlob
+  ( globToRegex'
+  , matchesGlob'
   ) where
 
 -- pat = "(foo[a-z]*bar|quux)"
@@ -9,7 +9,7 @@ module GlobRegex
 -- getAllTextMatches("good food" =~ ".ood") :: [String]
 
 import Text.Regex.Posix ((=~))
-import Control.Arrow
+import Utils
 
 globToRegex :: String -> String
 globToRegex cs = '^' : globToRegexHelper cs ++ "$"
@@ -37,24 +37,17 @@ charClass []       = error "Unterminated Character Class!"
 matchesGlob :: FilePath -> String -> Bool
 name `matchesGlob` pat = name =~ globToRegex pat
 
-(?) :: Bool -> a -> a -> a
-(?) b x y = if b then x else y
-
 globToRegex' :: String -> String
 globToRegex' = ('^':) . (++ "$") . globToRegexHelper
 
-(.**) :: (b -> c) -> (a0 -> a1 -> b) -> a0 -> a1 -> c
-(.**) = (.) . (.)
-
 matchesGlob' :: FilePath -> String -> Bool
 matchesGlob' = curry $ app . ((=~) *** globToRegex')
--- matchesGlob' = app .** curry ((=~) *** globToRegex')
+-- matchesGlob' = app .* curry ((=~) *** globToRegex')
 
 escape' :: Char -> String
 escape' =
   let regexChars   = "\\+()^$.{}]|"
-      escapeIfTrue = flip (? ('\\' :)) id
+      escapeIfTrue = flip (?>> ('\\' :)) id
       charToString = pure :: Char -> String
-
   in app . ((escapeIfTrue . (`elem` regexChars)) &&& charToString)
 

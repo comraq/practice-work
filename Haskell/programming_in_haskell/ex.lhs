@@ -57,7 +57,7 @@ Duplicate elements will be filtered out of the result list
 >   where a = 10
 >         xs = [1, 2, 3, 4, 5]
 
-4) 
+4)
 
 > last' :: [a] -> a
 > last' =  head . reverse
@@ -200,7 +200,7 @@ It is infeasible to exhaust all such possible combinations
 >   where n = length xs - 1
 >
 > find     :: (Eq a) => a -> [(a, b)] -> [b]
-> find k t =  [ v | (k', v) <- t, k == k' ] 
+> find k t =  [ v | (k', v) <- t, k == k' ]
 >
 > positions'      :: (Eq a) => a -> [a] -> [Int]
 > positions' x xs =  find x $ zip xs [0..]
