@@ -84,3 +84,24 @@ listMatches' =
       getMatchesWithPatFromDir = curry $ (((=<<) . getMatches') *** getDirectoryContents) >>> app >>> handle getDirExceptionHandler
 
   in curry $ ((getDirName >>> (>>=)) *** getMatchesWithPatFromDir) >>> app
+
+namesMatching' :: String -> IO [String]
+namesMatching' pat =
+  let notPattern         = not . isPattern
+      getMatchIfNotPat   = (doesNameExist &&& ((:[]) >>> (<<? []) >>> (return .) >>> (=<<))) >>> swap >>> app
+      handleDirNameEmpty = (getCurrentDirectory >>=) . flip listMatches
+      getDirs            = ((uncurry (<<?) . ((namesMatching . dropTrailingPathSeparator) &&& (return . (:[])))) &&& isPattern) >>> app
+      listDir            = app . ((uncurry (<<?) . (flip listMatches &&& flip listPlain)) &&& isPattern)
+      getAbsDirNames     = (return .* map) . (</>)
+      -- getAllAbsDirNames  = ((>>=) . listDir) >>> (&&& getAbsDirNames) *. app
+
+  in notPattern pat ?>> getMatchIfNotPat pat
+                    $ case splitFileName pat of
+                        ("", baseName)      -> handleDirNameEmpty baseName
+
+                        (dirName, baseName) -> do
+                          dirs <- getDirs dirName
+                          -- pathNames <- forM dirs $ getAllAbsDirNames baseName
+                          pathNames <- forM dirs $ ((listDir baseName >>> (>>=)) &&& getAbsDirNames) >>> app
+
+                          return $ concat pathNames
