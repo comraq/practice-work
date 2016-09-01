@@ -5,7 +5,7 @@ Terminal and Initial Objects
 Terminal Objects:
 
 Let C be a category:
-- A terminal  object in C is an object T in C such that for all X in C, there
+- A terminal object in C is an object T in C such that for all X in C, there
   exists a UNIQUE morphism from X -> T (this is the universal property)
     - this is sometimes also known as the final object
 

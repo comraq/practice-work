@@ -71,3 +71,144 @@ Consider the following diagram:
     - the best possible 'cone' (formed by the vertex 'u'), sums up/captures
       the 'entirety' of the diagram
 
+
+------------------
+Examples of Limits
+
+
+Terminal Objects (limit over empty diagram)
+
+ v -- !h --> u
+
+
+
+       +-----------+
+       |           |
+       |           |
+       |     D     |
+       |           |
+       |           |
+       +-----------+
+
+where
+  - D is the diagram for a Terminal Object (Terminal Objects have not
+    vertices within, and thus is an empty diagram)
+  - the universal cone consists of a vertex u mapping to all vertices within
+    D (however since D has no vertices, u has no mappings and is just an
+    object itself)
+  - Universal Property:
+    - for all v in V, v is another vertex with a unique factorization '!h' to u
+
+
+Products
+
+ +---------------------+
+ |                     |
+ v -- !h --> u         |
+ |           |         |
+ |     +-----+-----+   |
+ |     |           |   |
+ |     |           |   |
+ |     V           V   |
+ +---> A-----------B <-+
+       |           |
+       |           |
+       |     D     |
+       |           |
+       |           |
+       +-----------+
+
+where
+  - D is the diagram for a Product (with objects A, B and no morphisms in
+    between)
+  - u has a projection map to both A and B
+  - Universal Property:
+    - forall v in V
+      - there exists a projection map from v to both A and B
+      - there exists an unique factorization '!h' from v to u
+      - v -> A commutes with v -> u -> A, and likewise for B
+
+
+Pullbacks
+
+ +------------------------+
+ |                        |
+ v ----- !h --> u         |
+ |              |         |
+ |   +----------+-----+   |
+ |   |                |   |
+ |   |                |   |
+ |   |                V   |
+ |   |    +-----------B <-+
+ |   |    |           |
+ |   |    |           |
+ |   |    |     D     |
+ |   |    |           |
+ |   |    |           V
+ |   +--> A --------> C
+ |        ^
+ |        |
+ +--------+
+
+where
+  - D is the diagram for Pullback (with object A, B and C, with morphisms
+    from both A and B to C)
+  - although omitted, the limit should have a morphism from u -> C, however
+    this can be easily seen as a composition of u -> A -> C or u -> B -> C
+    (due to the Universal Property for Pullbacks)
+  - likewise for v (ie: an implicit commutative morphism from v -> C)
+  - Universal Property:
+    - forall v in V
+      - there exists projection maps from v to both A and B (and an implicit
+        commutative morphism to C)
+      - there exists an unique factorization '!h' from v to u
+      - v -> A commutes with v -> u -> A, likewise for B and C
+
+
+Equalizer
+
+
+ +-------------------------+
+ |                         |
+ v ----- !h --> u          |
+ |              |          |
+ |   +----------+----------+
+ |   |                     |
+ |   |                     |
+ |   |                     |
+ |   |    +-----------+    |
+ |   |    |           |    |
+ |   |    | --------> |    |
+ +---+--> |     D     | <--+
+          | --------> |
+          |           |
+          +-----------+
+
+where
+  - D is the diagram with two parallel arrows
+  - Equalizer is the limit over such a diagram D
+  - although omitted, there are actually two projections, one from u ->
+    beginning of top arrow, one from u -> beginning bottom arrow,
+    likewise for from u -> end of the top and bottom arrows
+  - due to commutativity, u -> beginning of top arrow -> end of top arrow
+    commutes with u -> end of top arrow
+  - also since both top and bottom arrows have the same domain and range, u
+    -> beginning of top arrow is the same as u -> beginning of bottom arrow
+
+  - thus, the diagram can be further refined to:
+
+    v ---- c --+   +-----------+
+    |          |   |           |
+   !h          |   | --- f --> |
+    |          +-> |           |
+    +-> u -- e --> |     D     |
+                   |           |
+                   | --- g --> |
+                   |           |
+                   +-----------+
+    where
+      - f . e === g . e (composition and commutativity)
+      - Universal Property:
+        - for all v in V:
+          - there exists an unique factorization '!h' from v to u
+          - c is commutative with e . h
