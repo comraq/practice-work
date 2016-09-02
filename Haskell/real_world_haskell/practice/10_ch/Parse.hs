@@ -1,3 +1,5 @@
+module Parse where
+
 import Utils
 
 import PNM (Greymap(..))

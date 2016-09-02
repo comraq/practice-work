@@ -123,7 +123,7 @@ be commutative, not just the A x B product (object).
       4-element sets in Set Theory
     - let B = { x, y, orange, monkey }
       - another 4-element set, isomorphic to Set A and can be expressed as
-        the prodcut of {1, 2} x {3, 4} by providing/equipping with the corresponding 
+        the prodcut of {1, 2} x {3, 4} by providing/equipping with the corresponding
         projection maps (ie: f, g from the product Diagram)
         ie: - x maps to (1, 3)
             - y maps to (1, 4)
@@ -227,7 +227,7 @@ Products - Essence
 
    Note: This can also be translated to the tradional Product Diagram (from
          (f x g) to (f, g):
- 
+
      v-------+
      |       |
      |       |
@@ -244,7 +244,7 @@ Products - Essence
 
 - Products with the Terminal Object
   - With all products, a monoidal structure is produced
-  - The Terminal Object can act as the unit object in monoidal structures, 
+  - The Terminal Object can act as the unit object in monoidal structures,
   - Consider A x 1: (where A is some object and 1 is the terminal object)
 
   +------V------+
@@ -283,5 +283,5 @@ Products - Essence
         |   |     |   |
         |   V     V   |
         +-->A     1<--+
-      
+
       Both sides of the diagram is commutative!
