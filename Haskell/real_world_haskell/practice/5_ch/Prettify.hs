@@ -17,10 +17,6 @@ module Prettify
     , docConcat
     , punctuate
 
-    -- * Formatters
-    , fill
-    , nest
-
     -- * Renderers
     , compact
     , pretty
@@ -122,29 +118,4 @@ w `fits` ('\n':_) = True
 w `fits` (c:cs)   = (w - 1) `fits` cs
 
 fill :: Int -> Doc -> Doc
-fill w d = docConcat $ init $ scanLines 0 [d <> Line]
-  where scanLines col (d:ds) = case d of
-          Empty        -> scanLines col ds
-          Char c       -> Char c : scanLines (col + 1) ds
-          Text s       -> Text s : scanLines (col + length s) ds
-          Line         -> (padLine $ w - col) : Line : scanLines 0 ds
-          a `Concat` b -> scanLines col (a:b:ds)
-          a `Union` b  -> scanLines col (b:ds)
-        scanLines _   _      = []
-        padLine w = Text $ replicate w '#'
-
-nest :: Int -> Doc -> Doc
-nest i d = scanLines 0 [d]
-  where scanLines col (d:ds) = case d of
-          Empty        -> Empty <> scanLines col ds
-          Char c       -> indentChar col (d:ds)
-          Text s       -> Text s <> scanLines col ds
-          Line         -> Line <> indentLine col <> scanLines col ds
-          a `Concat` b -> scanLines col (a:b:ds)
-          a `Union` b  -> scanLines col (a:ds) `Union` scanLines col (b:ds)
-        scanLines _   _      = Empty
-        indentChar n ((Char c):ds)
-          | c `elem` "[{" = Char c <> scanLines (n + i) (Line:ds)
-          | c `elem` "]}" = Line <> indentLine (n - i) <> Char c <> scanLines (n - i) ds
-          | otherwise     = Char c <> scanLines n ds
-        indentLine n = Text $ replicate n ' '
+fill = undefined
