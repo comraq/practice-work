@@ -118,7 +118,7 @@ Viewing the 'Natural Transformation' square as a "Triangular" cone:
       'u' (the vertex) to every object i in the diagram 'D'
 
       u -- P(i') --> D(i') tells us that all the morphisms already in the
-      digram can be expressed in terms of a morphism from 'u' to the new
+      diagram can be expressed in terms of a morphism from 'u' to the new
       object 'i' (ie: the projection maps in the cone are commutative)
 
   Thus, the 'naturality square' for this Natural Transformation looks like:
