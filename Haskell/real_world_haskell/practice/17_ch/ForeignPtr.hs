@@ -1,0 +1,20 @@
+{-
+ - Haskell Garbage Collector and Memory Management:
+ -
+ - newForeignPtr :: FinalizerPtr a -> Ptr a -> IO (ForeignPtr a)
+ -
+ - useAsCString :: ByteString -> (CString -> IO a) -> IO a
+ -
+ - Example usage calling 'useAsCString':
+ -   useAsCString str $ \cstr -> do
+ -     ... operate on the C String
+ -     ... return a result
+ -
+ - Provide the 'pcre_compile' function with a way to store data:
+ - alloca :: Storable a => (Ptr a -> IO b) -> IO b
+ -
+ - Example usage of 'alloca':
+ -   alloca $ \stringptr -> do
+ -     ... call some Ptr CString function
+ -     peek stringptr
+ -}
