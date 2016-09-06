@@ -138,3 +138,17 @@ Viewing the 'Natural Transformation' square as a "Triangular" cone:
       due to the id morphism from u --> u
       - thus, the cone from vertex 'u' to a digram 'D' is indeed
         a 'Natural Transformation'
+
+
+---------------------------
+Formal Definition of Limits
+
+A cone over a diagram 'D' with vertex 'v' is precisely a Natural
+Transformation: Delta_v ---> D. The limit is
+the universal cone, universal amongst the totality of all cones.
+  where
+    - Delta_v is a Functor
+    - The totality of all cones is the set of Natural Transformations
+      between functors from I to C that start from Delta_v and ends at D
+      - denoted as [I, C](Delta_v, D)
+
