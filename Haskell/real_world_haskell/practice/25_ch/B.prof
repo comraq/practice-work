@@ -1,0 +1,36 @@
+	Wed Sep  7 15:33 2016 Time and Allocation Profiling Report  (Final)
+
+	   B +RTS -i0.001 -hc -p -K100M -RTS 1e6
+
+	total time  =        0.48 secs   (481 ticks @ 1000 us, 1 processor)
+	total alloc = 253,573,184 bytes  (excludes profiling overheads)
+
+COST CENTRE MODULE  %time %alloc
+
+main        Main     57.8   66.3
+mean.k      Main     26.2    6.3
+mean.(...)  Main     13.1   22.1
+MAIN        MAIN      2.9    5.3
+
+
+                                                         individual     inherited
+COST CENTRE    MODULE                  no.     entries  %time %alloc   %time %alloc
+
+MAIN           MAIN                     61           0    2.9    5.3   100.0  100.0
+ main          Main                    123           0   57.8   66.3    97.1   94.7
+  mean         Main                    126           1    0.0    0.0    39.3   28.4
+   mean.n      Main                    130           1    0.0    0.0     0.0    0.0
+   mean.(...)  Main                    128           1   13.1   22.1    39.3   28.4
+    mean.k     Main                    129     1000000   26.2    6.3    26.2    6.3
+   mean.s      Main                    127           1    0.0    0.0     0.0    0.0
+ CAF:main1     Main                    120           0    0.0    0.0     0.0    0.0
+  main         Main                    122           1    0.0    0.0     0.0    0.0
+ CAF:main2     Main                    119           0    0.0    0.0     0.0    0.0
+  main         Main                    124           0    0.0    0.0     0.0    0.0
+ CAF:lvl2_r5fv Main                    115           0    0.0    0.0     0.0    0.0
+ CAF           GHC.TopHandler          108           0    0.0    0.0     0.0    0.0
+ CAF           GHC.Conc.Signal         105           0    0.0    0.0     0.0    0.0
+ CAF           GHC.IO.Encoding         104           0    0.0    0.0     0.0    0.0
+ CAF           GHC.IO.Handle.FD        103           0    0.0    0.0     0.0    0.0
+ CAF           Text.Read.Lex            97           0    0.0    0.0     0.0    0.0
+ CAF           GHC.IO.Encoding.Iconv    91           0    0.0    0.0     0.0    0.0

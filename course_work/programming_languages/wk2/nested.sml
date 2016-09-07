@@ -1,82 +1,53 @@
-fun countup_from1(x : int) =
-let
-  fun count (from : int) =
-    if from = x
-    then x::[]
-    else from :: count(from + 1)
+exception ListLengthMismatch
+
+fun old_zip3(l1, l2, l3) =
+  if null l1 andalso null l2 andalso null l3
+  then []
+  else if null l1 orelse null l2 orelse null l3
+  then raise ListLengthMismatch
+  else (hd l1, hd l2, hd l3) :: old_zip3(tl l1, tl l2, tl l3)
+
+fun zip3 list_triple =
+  case list_triple of
+       ([], [], [])          => []
+     | (x::xs, y::ys, z::zs) => (x, y, z) :: zip3(xs, ys, zs)
+     | _                     => raise ListLengthMismatch
+
+fun unzip3 lst =
+  case lst of
+       []            => ([], [], [])
+     | (a, b, c)::xs => let val (l1, l2, l3) = unzip3 xs
+                        in
+                          (a::l1, b::l2, c::l3)
+                        end
+
+fun bad_nondecreasing xs = (* int list -> bool *)
+  case xs of
+       [] => true
+     | x::xs' => case xs' of
+                      [] => true
+                    | y::ys' => x <= y andalso bad_nondecreasing xs'
+
+fun nondecreasing xs = (* int list -> bool *)
+  case xs of
+       []                 => true
+     | _::[]              => true
+     | head::(neck::rest) => head <= neck andalso nondecreasing (neck::rest)
+
+datatype sgn = P | N | Z
+
+fun multsign(x1, x2) = (* int * int -> sgn *)
+let fun sign x = if x = 0 then Z else if x > 0 then P else N
 in
-  count(1)
+  case (sign x1, sign x2) of
+       (Z, _) => Z
+     | (_, Z) => Z
+     | (P, P) => P
+     | (N, N) => P
+     | _      => N
 end
 
-fun bad_max(xs : int list) =
-  if null xs
-  then 0
-  else if null (tl xs)
-  then hd xs
-  else if hd xs > bad_max(tl xs)
-  then hd xs
-  else bad_max(tl xs)
-
-(* return [from, from + 1, ... , to] *)
-fun countup(from : int, to : int) =
-  if from = to
-  then to :: []
-  else from :: countup(from + 1, to)
-
-(* return [from, from - 1, ... , to] *)
-fun countdown(from : int, to : int) =
-  if from = to
-  then to :: []
-  else from :: countdown(from - 1, to)
-
-fun good_max(xs : int list) =
-  if null xs
-  then 0
-  else if null (tl xs)
-  then hd xs
-  else
-    let
-      val tl_ans = good_max(tl xs)
-      val x = hd xs
-    in
-      if x > tl_ans
-      then x
-      else tl_ans
-    end
-
-(* fn : int list -> int option *)
-fun new_max(xs : int list) =
-  if null xs
-  then NONE
-  else
-    let
-      val tl_ans = new_max(tl xs)
-      val x = hd xs
-    in
-      if isSome tl_ans andalso valOf tl_ans > x
-      then tl_ans
-      else SOME x
-    end
-
-fun new_max2(xs : int list) =
-  if null xs
-  then NONE
-  else
-    let
-      (* assume argument nonempty as the following function is local *)
-      (* int list -> int *)
-      fun max_nonempty(xs : int list) =
-        if null (tl xs) (* xs will be single element list *)
-        then hd xs
-        else
-          let
-            val tl_ans = max_nonempty(tl xs)
-            val x = hd xs
-          in
-            if x > tl_ans
-            then x
-            else tl_ans
-          end
-    in
-      SOME (max_nonempty xs)
-    end
+fun len xs =
+  case xs of
+       []     => 0
+     | _::xs' => 1 + len xs'

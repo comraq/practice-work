@@ -1,0 +1,330 @@
+
+==================== FINAL INTERFACE ====================
+2016-09-08 19:55:05.121439 UTC
+
+interface rwhbl_8NPN1FDCpGGBlCB0OJXzw7:BloomFilter.Easy 7103
+  interface hash: 2bce06832ddef9897526d2b06753d511
+  ABI hash: 2df9f4d68d0eb41353c012d4ef89a4fd
+  export-list hash: 66bba1e86509b97fc5252e5b06b2d714
+  orphan hash: 693e9af84d3dfcc71e640e005bdc5e2e
+  flag hash: 8b014af08ce3962903c3ca7bfd22116d
+  sig of: Nothing
+  used TH splices: False
+  where
+exports:
+  BloomFilter.elem
+  BloomFilter.length
+  BloomFilter.notElem
+  BloomFilter.Easy.easyList
+  BloomFilter.Easy.sizings
+  BloomFilter.Easy.suggestSizing
+  BloomFilter.Internal.Bloom
+module dependencies: BloomFilter BloomFilter.Hash
+                     BloomFilter.Internal BloomFilter.Mutable
+package dependencies: array-0.5.1.0@array_67iodizgJQIIxYVTp4emlA
+                      base-4.8.2.0 bytestring-0.10.6.0@bytes_6VWy06pWzJq9evDvK2d4w6
+                      deepseq-1.4.1.1@deeps_6vMKxt5sPFR0XsbRWvvq59 ghc-prim-0.4.0.0
+                      integer-gmp-1.0.0.0
+orphans: base-4.8.2.0:GHC.Base base-4.8.2.0:GHC.Float
+family instance modules: base-4.8.2.0:Control.Applicative
+                         base-4.8.2.0:Data.Either base-4.8.2.0:Data.Functor.Identity
+                         base-4.8.2.0:Data.Monoid base-4.8.2.0:Data.Type.Equality
+                         base-4.8.2.0:Data.Void base-4.8.2.0:GHC.Exts
+                         base-4.8.2.0:GHC.Generics
+import  -/  base-4.8.2.0:Data.Either e8724afd65fd432cfe9a54014f5f762d
+import  -/  base-4.8.2.0:Data.Foldable 2ce969969ad5231eb40bd713f94f05ad
+import  -/  base-4.8.2.0:Data.List 3f0782c8d4bf50eecefcd5ea1798aac8
+import  -/  base-4.8.2.0:Data.Maybe 1cb58de2b04ee3c0c0a7dc9201184aff
+import  -/  base-4.8.2.0:Data.OldList d8fd80b0e14aa085ce6219cd89dad356
+import  -/  base-4.8.2.0:Data.Word ec8deb535202352cc8b509b14004bcbd
+import  -/  base-4.8.2.0:GHC.Base 1db77db5dae73d8c424c85b09fbadb89
+import  -/  base-4.8.2.0:GHC.Enum debc6de3086023a15993ab0cecffb90b
+import  -/  base-4.8.2.0:GHC.Float e532d434ec2447d809887c0fca1d78a5
+import  -/  base-4.8.2.0:GHC.Num 9f42750c866f5832ca565146bd660c60
+import  -/  base-4.8.2.0:GHC.Real 1281efa9baf803bc7859d7efb89a38b3
+import  -/  base-4.8.2.0:GHC.Word 10dc88543d98000abab9695a1019767d
+import  -/  base-4.8.2.0:Prelude 694dcaf039efe62df1c44834e2dbd2fb
+import  -/  ghc-prim-0.4.0.0:GHC.Classes e1f4ff80f7b5262008a595d29986fb18
+import  -/  integer-gmp-1.0.0.0:GHC.Integer.Type 371e90fe753f08ddedf0d2657a9ef5c4
+import  -/  BloomFilter a31bc4b5e3c92abaf03b84cbf7ba24ff
+  exports: 81f80acdc6bd41dcd4475cc9d897f0d3
+  elem bf8b7efd8ac51f1dd9963a4616ad69b7
+  fromList 56f7a4897b19f2f2296c5ead837b12d9
+  length de11c2d35e45029e07fd5a88afe086c5
+  notElem dcc609a2e0b419ec7cf78cee534454c4
+import  -/  BloomFilter.Hash 0f1207570fecd3e4c0ed8c67146d2739
+  exports: f71bec67d020d8231140f43e53264602
+  Hashable aac1bc323ae91c914ffdbca2762638c6
+  doubleHash f2dcd0a04bae2bd31969b4dec6884288
+import  -/  BloomFilter.Internal 9dc4e26adddcfdb4e51228eb8da14774
+  Bloom d1bc33644c497927a887ca806ed3224e
+7cfd2cddff379723d452169670b690f3
+  $wlvl ::
+    GHC.Prim.Double#
+    -> GHC.Types.Double
+    -> GHC.Base.Maybe (GHC.Word.Word32, GHC.Types.Int)
+  {- Arity: 2, HasNoCafRefs, Strictness: <L,U><L,1*U(U)>,
+     Inline: [0],
+     Unfolding: (\ ww :: GHC.Prim.Double# ww1 :: GHC.Types.Double ->
+                 case GHC.Prim.tagToEnum#
+                        @ GHC.Types.Bool
+                        (GHC.Prim.>##
+                           ww
+                           (GHC.Prim.-##
+                              (GHC.Prim.word2Double# __word 4294967295)
+                              1.0)) of wild {
+                   GHC.Types.False
+                   -> GHC.Base.Just
+                        @ (GHC.Word.Word32, GHC.Types.Int)
+                        (let {
+                           n :: GHC.Prim.Int# = GHC.Prim.double2Int# ww
+                         } in
+                         case GHC.Prim.tagToEnum#
+                                @ GHC.Types.Bool
+                                (GHC.Prim.<## (GHC.Prim.int2Double# n) ww) of wild1 {
+                           GHC.Types.False
+                           -> GHC.Word.W32# (GHC.Prim.narrow32Word# (GHC.Prim.int2Word# n))
+                           GHC.Types.True
+                           -> GHC.Word.W32#
+                                (GHC.Prim.narrow32Word# (GHC.Prim.int2Word# (GHC.Prim.+# n 1))) },
+                         GHC.Float.RealFracMethods.double2Int ww1)
+                   GHC.Types.True
+                   -> GHC.Base.Nothing @ (GHC.Word.Word32, GHC.Types.Int) }) -}
+c75fd318e816f5461470ae94668fa218
+  easyList ::
+    BloomFilter.Hash.Hashable a =>
+    GHC.Types.Double
+    -> [a]
+    -> Data.Either.Either
+         GHC.Base.String (BloomFilter.Internal.Bloom a)
+  {- Arity: 3, Strictness: <L,C(C1(U(U)))><L,1*U(U)><S,U>,
+     Unfolding: (\ @ a
+                   $dHashable :: BloomFilter.Hash.Hashable a
+                   errRate :: GHC.Types.Double
+                   values :: [a] ->
+                 case BloomFilter.Easy.suggestSizing
+                        (Data.OldList.strictGenericLength
+                           @ a
+                           @ GHC.Integer.Type.Integer
+                           GHC.Num.$fNumInteger
+                           values)
+                        errRate of wild {
+                   Data.Either.Left err
+                   -> Data.Either.Left
+                        @ GHC.Base.String
+                        @ (BloomFilter.Internal.Bloom a)
+                        err
+                   Data.Either.Right ds
+                   -> case ds of wild1 { (,) bits hashes ->
+                      Data.Either.Right
+                        @ GHC.Base.String
+                        @ (BloomFilter.Internal.Bloom a)
+                        (case BloomFilter.$wfromList
+                                @ a
+                                (BloomFilter.Hash.doubleHash @ a $dHashable hashes)
+                                bits
+                                values of ww { (#,#) ww1 ww2 ->
+                         BloomFilter.Internal.B @ a ww1 ww2 }) } }) -}
+7279de8a8771c1a5d9389beace5c46f3
+  sizings ::
+    GHC.Integer.Type.Integer
+    -> GHC.Types.Double -> [(GHC.Types.Double, GHC.Types.Double)]
+  {- Arity: 2, Strictness: <L,1*U><L,U(U)>,
+     Unfolding: (\ capacity :: GHC.Integer.Type.Integer
+                   errRate :: GHC.Types.Double ->
+                 let {
+                   cap :: GHC.Types.Double
+                   = case GHC.Integer.Type.doubleFromInteger
+                            capacity of wild { DEFAULT ->
+                     GHC.Types.D# wild }
+                 } in
+                 letrec {
+                   go :: [GHC.Types.Double] -> [(GHC.Types.Double, GHC.Types.Double)]
+                     {- Arity: 1, Strictness: <S,1*U> -}
+                   = \ ds :: [GHC.Types.Double] ->
+                     case ds of wild {
+                       [] -> GHC.Types.[] @ (GHC.Types.Double, GHC.Types.Double)
+                       : y ys
+                       -> GHC.Types.:
+                            @ (GHC.Types.Double, GHC.Types.Double)
+                            (case y of wild1 { GHC.Types.D# x ->
+                             case cap of wild2 { GHC.Types.D# y1 ->
+                             case errRate of wild3 { GHC.Types.D# x1 ->
+                             case GHC.Prim./## 1.0 x of wild4 { DEFAULT ->
+                             case GHC.Prim.logDouble#
+                                    (GHC.Prim.-##
+                                       1.0
+                                       (GHC.Prim.**## x1 wild4)) of wild5 { DEFAULT ->
+                             case GHC.Prim./##
+                                    (GHC.Prim.*## (GHC.Prim.negateDouble# x) y1)
+                                    wild5 of wild6 { DEFAULT ->
+                             GHC.Types.D# wild6 } } } } } },
+                             y)
+                            (go ys) }
+                 } in
+                 go BloomFilter.Easy.sizings1) -}
+50a6c31d7dd2121ba7d7884a3e34ec22
+  sizings1 :: [GHC.Types.Double]
+  {- Unfolding: (GHC.Real.numericEnumFromTo
+                   @ GHC.Types.Double
+                   GHC.Classes.$fOrdDouble
+                   GHC.Float.$fFractionalDouble
+                   BloomFilter.Easy.sizings3
+                   BloomFilter.Easy.sizings2) -}
+72cbd36cd8c1e682a500deb60050665b
+  sizings2 :: GHC.Types.Double
+  {- HasNoCafRefs, Unfolding: (GHC.Types.D# 50.0) -}
+ef643269f0d33d7c259e756ec2a2704c
+  sizings3 :: GHC.Types.Double
+  {- HasNoCafRefs, Unfolding: (GHC.Types.D# 1.0) -}
+f7f4a5e7046661405619173c53bf4410
+  suggestSizing ::
+    GHC.Integer.Type.Integer
+    -> GHC.Types.Double
+    -> Data.Either.Either
+         GHC.Base.String (GHC.Word.Word32, GHC.Types.Int)
+  {- Arity: 2, Strictness: <S,U><L,1*U(U)>,
+     Unfolding: (\ capacity :: GHC.Integer.Type.Integer
+                   errRate :: GHC.Types.Double ->
+                 case GHC.Integer.Type.leInteger#
+                        capacity
+                        BloomFilter.Easy.suggestSizing8 of wild { DEFAULT ->
+                 case GHC.Prim.tagToEnum# @ GHC.Types.Bool wild of wild1 {
+                   GHC.Types.False
+                   -> case errRate of wild2 { GHC.Types.D# x ->
+                      case GHC.Prim.tagToEnum#
+                             @ GHC.Types.Bool
+                             (GHC.Prim.<=## x 0.0) of wild3 {
+                        GHC.Types.False
+                        -> case GHC.Prim.tagToEnum#
+                                  @ GHC.Types.Bool
+                                  (GHC.Prim.>=## x 1.0) of wild4 {
+                             GHC.Types.False
+                             -> case Data.Maybe.catMaybes1
+                                       @ (GHC.Word.Word32, GHC.Types.Int)
+                                       (GHC.Base.map
+                                          @ (GHC.Types.Double, GHC.Types.Double)
+                                          @ (GHC.Base.Maybe (GHC.Word.Word32, GHC.Types.Int))
+                                          BloomFilter.Easy.suggestSizing7
+                                          (BloomFilter.Easy.sizings capacity wild2)) of wild5 {
+                                  [] -> BloomFilter.Easy.suggestSizing5
+                                  : ds1 ds2
+                                  -> Data.Either.Right
+                                       @ GHC.Base.String
+                                       @ (GHC.Word.Word32, GHC.Types.Int)
+                                       (case ds1 of ww { (,) ww1 ww2 ->
+                                        case ds2 of wild6 {
+                                          [] -> (ww1, ww2)
+                                          : y ys
+                                          -> case y of ww3 { (,) ww4 ww5 ->
+                                             case ww1 of wild7 { GHC.Word.W32# a1 ->
+                                             case ww4 of wild8 { GHC.Word.W32# b1 ->
+                                             case GHC.Prim.tagToEnum#
+                                                    @ GHC.Types.Bool
+                                                    (GHC.Prim.ltWord# a1 b1) of wild9 {
+                                               GHC.Types.False
+                                               -> case GHC.Prim.tagToEnum#
+                                                         @ GHC.Types.Bool
+                                                         (GHC.Prim.eqWord# a1 b1) of wild10 {
+                                                    GHC.Types.False
+                                                    -> case BloomFilter.Easy.suggestSizing_$s$wgo1
+                                                              ys
+                                                              b1
+                                                              ww5 of ww6 { (#,#) ww7 ww8 ->
+                                                       (ww7, ww8) }
+                                                    GHC.Types.True
+                                                    -> case ww2 of wild11 { GHC.Types.I# x1 ->
+                                                       case ww5 of wild12 { GHC.Types.I# y1 ->
+                                                       case GHC.Prim.tagToEnum#
+                                                              @ GHC.Types.Bool
+                                                              (GHC.Prim.<=# x1 y1) of wild13 {
+                                                         GHC.Types.False
+                                                         -> case BloomFilter.Easy.suggestSizing_$s$wgo
+                                                                   ys
+                                                                   b1
+                                                                   y1 of ww6 { (#,#) ww7 ww8 ->
+                                                            (ww7, ww8) }
+                                                         GHC.Types.True
+                                                         -> case BloomFilter.Easy.suggestSizing_$s$wgo
+                                                                   ys
+                                                                   a1
+                                                                   x1 of ww6 { (#,#) ww7 ww8 ->
+                                                            (ww7, ww8) } } } } }
+                                               GHC.Types.True
+                                               -> case BloomFilter.Easy.suggestSizing_$s$wgo1
+                                                         ys
+                                                         a1
+                                                         ww2 of ww6 { (#,#) ww7 ww8 ->
+                                                  (ww7, ww8) } } } } } } }) }
+                             GHC.Types.True -> BloomFilter.Easy.suggestSizing3 }
+                        GHC.Types.True -> BloomFilter.Easy.suggestSizing3 } }
+                   GHC.Types.True -> BloomFilter.Easy.suggestSizing1 } }) -}
+429783e803c09acba2b67ec88cae5249
+  suggestSizing1 ::
+    Data.Either.Either GHC.Base.String (GHC.Word.Word32, GHC.Types.Int)
+  {- Strictness: m1,
+     Unfolding: (Data.Either.Left
+                   @ GHC.Base.String
+                   @ (GHC.Word.Word32, GHC.Types.Int)
+                   BloomFilter.Easy.suggestSizing2) -}
+722671aaded59f550ce90026143a8cd3
+  suggestSizing2 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "capacity too small"#) -}
+c7bb10539189fef193ce7867f56c6248
+  suggestSizing3 ::
+    Data.Either.Either GHC.Base.String (GHC.Word.Word32, GHC.Types.Int)
+  {- Strictness: m1,
+     Unfolding: (Data.Either.Left
+                   @ GHC.Base.String
+                   @ (GHC.Word.Word32, GHC.Types.Int)
+                   BloomFilter.Easy.suggestSizing4) -}
+c832b3a5279e1cd4c35de5f152e9ec4a
+  suggestSizing4 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "invalid error rate"#) -}
+3790af137e1023de33f46109e651f053
+  suggestSizing5 ::
+    Data.Either.Either GHC.Base.String (GHC.Word.Word32, GHC.Types.Int)
+  {- Strictness: m1,
+     Unfolding: (Data.Either.Left
+                   @ GHC.Base.String
+                   @ (GHC.Word.Word32, GHC.Types.Int)
+                   BloomFilter.Easy.suggestSizing6) -}
+0b8b9accb1cbef05565ef36ad33b4d69
+  suggestSizing6 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "capacity too large"#) -}
+36326af29c95bf321201368c818ffeaa
+  suggestSizing7 ::
+    (GHC.Types.Double, GHC.Types.Double)
+    -> GHC.Base.Maybe (GHC.Word.Word32, GHC.Types.Int)
+  {- Arity: 1, HasNoCafRefs, Strictness: <S(SL),1*U(1*U(U),1*U(U))>,
+     Inline: INLINE[0],
+     Unfolding: InlineRule (1, True, False)
+                (\ w :: (GHC.Types.Double, GHC.Types.Double) ->
+                 case w of ww { (,) ww1 ww2 ->
+                 case ww1 of ww3 { GHC.Types.D# ww4 ->
+                 BloomFilter.Easy.$wlvl ww4 ww2 } }) -}
+3f1c5cc57fba454a2ce923f295e1bf4d
+  suggestSizing8 :: GHC.Integer.Type.Integer
+  {- HasNoCafRefs, Unfolding: (__integer 0) -}
+3b56d708bbbac2c2a3a8750e8b06cccb
+  suggestSizing_$s$wgo ::
+    [(GHC.Word.Word32, GHC.Types.Int)]
+    -> GHC.Prim.Word#
+    -> GHC.Prim.Int#
+    -> (# GHC.Word.Word32, GHC.Types.Int #)
+  {- Arity: 3, HasNoCafRefs, Strictness: <S,1*U><L,U><L,U> -}
+49e8361cc7fcbe50de8eaf2006010999
+  suggestSizing_$s$wgo1 ::
+    [(GHC.Word.Word32, GHC.Types.Int)]
+    -> GHC.Prim.Word#
+    -> GHC.Types.Int
+    -> (# GHC.Word.Word32, GHC.Types.Int #)
+  {- Arity: 3, HasNoCafRefs, Strictness: <S,1*U><L,U><L,U(U)> -}
+vectorised variables:
+vectorised tycons:
+vectorised reused tycons:
+parallel variables:
+parallel tycons:
+trusted: none
+require own pkg trusted: False
+

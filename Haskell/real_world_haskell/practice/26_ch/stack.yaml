@@ -1,0 +1,11 @@
+flags: {}
+
+extra-package-dbs: []
+
+packages:
+- '.'
+
+extra-deps:
+- QuickCheck-2.9.1
+
+resolver: lts-6.15

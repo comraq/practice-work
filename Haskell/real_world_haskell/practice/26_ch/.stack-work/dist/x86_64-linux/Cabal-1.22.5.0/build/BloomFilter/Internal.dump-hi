@@ -1,0 +1,81 @@
+
+==================== FINAL INTERFACE ====================
+2016-09-08 04:38:10.802096 UTC
+
+interface rwhbl_8NPN1FDCpGGBlCB0OJXzw7:BloomFilter.Internal 7103
+  interface hash: f78477f76081a9a71f845013446bf8e6
+  ABI hash: 9dc4e26adddcfdb4e51228eb8da14774
+  export-list hash: 10c4fad2a35384c4953ab113ed84de9d
+  orphan hash: 693e9af84d3dfcc71e640e005bdc5e2e
+  flag hash: 8b014af08ce3962903c3ca7bfd22116d
+  sig of: Nothing
+  used TH splices: False
+  where
+exports:
+  BloomFilter.Internal.Bloom{BloomFilter.Internal.B BloomFilter.Internal.blmArray BloomFilter.Internal.blmHash}
+  BloomFilter.Internal.MutBloom{BloomFilter.Internal.MB BloomFilter.Internal.mutArray BloomFilter.Internal.mutHash}
+module dependencies:
+package dependencies: array-0.5.1.0@array_67iodizgJQIIxYVTp4emlA
+                      base-4.8.2.0 ghc-prim-0.4.0.0 integer-gmp-1.0.0.0
+orphans: base-4.8.2.0:GHC.Base base-4.8.2.0:GHC.Float
+family instance modules: base-4.8.2.0:Control.Applicative
+                         base-4.8.2.0:Data.Either base-4.8.2.0:Data.Monoid
+                         base-4.8.2.0:Data.Type.Equality base-4.8.2.0:GHC.Exts
+                         base-4.8.2.0:GHC.Generics
+import  -/  array-0.5.1.0@array_67iodizgJQIIxYVTp4emlA:Data.Array.Base a0576aaf9a801948417a257cfc0c6084
+import  -/  array-0.5.1.0@array_67iodizgJQIIxYVTp4emlA:Data.Array.ST d88c6a5ffc4a285f6725848851e6e1b3
+import  -/  array-0.5.1.0@array_67iodizgJQIIxYVTp4emlA:Data.Array.Unboxed babdfa1e5227a34735952147a45b17f7
+import  -/  base-4.8.2.0:Data.Word ec8deb535202352cc8b509b14004bcbd
+import  -/  base-4.8.2.0:GHC.Word 10dc88543d98000abab9695a1019767d
+import  -/  base-4.8.2.0:Prelude 694dcaf039efe62df1c44834e2dbd2fb
+d1bc33644c497927a887ca806ed3224e
+  data Bloom a
+    = B {blmHash :: a -> [GHC.Word.Word32],
+         blmArray :: Data.Array.Base.UArray GHC.Word.Word32 GHC.Types.Bool}
+5b41d7537f55c94ad47630eb9b9503d3
+  type role MutBloom nominal representational
+  data MutBloom s a
+    = MB {mutHash :: a -> [GHC.Word.Word32],
+          mutArray :: Data.Array.Base.STUArray
+                        s GHC.Word.Word32 GHC.Types.Bool}
+3dda0342460cd6b16de30bb06af8a142
+  blmArray ::
+    BloomFilter.Internal.Bloom a
+    -> Data.Array.Base.UArray GHC.Word.Word32 GHC.Types.Bool
+  RecSel BloomFilter.Internal.Bloom
+  {- Arity: 1, HasNoCafRefs, Strictness: <S(LS),1*U(A,1*U(U,U,U,U))>,
+     Unfolding: InlineRule (1, True, False)
+                (\ @ a ds :: BloomFilter.Internal.Bloom a ->
+                 case ds of wild { BloomFilter.Internal.B ds1 ds2 -> ds2 }) -}
+2f2851d334058df90a8a1111438ab19e
+  blmHash :: BloomFilter.Internal.Bloom a -> a -> [GHC.Word.Word32]
+  RecSel BloomFilter.Internal.Bloom
+  {- Arity: 1, HasNoCafRefs, Strictness: <S(SL),1*U(1*U,A)>,
+     Unfolding: InlineRule (1, True, False)
+                (\ @ a ds :: BloomFilter.Internal.Bloom a ->
+                 case ds of wild { BloomFilter.Internal.B ds1 ds2 -> ds1 }) -}
+1457353db06275a8c255f10e6761f8fb
+  mutArray ::
+    BloomFilter.Internal.MutBloom s a
+    -> Data.Array.Base.STUArray s GHC.Word.Word32 GHC.Types.Bool
+  RecSel BloomFilter.Internal.MutBloom
+  {- Arity: 1, HasNoCafRefs, Strictness: <S(LS),1*U(A,1*U(U,U,U,U))>,
+     Unfolding: InlineRule (1, True, False)
+                (\ @ s @ a ds :: BloomFilter.Internal.MutBloom s a ->
+                 case ds of wild { BloomFilter.Internal.MB ds1 ds2 -> ds2 }) -}
+0feb327a9bb6d55db977dee9dcad7a41
+  mutHash ::
+    BloomFilter.Internal.MutBloom s a -> a -> [GHC.Word.Word32]
+  RecSel BloomFilter.Internal.MutBloom
+  {- Arity: 1, HasNoCafRefs, Strictness: <S(SL),1*U(1*U,A)>,
+     Unfolding: InlineRule (1, True, False)
+                (\ @ s @ a ds :: BloomFilter.Internal.MutBloom s a ->
+                 case ds of wild { BloomFilter.Internal.MB ds1 ds2 -> ds1 }) -}
+vectorised variables:
+vectorised tycons:
+vectorised reused tycons:
+parallel variables:
+parallel tycons:
+trusted: none
+require own pkg trusted: False
+

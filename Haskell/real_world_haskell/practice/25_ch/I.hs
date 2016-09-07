@@ -1,0 +1,18 @@
+{-
+ - Another performance optimization technique is known as fusion.
+ -
+ - Instead of keeping intermediate list representations, we can just keep
+ - the next element. GHC does this via "deforestation", which refers to a
+ - general class of optimizations that involve eliminating intermediate data
+ - structures.
+ -
+ - "Stream Fusion" is an fusion optimization technique that transforms
+ - recursive list generation and transformation functions into non-recursive
+ - 'unfolds'. When an 'unfold' appears next to a 'fold', the structure
+ - between them is then eliminated entirely, yielding a single, tight loop,
+ - with no heap allocation. The optimization isn't enabled by default, and
+ - it can radically change the complexity of a piece of code, but is enabled
+ - by a number of data structure libraries, which provide "rewrite rules",
+ - custom optimizations the compiler aplies to functions the library
+ - exports.
+ -}

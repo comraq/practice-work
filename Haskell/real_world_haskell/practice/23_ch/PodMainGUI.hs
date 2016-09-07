@@ -1,5 +1,11 @@
 module PodMainGUI where
 
+{-
+ - Helpful links for help converting Gtk.Glade to Gtk.Builder:
+ - @link - http://stackoverflow.com/questions/13294311/cant-use-a-glade-xml-file-with-haskell
+ - @link - http://rickardlindberg.me/writing/reflections-on-programming/2012-02-11-hello-world-haskell-gtk/
+ -}
+
 import PodDownload
 import PodDB
 import PodTypes

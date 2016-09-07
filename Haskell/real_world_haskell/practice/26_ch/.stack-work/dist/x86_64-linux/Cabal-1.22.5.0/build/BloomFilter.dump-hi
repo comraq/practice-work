@@ -1,0 +1,365 @@
+
+==================== FINAL INTERFACE ====================
+2016-09-08 04:41:59.030984 UTC
+
+interface rwhbl_8NPN1FDCpGGBlCB0OJXzw7:BloomFilter 7103
+  interface hash: 0f54c3e94c64432a2ce490f128ae1d42
+  ABI hash: a31bc4b5e3c92abaf03b84cbf7ba24ff
+  export-list hash: 81f80acdc6bd41dcd4475cc9d897f0d3
+  orphan hash: 693e9af84d3dfcc71e640e005bdc5e2e
+  flag hash: f1cf4fa11ed5a494aef07462212cd142
+  sig of: Nothing
+  used TH splices: False
+  where
+exports:
+  BloomFilter.elem
+  BloomFilter.fromList
+  BloomFilter.length
+  BloomFilter.notElem
+  BloomFilter.Internal.Bloom
+module dependencies: BloomFilter.Internal BloomFilter.Mutable
+package dependencies: array-0.5.1.0@array_67iodizgJQIIxYVTp4emlA
+                      base-4.8.2.0 ghc-prim-0.4.0.0 integer-gmp-1.0.0.0
+orphans: base-4.8.2.0:GHC.Base base-4.8.2.0:GHC.Float
+family instance modules: base-4.8.2.0:Control.Applicative
+                         base-4.8.2.0:Data.Either base-4.8.2.0:Data.Monoid
+                         base-4.8.2.0:Data.Type.Equality base-4.8.2.0:GHC.Exts
+                         base-4.8.2.0:GHC.Generics
+import  -/  array-0.5.1.0@array_67iodizgJQIIxYVTp4emlA:Data.Array.Base a0576aaf9a801948417a257cfc0c6084
+import  -/  array-0.5.1.0@array_67iodizgJQIIxYVTp4emlA:Data.Array.IArray 8a5e59347bb3b7c94f4747168380d3cd
+import  -/  array-0.5.1.0@array_67iodizgJQIIxYVTp4emlA:Data.Array.ST d88c6a5ffc4a285f6725848851e6e1b3
+import  -/  base-4.8.2.0:Data.Foldable 2ce969969ad5231eb40bd713f94f05ad
+import  -/  base-4.8.2.0:Data.Tuple 012ad951a59a9d85fe1de36a2f012986
+import  -/  base-4.8.2.0:Data.Word ec8deb535202352cc8b509b14004bcbd
+import  -/  base-4.8.2.0:GHC.Base 1db77db5dae73d8c424c85b09fbadb89
+import  -/  base-4.8.2.0:GHC.Enum debc6de3086023a15993ab0cecffb90b
+import  -/  base-4.8.2.0:GHC.Real 1281efa9baf803bc7859d7efb89a38b3
+import  -/  base-4.8.2.0:GHC.Word 10dc88543d98000abab9695a1019767d
+import  -/  base-4.8.2.0:Prelude 694dcaf039efe62df1c44834e2dbd2fb
+import  -/  ghc-prim-0.4.0.0:GHC.Classes e1f4ff80f7b5262008a595d29986fb18
+import  -/  BloomFilter.Internal 9dc4e26adddcfdb4e51228eb8da14774
+  exports: 10c4fad2a35384c4953ab113ed84de9d
+  B 099832d6a11c928d014bfd3f067e3db1
+  Bloom d1bc33644c497927a887ca806ed3224e
+  blmArray 3dda0342460cd6b16de30bb06af8a142
+  blmHash 2f2851d334058df90a8a1111438ab19e
+  mutArray 1457353db06275a8c255f10e6761f8fb
+import  -/  BloomFilter.Mutable c5411d9500460bfd5214cedac7d3326e
+  exports: 8bda47db1bba5e73f4c059cf6d64a4ce
+  insert 27067743afc53297ea2f0004c10f1f1f
+  new 64f0c54f1649e95f5af4cda80595cf7b
+f2a23f0e0fadf38b3e9ed7046a13abb9
+  $welem ::
+    a
+    -> (a -> [GHC.Word.Word32])
+    -> Data.Array.Base.UArray GHC.Word.Word32 GHC.Types.Bool
+    -> GHC.Types.Bool
+  {- Arity: 3, Strictness: <L,U><C(S),1*C1(U)><L,U(U(U),U(U),U,U)>,
+     Inline: [0],
+     Unfolding: (\ @ a
+                   w :: a
+                   ww :: a -> [GHC.Word.Word32]
+                   ww1 :: Data.Array.Base.UArray GHC.Word.Word32 GHC.Types.Bool ->
+                 case ww w of wild {
+                   [] -> GHC.Types.True
+                   : y ys
+                   -> case ww1 of wild1 { Data.Array.Base.UArray l u dt ds1 ->
+                      case l of wild2 { GHC.Word.W32# a1 ->
+                      case u of wild4 { GHC.Word.W32# b2 ->
+                      case y of wild3 { GHC.Word.W32# x# ->
+                      case b2 of wild5 {
+                        DEFAULT
+                        -> case GHC.Prim.narrow32Word#
+                                  (GHC.Prim.plusWord# wild5 __word 1) of wild6 {
+                             DEFAULT
+                             -> case GHC.Prim.remWord# x# wild6 of wild7 { DEFAULT ->
+                                case GHC.Prim.tagToEnum#
+                                       @ GHC.Types.Bool
+                                       (GHC.Prim.leWord# a1 wild7) of wild8 {
+                                  GHC.Types.False
+                                  -> case GHC.Arr.hopelessIndexError ret_ty GHC.Types.Bool of {}
+                                  GHC.Types.True
+                                  -> case GHC.Prim.tagToEnum#
+                                            @ GHC.Types.Bool
+                                            (GHC.Prim.leWord# wild7 wild5) of wild9 {
+                                       GHC.Types.False
+                                       -> case GHC.Arr.hopelessIndexError
+                                          ret_ty GHC.Types.Bool
+                                          of {}
+                                       GHC.Types.True
+                                       -> let {
+                                            y1 :: GHC.Prim.Int#
+                                            = GHC.Prim.word2Int#
+                                                (GHC.Prim.narrow32Word#
+                                                   (GHC.Prim.minusWord# wild7 a1))
+                                          } in
+                                          case GHC.Prim.tagToEnum#
+                                                 @ GHC.Types.Bool
+                                                 (GHC.Prim.<=# 0 y1) of wild10 {
+                                            GHC.Types.False
+                                            -> case BloomFilter.elem1 y1 dt
+                                               ret_ty GHC.Types.Bool
+                                               of {}
+                                            GHC.Types.True
+                                            -> case GHC.Prim.tagToEnum#
+                                                      @ GHC.Types.Bool
+                                                      (GHC.Prim.<# y1 dt) of wild11 {
+                                                 GHC.Types.False
+                                                 -> case BloomFilter.elem1 y1 dt
+                                                    ret_ty GHC.Types.Bool
+                                                    of {}
+                                                 GHC.Types.True
+                                                 -> case GHC.Prim.indexWordArray#
+                                                           ds1
+                                                           (GHC.Prim.uncheckedIShiftRA#
+                                                              y1
+                                                              6) of wild12 { DEFAULT ->
+                                                    case GHC.Prim.and#
+                                                           wild12
+                                                           (GHC.Prim.uncheckedShiftL#
+                                                              __word 1
+                                                              (GHC.Prim.word2Int#
+                                                                 (GHC.Prim.and#
+                                                                    (GHC.Prim.int2Word# y1)
+                                                                    __word 63))) of wild13 {
+                                                      DEFAULT
+                                                      -> letrec {
+                                                           go :: [GHC.Word.Word32]
+                                                                 -> Data.Monoid.All
+                                                             {- Arity: 1, Strictness: <S,1*U> -}
+                                                           = \ ds :: [GHC.Word.Word32] ->
+                                                             case ds of wild14 {
+                                                               []
+                                                               -> GHC.Types.True
+                                                                    `cast`
+                                                                  (Sym (Data.Monoid.NTCo:All[0]))
+                                                               : y2 ys1
+                                                               -> case y2 of wild15 { GHC.Word.W32# x#1 ->
+                                                                  case GHC.Prim.remWord#
+                                                                         x#1
+                                                                         wild6 of wild16 { DEFAULT ->
+                                                                  case GHC.Prim.tagToEnum#
+                                                                         @ GHC.Types.Bool
+                                                                         (GHC.Prim.leWord#
+                                                                            a1
+                                                                            wild16) of wild17 {
+                                                                    GHC.Types.False
+                                                                    -> case GHC.Arr.hopelessIndexError
+                                                                       ret_ty Data.Monoid.All
+                                                                       of {}
+                                                                    GHC.Types.True
+                                                                    -> case GHC.Prim.tagToEnum#
+                                                                              @ GHC.Types.Bool
+                                                                              (GHC.Prim.leWord#
+                                                                                 wild16
+                                                                                 wild5) of wild18 {
+                                                                         GHC.Types.False
+                                                                         -> case GHC.Arr.hopelessIndexError
+                                                                            ret_ty Data.Monoid.All
+                                                                            of {}
+                                                                         GHC.Types.True
+                                                                         -> let {
+                                                                              y3 :: GHC.Prim.Int#
+                                                                              = GHC.Prim.word2Int#
+                                                                                  (GHC.Prim.narrow32Word#
+                                                                                     (GHC.Prim.minusWord#
+                                                                                        wild16
+                                                                                        a1))
+                                                                            } in
+                                                                            case GHC.Prim.tagToEnum#
+                                                                                   @ GHC.Types.Bool
+                                                                                   (GHC.Prim.<=#
+                                                                                      0
+                                                                                      y3) of wild19 {
+                                                                              GHC.Types.False
+                                                                              -> case BloomFilter.elem1
+                                                                                        y3
+                                                                                        dt
+                                                                                 ret_ty Data.Monoid.All
+                                                                                 of {}
+                                                                              GHC.Types.True
+                                                                              -> case GHC.Prim.tagToEnum#
+                                                                                        @ GHC.Types.Bool
+                                                                                        (GHC.Prim.<#
+                                                                                           y3
+                                                                                           dt) of wild20 {
+                                                                                   GHC.Types.False
+                                                                                   -> case BloomFilter.elem1
+                                                                                             y3
+                                                                                             dt
+                                                                                      ret_ty Data.Monoid.All
+                                                                                      of {}
+                                                                                   GHC.Types.True
+                                                                                   -> case GHC.Prim.indexWordArray#
+                                                                                             ds1
+                                                                                             (GHC.Prim.uncheckedIShiftRA#
+                                                                                                y3
+                                                                                                6) of wild21 { DEFAULT ->
+                                                                                      case GHC.Prim.and#
+                                                                                             wild21
+                                                                                             (GHC.Prim.uncheckedShiftL#
+                                                                                                __word 1
+                                                                                                (GHC.Prim.word2Int#
+                                                                                                   (GHC.Prim.and#
+                                                                                                      (GHC.Prim.int2Word#
+                                                                                                         y3)
+                                                                                                      __word 63))) of wild22 {
+                                                                                        DEFAULT
+                                                                                        -> go ys1
+                                                                                        __word 0
+                                                                                        -> GHC.Types.False
+                                                                                             `cast`
+                                                                                           (Sym (Data.Monoid.NTCo:All[0])) } } } } } } } } }
+                                                         } in
+                                                         (go ys) `cast` (Data.Monoid.NTCo:All[0])
+                                                      __word 0 -> GHC.Types.False } } } } } } }
+                             __word 0
+                             -> case GHC.Real.divZeroError ret_ty GHC.Types.Bool of {} }
+                        __word 4294967295
+                        -> case GHC.Word.$fEnumWord6
+                           ret_ty GHC.Types.Bool
+                           of {} } } } } } }) -}
+df7a2ce274f3155e79f4c54a4d999927
+  $wfromList ::
+    (a -> [GHC.Word.Word32])
+    -> GHC.Word.Word32
+    -> [a]
+    -> (# a -> [GHC.Word.Word32],
+          Data.Array.Base.UArray GHC.Word.Word32 GHC.Types.Bool #)
+  {- Arity: 3, Strictness: <L,U><L,1*U(U)><L,1*U>, Inline: [0],
+     Unfolding: (\ @ a
+                   w :: a -> [GHC.Word.Word32]
+                   w1 :: GHC.Word.Word32
+                   w2 :: [a] ->
+                 (# w,
+                    GHC.ST.runSTRep
+                      @ (Data.Array.Base.UArray GHC.Word.Word32 GHC.Types.Bool)
+                      (\ @ s s1 :: GHC.Prim.State# s[OneShot] ->
+                       case w1 of ww { GHC.Word.W32# ww1 ->
+                       case BloomFilter.Mutable.$wa2
+                              @ a
+                              @ s
+                              w
+                              ww1
+                              s1 of ds1 { (#,#) ipv ipv1 ->
+                       case w2 of wild {
+                         []
+                         -> case ipv1 of wild1 { BloomFilter.Internal.MB ds2 ds3 ->
+                            case ds3 of wild2 { Data.Array.Base.STUArray l u dt marr# ->
+                            case GHC.Prim.unsafeFreezeByteArray#
+                                   @ s
+                                   marr#
+                                   ipv of ds4 { (#,#) ipv2 ipv3 ->
+                            (# ipv2,
+                               Data.Array.Base.UArray
+                                 @ GHC.Word.Word32
+                                 @ GHC.Types.Bool
+                                 l
+                                 u
+                                 dt
+                                 ipv3 #) } } }
+                         : y ys
+                         -> case ipv1 of ww2 { BloomFilter.Internal.MB ww3 ww4 ->
+                            case ww4 of ww5 { Data.Array.Base.STUArray ww6 ww7 ww8 ww9 ->
+                            case ww6 of ww10 { GHC.Word.W32# ww11 ->
+                            case ww7 of ww12 { GHC.Word.W32# ww13 ->
+                            case BloomFilter.Mutable.$wa1
+                                   @ s
+                                   @ a
+                                   ww3
+                                   ww11
+                                   ww13
+                                   ww8
+                                   ww9
+                                   y
+                                   ipv of ds { (#,#) ipv2 ipv3 ->
+                            letrec {
+                              a1 :: [a] -> GHC.Prim.State# s -> (# GHC.Prim.State# s, () #)
+                                {- Arity: 2, Strictness: <S,1*U><L,U> -}
+                              = \ ds2 :: [a] eta :: GHC.Prim.State# s[OneShot] ->
+                                case ds2 of wild1 {
+                                  [] -> (# eta, GHC.Tuple.() #)
+                                  : y1 ys1
+                                  -> case BloomFilter.Mutable.$wa1
+                                            @ s
+                                            @ a
+                                            ww3
+                                            ww11
+                                            ww13
+                                            ww8
+                                            ww9
+                                            y1
+                                            eta of ds3 { (#,#) ipv4 ipv5 ->
+                                     a1 ys1 ipv4 } }
+                            } in
+                            case a1 ys ipv2 of ds2 { (#,#) ipv4 ipv5 ->
+                            case GHC.Prim.unsafeFreezeByteArray#
+                                   @ s
+                                   ww9
+                                   ipv4 of ds3 { (#,#) ipv6 ipv7 ->
+                            (# ipv6,
+                               Data.Array.Base.UArray
+                                 @ GHC.Word.Word32
+                                 @ GHC.Types.Bool
+                                 ww10
+                                 ww12
+                                 ww8
+                                 ipv7 #) } } } } } } } } } }) #)) -}
+bf8b7efd8ac51f1dd9963a4616ad69b7
+  elem :: a -> BloomFilter.Internal.Bloom a -> GHC.Types.Bool
+  {- Arity: 2,
+     Strictness: <L,U><S(C(S)L),1*U(1*C1(U),U(U(U),U(U),U,U))>,
+     Inline: INLINE[0],
+     Unfolding: InlineRule (2, True, False)
+                (\ @ a w :: a w1 :: BloomFilter.Internal.Bloom a ->
+                 case w1 of ww { BloomFilter.Internal.B ww1 ww2 ->
+                 BloomFilter.$welem @ a w ww1 ww2 }) -}
+db232562ba28add443b84b438b0ba2a1
+  elem1 :: GHC.Prim.Int# -> GHC.Prim.Int# -> GHC.Types.Int
+  {- Arity: 2, Strictness: <L,U><L,U>b -}
+56f7a4897b19f2f2296c5ead837b12d9
+  fromList ::
+    (a -> [GHC.Word.Word32])
+    -> GHC.Word.Word32 -> [a] -> BloomFilter.Internal.Bloom a
+  {- Arity: 3, Strictness: <L,U><L,1*U(U)><L,1*U>m,
+     Inline: INLINE[0],
+     Unfolding: InlineRule (3, True, False)
+                (\ @ a
+                   w :: a -> [GHC.Word.Word32]
+                   w1 :: GHC.Word.Word32
+                   w2 :: [a] ->
+                 case BloomFilter.$wfromList @ a w w1 w2 of ww { (#,#) ww1 ww2 ->
+                 BloomFilter.Internal.B @ a ww1 ww2 }) -}
+de11c2d35e45029e07fd5a88afe086c5
+  length :: BloomFilter.Internal.Bloom a -> GHC.Types.Int
+  {- Arity: 1,
+     Strictness: <S(LS(SS(S)LL)),1*U(A,1*U(1*H,U(1*U),A,A))>m,
+     Unfolding: InlineRule (1, True, False)
+                (\ @ a x :: BloomFilter.Internal.Bloom a ->
+                 case x of wild { BloomFilter.Internal.B ds1 ds2 ->
+                 case ds2 of wild1 { Data.Array.Base.UArray l u dt ds4 ->
+                 case u of wild2 { GHC.Word.W32# a1 ->
+                 case a1 of wild3 {
+                   DEFAULT
+                   -> GHC.Types.I#
+                        (GHC.Prim.word2Int#
+                           (GHC.Prim.narrow32Word# (GHC.Prim.plusWord# wild3 __word 1)))
+                   __word 4294967295
+                   -> case GHC.Word.$fEnumWord6 ret_ty GHC.Types.Int of {} } } } }) -}
+dcc609a2e0b419ec7cf78cee534454c4
+  notElem :: a -> BloomFilter.Internal.Bloom a -> GHC.Types.Bool
+  {- Arity: 2,
+     Strictness: <L,U><S(C(S)L),1*U(1*C1(U),U(U(U),U(U),U,U))>,
+     Unfolding: InlineRule (2, True, False)
+                (\ @ a elt :: a filt :: BloomFilter.Internal.Bloom a ->
+                 case BloomFilter.elem @ a elt filt of wild {
+                   GHC.Types.False -> GHC.Types.True
+                   GHC.Types.True -> GHC.Types.False }) -}
+vectorised variables:
+vectorised tycons:
+vectorised reused tycons:
+parallel variables:
+parallel tycons:
+trusted: none
+require own pkg trusted: False
+

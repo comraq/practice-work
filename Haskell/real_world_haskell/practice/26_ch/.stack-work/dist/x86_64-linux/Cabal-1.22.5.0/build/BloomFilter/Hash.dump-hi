@@ -1,0 +1,437 @@
+
+==================== FINAL INTERFACE ====================
+2016-09-08 19:55:04.001671 UTC
+
+interface rwhbl_8NPN1FDCpGGBlCB0OJXzw7:BloomFilter.Hash 7103
+  interface hash: 28f9c08d2756f724d49cbd32fc4bca33
+  ABI hash: 0f1207570fecd3e4c0ed8c67146d2739
+  export-list hash: f71bec67d020d8231140f43e53264602
+  orphan hash: 693e9af84d3dfcc71e640e005bdc5e2e
+  flag hash: bf7594099a356b183330a265ec3847be
+  sig of: Nothing
+  used TH splices: False
+  where
+exports:
+  BloomFilter.Hash.doubleHash
+  BloomFilter.Hash.hash
+  BloomFilter.Hash.Hashable{BloomFilter.Hash.hashWithSalt}
+module dependencies:
+package dependencies: array-0.5.1.0@array_67iodizgJQIIxYVTp4emlA
+                      base-4.8.2.0 bytestring-0.10.6.0@bytes_6VWy06pWzJq9evDvK2d4w6
+                      deepseq-1.4.1.1@deeps_6vMKxt5sPFR0XsbRWvvq59 ghc-prim-0.4.0.0
+                      integer-gmp-1.0.0.0
+orphans: base-4.8.2.0:GHC.Base base-4.8.2.0:GHC.Float
+family instance modules: base-4.8.2.0:Control.Applicative
+                         base-4.8.2.0:Data.Either base-4.8.2.0:Data.Functor.Identity
+                         base-4.8.2.0:Data.Monoid base-4.8.2.0:Data.Type.Equality
+                         base-4.8.2.0:Data.Void base-4.8.2.0:GHC.Generics
+import  -/  base-4.8.2.0:Control.Monad 480c5067477275068c9b98be08410df9
+import  -/  base-4.8.2.0:Data.Bits 87551525e7ef366d0fc4cad44e8b1bfc
+import  -/  base-4.8.2.0:Data.Word ec8deb535202352cc8b509b14004bcbd
+import  -/  base-4.8.2.0:Foreign.C.Types cbaa8f9d467b53c6af805ebf0a4c7eb3
+import  -/  base-4.8.2.0:Foreign.Marshal.Array 1d9c05d79e8226dd1629eeb79158d672
+import  -/  base-4.8.2.0:Foreign.Marshal.Utils a37afcea3b518608682246f82a22fad5
+import  -/  base-4.8.2.0:Foreign.Ptr 2143d7a69eed57fd8b63d960420e360b
+import  -/  base-4.8.2.0:Foreign.Storable 21c2e5c6def2e7e92aa4b75657ccc427
+import  -/  base-4.8.2.0:GHC.Base 1db77db5dae73d8c424c85b09fbadb89
+import  -/  base-4.8.2.0:GHC.Enum debc6de3086023a15993ab0cecffb90b
+import  -/  base-4.8.2.0:GHC.IO bb5b81adcea33b14bd4abe16d7dde45f
+import  -/  base-4.8.2.0:GHC.List 0c736920522bbd14b770342776012ab6
+import  -/  base-4.8.2.0:GHC.Num 9f42750c866f5832ca565146bd660c60
+import  -/  base-4.8.2.0:GHC.Ptr 074805932cc34cfdd9b02e273ecf4865
+import  -/  base-4.8.2.0:GHC.Real 1281efa9baf803bc7859d7efb89a38b3
+import  -/  base-4.8.2.0:GHC.Word 10dc88543d98000abab9695a1019767d
+import  -/  base-4.8.2.0:Prelude 694dcaf039efe62df1c44834e2dbd2fb
+import  -/  base-4.8.2.0:System.IO.Unsafe fc45e72b9d9eb2c797a8c81f5821fcd0
+import  -/  bytestring-0.10.6.0@bytes_6VWy06pWzJq9evDvK2d4w6:Data.ByteString a7dd1816d7b9a73f13bb7af0c321dca4
+import  -/  bytestring-0.10.6.0@bytes_6VWy06pWzJq9evDvK2d4w6:Data.ByteString.Internal dfa34e211eb5d18268ce7a397234e851
+import  -/  bytestring-0.10.6.0@bytes_6VWy06pWzJq9evDvK2d4w6:Data.ByteString.Lazy 7f48d46f600589dfd94d36d5fcf54f5b
+import  -/  bytestring-0.10.6.0@bytes_6VWy06pWzJq9evDvK2d4w6:Data.ByteString.Lazy.Internal dc0c348a11f4ab8681c713e3b946d31c
+import  -/  ghc-prim-0.4.0.0:GHC.Classes e1f4ff80f7b5262008a595d29986fb18
+import  -/  ghc-prim-0.4.0.0:GHC.Types 6b27fb3fdbd0e3f0925a4496c66513bb
+aac1bc323ae91c914ffdbca2762638c6
+  $fHashable(,) ::
+    (BloomFilter.Hash.Hashable a, BloomFilter.Hash.Hashable b) =>
+    BloomFilter.Hash.Hashable (a, b)
+  DFunId[0]
+  {- Arity: 4, HasNoCafRefs,
+     Strictness: <L,1*C1(C1(U))><C(C(S)),1*C1(C1(U(U)))><L,U><S,1*U(U,U)>,
+     Inline: INLINE (sat-args=0),
+     Unfolding: InlineRule (0, False, True)
+                BloomFilter.Hash.$fHashable(,)_$chashWithSalt
+                  `cast`
+                (forall a b.
+                 <BloomFilter.Hash.Hashable a>_R
+                 ->_R <BloomFilter.Hash.Hashable b>_R
+                 ->_R Sym (BloomFilter.Hash.NTCo:Hashable[0] <(a, b)>_N)) -}
+aac1bc323ae91c914ffdbca2762638c6
+  $fHashable(,)_$chashWithSalt ::
+    (BloomFilter.Hash.Hashable a, BloomFilter.Hash.Hashable b) =>
+    GHC.Word.Word64 -> (a, b) -> GHC.Word.Word64
+  {- Arity: 4, HasNoCafRefs,
+     Strictness: <L,1*C1(C1(U))><C(C(S)),1*C1(C1(U(U)))><L,U><S,1*U(U,U)>,
+     Unfolding: InlineRule (4, True, False)
+                (\ @ a
+                   @ b
+                   $dHashable :: BloomFilter.Hash.Hashable a
+                   $dHashable1 :: BloomFilter.Hash.Hashable b
+                   salt :: GHC.Word.Word64
+                   ds :: (a, b) ->
+                 case ds of wild { (,) a1 b1 ->
+                 $dHashable1 `cast` (BloomFilter.Hash.NTCo:Hashable[0] <b>_N)
+                   ($dHashable `cast` (BloomFilter.Hash.NTCo:Hashable[0] <a>_N)
+                      salt
+                      a1)
+                   b1 }) -}
+aac1bc323ae91c914ffdbca2762638c6
+  $fHashable(,,) ::
+    (BloomFilter.Hash.Hashable a, BloomFilter.Hash.Hashable b,
+     BloomFilter.Hash.Hashable c) =>
+    BloomFilter.Hash.Hashable (a, b, c)
+  DFunId[0]
+  {- Arity: 5, HasNoCafRefs,
+     Strictness: <L,1*C1(C1(U))><L,1*C1(C1(U))><C(C(S)),1*C1(C1(U(U)))><L,U><S,1*U(U,U,U)>,
+     Inline: INLINE (sat-args=0),
+     Unfolding: InlineRule (0, False, True)
+                BloomFilter.Hash.$fHashable(,,)_$chashWithSalt
+                  `cast`
+                (forall a b c.
+                 <BloomFilter.Hash.Hashable a>_R
+                 ->_R <BloomFilter.Hash.Hashable b>_R
+                 ->_R <BloomFilter.Hash.Hashable c>_R
+                 ->_R Sym (BloomFilter.Hash.NTCo:Hashable[0] <(a, b, c)>_N)) -}
+aac1bc323ae91c914ffdbca2762638c6
+  $fHashable(,,)_$chashWithSalt ::
+    (BloomFilter.Hash.Hashable a, BloomFilter.Hash.Hashable b,
+     BloomFilter.Hash.Hashable c) =>
+    GHC.Word.Word64 -> (a, b, c) -> GHC.Word.Word64
+  {- Arity: 5, HasNoCafRefs,
+     Strictness: <L,1*C1(C1(U))><L,1*C1(C1(U))><C(C(S)),1*C1(C1(U(U)))><L,U><S,1*U(U,U,U)>,
+     Unfolding: InlineRule (5, True, False)
+                (\ @ a
+                   @ b
+                   @ c
+                   $dHashable :: BloomFilter.Hash.Hashable a
+                   $dHashable1 :: BloomFilter.Hash.Hashable b
+                   $dHashable2 :: BloomFilter.Hash.Hashable c
+                   salt :: GHC.Word.Word64
+                   ds :: (a, b, c) ->
+                 case ds of wild { (,,) a1 b1 c1 ->
+                 $dHashable2 `cast` (BloomFilter.Hash.NTCo:Hashable[0] <c>_N)
+                   ($dHashable1 `cast` (BloomFilter.Hash.NTCo:Hashable[0] <b>_N)
+                      ($dHashable `cast` (BloomFilter.Hash.NTCo:Hashable[0] <a>_N)
+                         salt
+                         a1)
+                      b1)
+                   c1 }) -}
+aac1bc323ae91c914ffdbca2762638c6
+  $fHashableByteString ::
+    BloomFilter.Hash.Hashable Data.ByteString.Lazy.Internal.ByteString
+  DFunId[0]
+  {- Arity: 2, Strictness: <L,U(U)><L,1*U>,
+     Inline: INLINE (sat-args=0),
+     Unfolding: InlineRule (0, False, True)
+                BloomFilter.Hash.$fHashableByteString_$chashWithSalt
+                  `cast`
+                (Sym (BloomFilter.Hash.NTCo:Hashable[0]
+                          <Data.ByteString.Lazy.Internal.ByteString>_N)) -}
+aac1bc323ae91c914ffdbca2762638c6
+  $fHashableByteString0 ::
+    BloomFilter.Hash.Hashable Data.ByteString.Internal.ByteString
+  DFunId[0]
+  {- Arity: 2, HasNoCafRefs, Strictness: <L,1*U(U)><L,1*U(U,U,U,U)>,
+     Inline: INLINE (sat-args=0),
+     Unfolding: InlineRule (0, False, True)
+                BloomFilter.Hash.$fHashableByteString0_$chashWithSalt
+                  `cast`
+                (Sym (BloomFilter.Hash.NTCo:Hashable[0]
+                          <Data.ByteString.Internal.ByteString>_N)) -}
+8207e9ecd5800e48eac04a9beead04f8
+  $fHashableByteString0_$chashWithSalt ::
+    GHC.Word.Word64
+    -> Data.ByteString.Internal.ByteString -> GHC.Word.Word64
+  {- Arity: 2, HasNoCafRefs, Strictness: <L,1*U(U)><L,1*U(U,U,U,U)>,
+     Unfolding: InlineRule (2, True, False)
+                (\ salt :: GHC.Word.Word64
+                   bs :: Data.ByteString.Internal.ByteString ->
+                 GHC.IO.unsafeDupablePerformIO
+                   @ GHC.Word.Word64
+                   (\ s :: GHC.Prim.State# GHC.Prim.RealWorld[OneShot] ->
+                    case GHC.Prim.noDuplicate# s of s' { DEFAULT ->
+                    BloomFilter.Hash.$fHashableByteString1 salt bs s' })
+                     `cast`
+                   (Sym (GHC.Types.NTCo:IO[0] <GHC.Word.Word64>_R))) -}
+271fdbbc69d4043da26ba90cdd0781e7
+  $fHashableByteString1 ::
+    GHC.Word.Word64
+    -> Data.ByteString.Internal.ByteString
+    -> GHC.Prim.State# GHC.Prim.RealWorld
+    -> (# GHC.Prim.State# GHC.Prim.RealWorld, GHC.Word.Word64 #)
+  {- Arity: 3, HasNoCafRefs,
+     Strictness: <L,1*U(U)><S,1*U(U,U,U,U)><L,U>, Inline: INLINE[0],
+     Unfolding: InlineRule (3, True, False)
+                (\ w :: GHC.Word.Word64
+                   w1 :: Data.ByteString.Internal.ByteString
+                   w2 :: GHC.Prim.State# GHC.Prim.RealWorld[OneShot] ->
+                 case w1 of ww { Data.ByteString.Internal.PS ww1 ww2 ww3 ww4 ->
+                 BloomFilter.Hash.$wa w ww1 ww2 ww3 ww4 w2 }) -}
+0487144e3befebc821c260de10b0d2e8
+  $fHashableByteString_$chashWithSalt ::
+    GHC.Word.Word64
+    -> Data.ByteString.Lazy.Internal.ByteString -> GHC.Word.Word64
+  {- Arity: 2, Strictness: <L,U(U)><L,1*U>,
+     Unfolding: (\ salt :: GHC.Word.Word64
+                   bs :: Data.ByteString.Lazy.Internal.ByteString ->
+                 GHC.IO.unsafeDupablePerformIO
+                   @ GHC.Word.Word64
+                   (\ s :: GHC.Prim.State# GHC.Prim.RealWorld[OneShot] ->
+                    case GHC.Prim.noDuplicate# s of s' { DEFAULT ->
+                    BloomFilter.Hash.$fHashableByteString_a4
+                      (BloomFilter.Hash.rechunk bs)
+                      salt
+                      s' })
+                     `cast`
+                   (Sym (GHC.Types.NTCo:IO[0] <GHC.Word.Word64>_R))) -}
+cc1616ff7e1955ba287ec7d72fbeb0c0
+  $fHashableByteString_a4 ::
+    [Data.ByteString.Internal.ByteString]
+    -> GHC.Word.Word64
+    -> GHC.Prim.State# GHC.Prim.RealWorld
+    -> (# GHC.Prim.State# GHC.Prim.RealWorld, GHC.Word.Word64 #)
+  {- Arity: 3, HasNoCafRefs, Strictness: <S,1*U><L,U(U)><L,U> -}
+8bbbf933368446b5d24ed0124bea5966
+  $wa ::
+    GHC.Word.Word64
+    -> GHC.Prim.Addr#
+    -> GHC.ForeignPtr.ForeignPtrContents
+    -> GHC.Prim.Int#
+    -> GHC.Prim.Int#
+    -> GHC.Prim.State# GHC.Prim.RealWorld
+    -> (# GHC.Prim.State# GHC.Prim.RealWorld, GHC.Word.Word64 #)
+  {- Arity: 6, HasNoCafRefs,
+     Strictness: <L,1*U(U)><L,U><L,U><L,U><L,U><L,U>, Inline: [0],
+     Unfolding: (\ w :: GHC.Word.Word64
+                   ww :: GHC.Prim.Addr#
+                   ww1 :: GHC.ForeignPtr.ForeignPtrContents
+                   ww2 :: GHC.Prim.Int#
+                   ww3 :: GHC.Prim.Int#
+                   w1 :: GHC.Prim.State# GHC.Prim.RealWorld[OneShot] ->
+                 case GHC.Prim.newPinnedByteArray#
+                        @ GHC.Prim.RealWorld
+                        (GHC.Prim.+# ww3 1)
+                        w1 of ds1 { (#,#) ipv ipv1 ->
+                 case GHC.Prim.unsafeFreezeByteArray#
+                        @ GHC.Prim.RealWorld
+                        ipv1
+                        ipv of ds2 { (#,#) ipv2 ipv3 ->
+                 let {
+                   a3 :: GHC.Prim.Addr# = GHC.Prim.byteArrayContents# ipv3
+                 } in
+                 case {__pkg_ccall bytestring-0.10.6.0@bytes_6VWy06pWzJq9evDvK2d4w6 memcpy GHC.Prim.Addr#
+                                                                                           -> GHC.Prim.Addr#
+                                                                                           -> GHC.Prim.Word#
+                                                                                           -> GHC.Prim.State#
+                                                                                                GHC.Prim.RealWorld
+                                                                                           -> (# GHC.Prim.State#
+                                                                                                   GHC.Prim.RealWorld,
+                                                                                                 GHC.Prim.Addr# #)}
+                        a3
+                        (GHC.Prim.plusAddr# ww ww2)
+                        (GHC.Prim.int2Word# ww3)
+                        ipv2 of wild1 { (#,#) ds4 ds5 ->
+                 case GHC.Prim.writeWord8OffAddr#
+                        @ GHC.Prim.RealWorld
+                        (GHC.Prim.plusAddr# a3 ww3)
+                        0
+                        __word 0
+                        ds4 of s2 { DEFAULT ->
+                 case GHC.Prim.newAlignedPinnedByteArray#
+                        @ GHC.Prim.RealWorld
+                        8
+                        8
+                        s2 of ds7 { (#,#) ipv4 ipv5 ->
+                 case GHC.Prim.unsafeFreezeByteArray#
+                        @ GHC.Prim.RealWorld
+                        ipv5
+                        ipv4 of ds3 { (#,#) ipv6 ipv7 ->
+                 case w of wild2 { GHC.Word.W64# x ->
+                 let {
+                   a1 :: GHC.Prim.Addr# = GHC.Prim.byteArrayContents# ipv7
+                 } in
+                 case GHC.Prim.writeWord64OffAddr#
+                        @ GHC.Prim.RealWorld
+                        a1
+                        0
+                        x
+                        ipv6 of s1 { DEFAULT ->
+                 let {
+                   x# :: GHC.Prim.Word# = GHC.Prim.int2Word# ww3
+                 } in
+                 case GHC.Prim.and# x# __word 3 of wild {
+                   DEFAULT
+                   -> case {__pkg_ccall rwhbl_8NPN1FDCpGGBlCB0OJXzw7 hashlittle2 GHC.Prim.Addr#
+                                                                                 -> GHC.Prim.Word#
+                                                                                 -> GHC.Prim.Addr#
+                                                                                 -> GHC.Prim.Addr#
+                                                                                 -> GHC.Prim.State#
+                                                                                      GHC.Prim.RealWorld
+                                                                                 -> (# GHC.Prim.State#
+                                                                                         GHC.Prim.RealWorld #)}
+                             a3
+                             x#
+                             a1
+                             (GHC.Prim.plusAddr# a1 4)
+                             s1 of wild4 { (##) ds ->
+                      case GHC.Prim.readWord64OffAddr#
+                             @ GHC.Prim.RealWorld
+                             a1
+                             0
+                             ds of ds8 { (#,#) ipv8 ipv9 ->
+                      case GHC.Prim.touch#
+                             @ GHC.Prim.ByteArray#
+                             ipv7
+                             ipv8 of s4 { DEFAULT ->
+                      case GHC.Prim.touch#
+                             @ GHC.ForeignPtr.ForeignPtrContents
+                             ww1
+                             s4 of s' { DEFAULT ->
+                      case GHC.Prim.touch#
+                             @ GHC.Prim.ByteArray#
+                             ipv3
+                             s' of s3 { DEFAULT ->
+                      (# s3, GHC.Word.W64# ipv9 #) } } } } }
+                   __word 0
+                   -> case {__pkg_ccall rwhbl_8NPN1FDCpGGBlCB0OJXzw7 hashword2 GHC.Prim.Addr#
+                                                                               -> GHC.Prim.Word#
+                                                                               -> GHC.Prim.Addr#
+                                                                               -> GHC.Prim.Addr#
+                                                                               -> GHC.Prim.State#
+                                                                                    GHC.Prim.RealWorld
+                                                                               -> (# GHC.Prim.State#
+                                                                                       GHC.Prim.RealWorld #)}
+                             a3
+                             (GHC.Prim.quotWord# x# __word 4)
+                             a1
+                             (GHC.Prim.plusAddr# a1 4)
+                             s1 of wild4 { (##) ds ->
+                      case GHC.Prim.readWord64OffAddr#
+                             @ GHC.Prim.RealWorld
+                             a1
+                             0
+                             ds of ds8 { (#,#) ipv8 ipv9 ->
+                      case GHC.Prim.touch#
+                             @ GHC.Prim.ByteArray#
+                             ipv7
+                             ipv8 of s4 { DEFAULT ->
+                      case GHC.Prim.touch#
+                             @ GHC.ForeignPtr.ForeignPtrContents
+                             ww1
+                             s4 of s' { DEFAULT ->
+                      case GHC.Prim.touch#
+                             @ GHC.Prim.ByteArray#
+                             ipv3
+                             s' of s3 { DEFAULT ->
+                      (# s3, GHC.Word.W64# ipv9 #) } } } } } } } } } } } } } }) -}
+caada46247be18a26c24a9956565fb3b
+  $wdoubleHash ::
+    BloomFilter.Hash.Hashable a =>
+    GHC.Prim.Int# -> a -> [GHC.Word.Word32]
+  {- Arity: 3, Strictness: <L,1*C1(C1(U(U)))><L,U><L,U>, Inline: [0],
+     Unfolding: (\ @ a
+                   w :: BloomFilter.Hash.Hashable a
+                   ww :: GHC.Prim.Int#
+                   w1 :: a ->
+                 let {
+                   h :: GHC.Word.Word64
+                   = w `cast` (BloomFilter.Hash.NTCo:Hashable[0] <a>_N)
+                       BloomFilter.Hash.doubleHash1
+                       w1
+                 } in
+                 let {
+                   h1 :: GHC.Word.Word32
+                   = case h of wild { GHC.Word.W64# x# ->
+                     GHC.Word.W32#
+                       (GHC.Prim.and#
+                          (GHC.Prim.narrow32Word# (GHC.Prim.uncheckedShiftRL# x# 32))
+                          __word 4294967295) }
+                 } in
+                 let {
+                   h2 :: GHC.Word.Word32
+                   = case h of wild { GHC.Word.W64# x# ->
+                     GHC.Word.W32# (GHC.Prim.narrow32Word# x#) }
+                 } in
+                 letrec {
+                   go :: [GHC.Word.Word32] -> [GHC.Word.Word32]
+                     {- Arity: 1, Strictness: <S,1*U> -}
+                   = \ ds :: [GHC.Word.Word32] ->
+                     case ds of wild {
+                       [] -> GHC.Types.[] @ GHC.Word.Word32
+                       : y ys
+                       -> GHC.Types.:
+                            @ GHC.Word.Word32
+                            (case h1 of wild1 { GHC.Word.W32# x# ->
+                             case h2 of wild2 { GHC.Word.W32# x#1 ->
+                             case y of wild3 { GHC.Word.W32# y# ->
+                             GHC.Word.W32#
+                               (GHC.Prim.narrow32Word#
+                                  (GHC.Prim.plusWord#
+                                     x#
+                                     (GHC.Prim.narrow32Word# (GHC.Prim.timesWord# x#1 y#)))) } } })
+                            (go ys) }
+                 } in
+                 go
+                   (GHC.Word.$w$cenumFromTo1
+                      __word 0
+                      (GHC.Prim.narrow32Word# (GHC.Prim.int2Word# ww)))) -}
+aac1bc323ae91c914ffdbca2762638c6
+  class Hashable a where
+    hashWithSalt :: GHC.Word.Word64 -> a -> GHC.Word.Word64
+f2dcd0a04bae2bd31969b4dec6884288
+  doubleHash ::
+    BloomFilter.Hash.Hashable a =>
+    GHC.Types.Int -> a -> [GHC.Word.Word32]
+  {- Arity: 3, Strictness: <L,1*C1(C1(U(U)))><S,1*U(U)><L,U>,
+     Inline: INLINE[0],
+     Unfolding: InlineRule (3, True, False)
+                (\ @ a
+                   w :: BloomFilter.Hash.Hashable a
+                   w1 :: GHC.Types.Int
+                   w2 :: a ->
+                 case w1 of ww { GHC.Types.I# ww1 ->
+                 BloomFilter.Hash.$wdoubleHash @ a w ww1 w2 }) -}
+27ed616d22c3b0552dbfd0a372c0226c
+  doubleHash1 :: GHC.Word.Word64
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Word.W64# __word 10471055255048590947) -}
+40763953354d7c2a6e25d64eabd6efc8
+  hash :: BloomFilter.Hash.Hashable a => a -> GHC.Word.Word64
+  {- Arity: 1, HasNoCafRefs, Strictness: <C(S),1*C1(U)>,
+     Unfolding: InlineRule (1, True, True)
+                (\ @ a $dHashable :: BloomFilter.Hash.Hashable a ->
+                 $dHashable `cast` (BloomFilter.Hash.NTCo:Hashable[0] <a>_N)
+                   BloomFilter.Hash.hash1) -}
+53df3e9ed1b10809acdd0a761908a3d2
+  hash1 :: GHC.Word.Word64
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Word.W64# __word 503340467227682003) -}
+4ee206490430b9487ec45876732a85af
+  rechunk ::
+    Data.ByteString.Lazy.Internal.ByteString
+    -> [Data.ByteString.Internal.ByteString]
+  {- Arity: 1, Strictness: <S,1*U> -}
+instance BloomFilter.Hash.Hashable [(,)]
+  = BloomFilter.Hash.$fHashable(,)
+instance BloomFilter.Hash.Hashable [(,,)]
+  = BloomFilter.Hash.$fHashable(,,)
+instance BloomFilter.Hash.Hashable [Data.ByteString.Lazy.Internal.ByteString]
+  = BloomFilter.Hash.$fHashableByteString
+instance BloomFilter.Hash.Hashable [Data.ByteString.Internal.ByteString]
+  = BloomFilter.Hash.$fHashableByteString0
+vectorised variables:
+vectorised tycons:
+vectorised reused tycons:
+parallel variables:
+parallel tycons:
+trusted: none
+require own pkg trusted: False
+
