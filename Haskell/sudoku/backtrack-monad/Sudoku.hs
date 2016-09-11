@@ -3,8 +3,6 @@ module Sudoku where
 import Control.Monad.State
 import Control.Monad.Trans
 
-type Possible a = [a]
-
 -- Each Sudoku Cell Contains a Char
 type Value  = Char
 
@@ -47,10 +45,10 @@ blocks =  [[ (row + r * size, col + c * size )
 blockNum :: Cell -> Int
 blockNum (r, c) = r * dimensions + c
 
-data Options = Options { cells :: [[Possible Value]]
-                       , rows  :: [[Possible Cell]]
-                       , cols  :: [[Possible Cell]]
-                       , blks  :: [[Possible Cell]]
+data Options = Options { cells :: [[[ Value ]]]
+                       , rows  :: [[[ Cell  ]]]
+                       , cols  :: [[[ Cell  ]]]
+                       , blks  :: [[[ Cell  ]]]
                        } deriving Show
 
 -- initOptions :: Options
