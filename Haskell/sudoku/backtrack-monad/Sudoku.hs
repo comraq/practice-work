@@ -50,7 +50,7 @@ blocks =  [[ (row + r * size, col + c * size )
   where blkSize = [0..size - 1]
 
 blockNum :: Cell -> Int
-blockNum (r, c) = r * dimensions + c
+blockNum (r, c) = (r * dimensions + c) `mod` dimensions
 
 type CellOptions  = [[[Value]]]         -- list of possible values for each cell
 type ValueOptions = [[(Value, [Cell])]]
@@ -218,6 +218,27 @@ constrainCell val cell@(row, col) = do
     blk :: Int
     blk = blockNum cell
 
+solutions :: StateT Options [] Solution
+solutions = solveFromRow 0
+  where
+    solveFromRow :: Int -> StateT Options [] Solution
+    solveFromRow row
+      | row >= dimensions = return []
+      | otherwise         = do
+          solvedRow  <- solveRowFromCol row 0
+          solvedRows <- solveFromRow $ row + 1
+          return $ solvedRow : solvedRows
+
+    solveRowFromCol :: Int -> Int -> StateT Options [] [Value]
+    solveRowFromCol row col
+      | col >= dimensions = return []
+      | otherwise         = do
+          possibleVals <- gets $ cellOpts >>> (!! row) >>> (!! col)
+          value        <- lift possibleVals
+
+          (row, col) `setCellValue` value
+          solvedRow <- solveRowFromCol row $ col + 1
+          return $ value : solvedRow
 
 
 
@@ -231,15 +252,17 @@ replaceCellOpts 0   col newVals (vs:vss) = replaceInList col newVals vs : vss
 replaceCellOpts row col newVals (vs:vss) = vs : replaceCellOpts (row - 1) col newVals vss
 
 replaceInList :: Int -> a -> [a] -> [a]
-replaceInList n newVal xs =
-  let (firstHalf, oldVal:secondHalf) = splitAt n xs
-  in  firstHalf ++ newVal:secondHalf
+replaceInList 0 newX (_:xs) = newX:xs
+replaceInList n newX (x:xs) = x : replaceInList (n - 1) newX xs
 
 replaceOpts :: Int -> Value -> [Cell] -> ValueOptions -> ValueOptions
 replaceOpts 0 value cells (pr:prs) = setAssocList (== value) cells pr : prs
-replaceOpts n value cells (pr:prs) = pr : replaceOpts n value cells prs
+replaceOpts n value cells (pr:prs) = pr : replaceOpts (n - 1) value cells prs
 
 setAssocList :: (k -> Bool) -> v -> [(k, v)] -> [(k, v)]
-setAssocList predicate newVal prs =
-  let (firstHalf, (key, oldVal):secondHalf) = break (predicate . fst) prs
-  in  firstHalf ++ (key, newVal):secondHalf
+setAssocList predicate newVal ((key, value):prs)
+  | predicate key = (key, newVal) : prs
+  | otherwise     = (key, value)  : setAssocList predicate newVal prs
+
+main :: IO ()
+main = print $ runStateT solutions initOptions

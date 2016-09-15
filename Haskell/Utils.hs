@@ -40,6 +40,3 @@ infixr 1 **.
 
 dup :: a -> (a, a)
 dup = id &&& id
-
-app' :: (b -> c) -> b -> c
-app' = curry app
