@@ -1,6 +1,14 @@
 {-# LANGUAGE FlexibleContexts #-}
 
-module Sudoku where
+module Sudoku
+  ( Solution
+  , Puzzle
+  , solve
+  , getValues
+  , size
+  , Value
+  , empty
+  ) where
 
 {-
  - My own adaptation of a Sudoku solver using StateT and [] for backtracking
@@ -9,7 +17,10 @@ module Sudoku where
  -}
 
 import Utils
+
 import Data.List (delete)
+import Data.Maybe (maybeToList)
+
 import Control.Monad.Plus (mfromMaybe)
 import Control.Monad.State
 import Control.Monad.Trans
@@ -50,7 +61,9 @@ blocks =  [[ (row + r * size, col + c * size )
   where blkSize = [0..size - 1]
 
 blockNum :: Cell -> Int
-blockNum (r, c) = (r * dimensions + c) `mod` dimensions
+blockNum (r, c) = rowBlkNum + colBlkNum
+  where colBlkNum = c `div` size
+        rowBlkNum = (r `div` size) * size
 
 type CellOptions  = [[[Value]]]         -- list of possible values for each cell
 type ValueOptions = [[(Value, [Cell])]]
@@ -143,10 +156,6 @@ cell@(row, col) `setCellValue` value = do
                                             , blkCell /= cell ]
 
   where
-    -- Gets the list of possible values of a given Cell from CellOptions
-    getCellValues :: Cell -> Options -> [Value]
-    getCellValues (row, col) = cellOpts >>> (!! row) >>> (!! col)
-
     blk :: Int
     blk = blockNum cell
 
@@ -157,7 +166,11 @@ cell@(row, col) `setCellValue` value = do
     cellsRange = [0 .. dimensions - 1]
 
     valuesRange :: [Value]
-    valuesRange =  getValues size
+    valuesRange = getValues size
+
+-- Gets the list of possible values of a given Cell from CellOptions
+getCellValues :: Cell -> Options -> [Value]
+getCellValues (row, col) = cellOpts >>> (!! row) >>> (!! col)
 
 {-
  - The 'Alternative' and 'MonadPlus' implementations of []:
@@ -190,7 +203,7 @@ constrainCell val cell@(row, col) = do
     constrainCellOpts :: (MonadState Options m, MonadPlus m)
                       => Cell -> Value -> m ()
     constrainCellOpts cell@(row, col) valToRemove = do
-      valsRemain <- gets $ cellOpts >>> (!! row) >>> (!! col)
+      valsRemain <- gets $ getCellValues cell
       case valsRemain of
         [val] -> guard (val /= valToRemove)
         [_,_] -> when (valToRemove `elem` valsRemain) $
@@ -233,12 +246,20 @@ solutions = solveFromRow 0
     solveRowFromCol row col
       | col >= dimensions = return []
       | otherwise         = do
-          possibleVals <- gets $ cellOpts >>> (!! row) >>> (!! col)
+          possibleVals <- gets $ getCellValues (row, col)
           value        <- lift possibleVals
 
           (row, col) `setCellValue` value
           solvedRow <- solveRowFromCol row $ col + 1
           return $ value : solvedRow
+
+solve     :: Puzzle -> [Solution]
+solve puz =  evalStateT (initPuzzle >> solutions) initOptions
+  where
+    initPuzzle :: (MonadState Options m, MonadPlus m) => m ()
+    initPuzzle = sequence_ [ (r, c) `setCellValue` v | (row, r) <- zip puz [0..]
+                                                     , (val, c) <- zip row [0..]
+                                                     , v <- maybeToList val ]
 
 
 
@@ -264,5 +285,5 @@ setAssocList predicate newVal ((key, value):prs)
   | predicate key = (key, newVal) : prs
   | otherwise     = (key, value)  : setAssocList predicate newVal prs
 
-main :: IO ()
-main = print $ runStateT solutions initOptions
+empty :: [(Solution, Options)]
+empty = runStateT solutions initOptions
