@@ -16,13 +16,13 @@ h1 = [ "4.....8.5"
      , "1.4......"
      ]
 
-gridToPuzzle :: Grid -> Puzzle
-gridToPuzzle = map $ map valueToMaybe
-
-valueToMaybe :: Value -> Maybe Value
-valueToMaybe val
-    | val `elem` values = Just val
-    | otherwise         = Nothing
+gridToPuzzle :: Int -> Grid -> Puzzle
+gridToPuzzle size = map $ map (valueToMaybe values)
   where
     values :: [Value]
     values = getValues size
+
+valueToMaybe :: [Value] -> Value -> Maybe Value
+valueToMaybe values val
+    | val `elem` values = Just val
+    | otherwise         = Nothing
