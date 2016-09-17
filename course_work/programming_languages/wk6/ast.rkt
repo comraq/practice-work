@@ -157,3 +157,76 @@
 
         [#t (error "eval-exp expected an exp")]
         ))
+
+; Variables:
+;
+; To implement variables, use a list of pairs (string, value) as the
+; environment, where 'string' is the variable name and 'value' is the value
+; stored in the variable.
+;
+; This environment should be passed around in the recursive 'eval-exp'
+; function, to be able to lookup variable values when encountering
+; expressions involving variables.
+
+; Closures:
+;
+; To implement closures, create a struct with the function and the
+; environment of the function. Thus later when invoked, the function stored
+; in the closure can be invoked within the environment in the closure
+; struct.
+;
+; Note:
+;   - The closure and arguments to be passed to the closure should be
+;     evaluted in the current environment
+;   - The closure function body should be evaluated in the closure's
+;     environment
+;   - To allow function bodies to recursively call itself, must extend the
+;     function's environment with the function's name mapping to the entire
+;     closure struct
+;
+; Note:
+;   - blindly storing all variables in the environment of a closure can be
+;     expensive (space-wise), as there may be many bindings not referenced in
+;     the function body of the closure but the closure environment prevents
+;     garbage collection
+;   - scan through all closure function bodies and only store the referenced
+;     free variables of the function in its environment (this step can be
+;     done before run time)
+;
+; Note:
+;   - in a compiled language, since there is no interpreter to invoke a
+;     closure function with a closure environment, the compiled/translated
+;     code must "re-write" the function to take in an extra argument (an
+;     argument that contains the look up information for the closure
+;     environment's free variables)
+;   - the extra "environment/free variables argument" must be passed to the
+;     function, and the function must be re-written to lookup variable
+;     bindings inside this argument
+;     - every function must be re-written to take in this extra
+;       "environment/free variables argument"
+;     - every function call must be re-written to pass in this extra argument
+;     - every function must be re-written to lookup bindings in this extra
+;       argument
+
+; Macros can just be racket functions as follows:
+(define (andalso e1 e2)
+  (if-then-else e1 e2 (bool #f)))
+
+(define (double e)
+  (multiply e (const 2)))
+
+(define (list-product es)
+  (if (null? es)
+      (const 1)
+      (multiply (car es) (list-product (cdr es)))))
+
+(define test (andalso (eq-num (double (const 4))
+                              (list-product (list (const 2)
+                                                  (const 2)
+                                                  (const 1)
+                                                  (const 2))))
+                      (bool #t)))
+
+; Note that these "function macros" do not evaluate an expression, they are
+; just syntax that construct/expand the actual expressions to be evaluated
+; by 'eval-exp'.
