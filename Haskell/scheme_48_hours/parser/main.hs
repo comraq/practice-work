@@ -2,9 +2,13 @@ module Main where
 
 import System.Environment
 import Text.ParserCombinators.Parsec hiding (spaces)
-import Numeric (readHex, readOct, readInt)
+
+import Numeric (readHex, readOct, readInt, readFloat, readDec)
 import Data.Char (digitToInt)
+import Data.Maybe (maybeToList)
 import Control.Monad (void)
+import Data.Ratio
+import Data.Complex
 
 
 
@@ -13,11 +17,19 @@ import Control.Monad (void)
 data LispVal = LAtom       String
              | LList       [LispVal]
              | LDottedList [LispVal] LispVal
-             | LNumber     Integer
+             | LNumber     SchemeNumber
              | LString     String
              | LBool       Bool
              | LChar       Char
-  deriving (Show)
+  deriving (Show, Eq, Read)
+
+data SchemeNumber = SInt      Integer
+                  | SDouble   Double
+                  | SRational Rational
+                  | SComplex  (Complex Double)
+  deriving (Show, Eq, Read)
+
+
 
 
 ------ Entry Point (Main) -------
@@ -38,7 +50,13 @@ readExpr input =  case parse parseExpr "lisp" input of
   Right val -> "Found value: " ++ show val
 
 parseExpr :: Parser LispVal
-parseExpr =  parseAtom <|> parseString <|> parseNumber' <|> parseChar <|> parseBool
+parseExpr =  parseAtom
+  <|> parseString
+  <|> parseNumber'
+  <|> parseChar
+  <|> parseBool
+  <|> parseQuoted
+  <|> parseAnyList
 
 
 
@@ -101,31 +119,99 @@ validString = many1 (noneOf "\\\"") <|> escaped
           _   -> [x]
 
 parseNumber' :: Parser LispVal
-parseNumber' = LNumber <$> parseNum
+parseNumber' = LNumber <$> parseSNumber
+
+parseSNumber :: Parser SchemeNumber
+parseSNumber = tryRational <|> tryComplex <|> noBase <|> withBase
   where
-    parseNum :: Parser Integer
-    parseNum = noBase <|> try withBase
+    maybeNeg :: Num a => Parser (a -> a)
+    maybeNeg = maybe id (const negate) <$> optionMaybe (char '-')
 
-    noBase :: Parser Integer
-    noBase = read <$> many1 digit
+    toInt :: String -> Integer
+    toInt = fst . head . readDec
 
-    withBase :: Parser Integer
+    toDouble :: String -> Double
+    toDouble = fst . head . readFloat
+
+    getNumInt :: Parser Integer
+    getNumInt = do
+      mbNeg  <- maybeNeg
+      digits <- many1 digit
+      return . mbNeg . toInt $ digits
+
+    getNumDouble :: Parser Double
+    getNumDouble = do
+      mbNeg  <- maybeNeg
+      [a, b] <- take 2 <$> many1 digit `sepBy1` char '.'
+      return . mbNeg . toDouble $ a ++ '.':b
+
+    noBase :: Parser SchemeNumber
+    noBase = SDouble <$> try getNumDouble <|> SInt <$> getNumInt
+
+    withBase :: Parser SchemeNumber
     withBase = char '#' >> oneOf baseChars >>= getNumFromBaseChar
 
     baseChars :: String
     baseChars = "bodx"
 
-    getNumFromBaseChar :: Char -> Parser Integer
-    getNumFromBaseChar 'b' = fst . head . readBin <$> many1 (oneOf binChars)
-    getNumFromBaseChar 'o' = fst . head . readOct <$> many1 (oneOf octChars)
-    getNumFromBaseChar 'd' = (read :: String -> Integer) <$> many1 digit
-    getNumFromBaseChar 'x' = fst . head . readHex <$> many1 (oneOf hexChars)
+    getNumFromBaseChar :: Char -> Parser SchemeNumber
+    getNumFromBaseChar 'b' = SInt . fst . head . readBin   <$> many1 (oneOf binChars)
+    getNumFromBaseChar 'o' = SInt . fst . head . readOct   <$> many1 octDigit
+    getNumFromBaseChar 'd' = noBase
+    getNumFromBaseChar 'x' = SInt . fst . head . readHex   <$> many1 hexDigit
 
-hexChars :: String
-hexChars = ['0'..'9'] ++ ['A'..'F']
+    tryRational :: Parser SchemeNumber
+    tryRational = try $ do
+      [a, b] <- take 2 <$> getNumInt `sepBy1` char '/'
+      return . SRational $ a % b
 
-octChars :: String
-octChars = ['0'..'7']
+    tryComplex :: Parser SchemeNumber
+    tryComplex = fmap SComplex $ rectComplex <|> polarComplex
+
+    rectComplex :: Parser (Complex Double)
+    rectComplex = try $ do
+      rPart    <- getNum
+      iPartNeg <- oneOf "+-" >>= \op -> return $ if op == '-'
+                                          then negate
+                                          else id
+
+      iPart    <- iPartNeg <$> getNum
+      char 'i'
+      return $ rPart :+ iPart
+
+    polarComplex :: Parser (Complex Double)
+    polarComplex = try $ do
+      mag   <- maybeNeg <*> getNumInt
+      char '@'
+      angle <- getNum
+      return $ mkPolar (fromIntegral mag) angle
+
+    getNum :: Parser Double
+    getNum = try getNumDouble <|> fmap fromIntegral getNumInt
+
+
+parseQuoted :: Parser LispVal
+parseQuoted = do
+  char '\''
+  x <- parseExpr
+  return $ LList [LAtom "quote", x]
+
+parseAnyList :: Parser LispVal
+parseAnyList = between (char '(') (char ')') anyList
+  where
+    anyList :: Parser LispVal
+    anyList = try parseList <|> parseDottedList
+
+
+parseList :: Parser LispVal
+parseList = LList <$> sepBy parseExpr spaces
+
+parseDottedList :: Parser LispVal
+parseDottedList =
+  let head = endBy parseExpr spaces
+      tail = char '.' >> spaces >> parseExpr
+  in  LDottedList <$> head <*> tail
+
 
 binChars :: String
 binChars = "01"
@@ -135,7 +221,7 @@ readBin :: String -> [(Integer, String)]
 readBin = readInt 2 (`elem` binChars) digitToInt
 
 symbol :: Parser Char
-symbol =  oneOf "!$%&|*+-/:<=?>@^_~"
+symbol =  oneOf "!$%&|*+/:<=?>@^_~"
 
 spaces :: Parser ()
 spaces =  skipMany1 space
@@ -172,4 +258,3 @@ parseAtomBind = (letter <|> symbol) >>=
 
 parseStringBind :: Parser LispVal
 parseStringBind =  char '"' >> many validString >>= \x -> char '"' >> return (LString $ concat x)
-
