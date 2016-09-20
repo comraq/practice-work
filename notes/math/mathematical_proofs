@@ -1,0 +1,105 @@
+Axiom -> Definition -> Conjecture -> Theorem -> Proof -> Generalization -> Extension
+
+--------------------
+Inductive Reasoning:
+- the method of reasoning based on making inferences and conclusions from
+  observations to a more general conclusion or future event
+
+--------------------
+Deductive Reasoning:
+- the method of reasoning where a conclusion is reached by logical arguments
+  based on a collection of assumptions
+
+----------------
+Axiom/Postulate:
+- a mathematical statement that is taken to be self-evidently true without
+  proof
+- these are basic building blocks from which all theorems are proved
+
+-----------------------
+Mathematical Definition:
+- a statement that gives precise meaning to a mathematical concept, word or
+  term
+- it characterizes the meaning of the word by giving all the properties and
+  only those properties that must be true
+
+-----------
+Conjecture:
+- any mathematical statement that has not yet been proved or disproved
+
+------
+Proof:
+- a proof of a mathematical result is a sequence of rigorous mathematical
+  arguments that are presented in a clear and concise fashion
+- convincingly demonstrates the truth of a given result
+
+--------
+Theorem:
+- any mathematical statement that can be shown to be true using accepted
+  logical and mathematical arguments
+
+------
+Lemma:
+- a minor result whose sole purpose is to help in proving a theorem
+- any provable result that is used primarily as a necessary step in the
+  proof of another theorem
+- a stepping stone on the path to proving a theorem
+- very occasionally lemmas can take on a "life of their own" (Zorn's lemma,
+  Urysohn's lemma, Burnside's lemma, Sperner's lemma)
+
+----------
+Corollary:
+- a theorem that can be stated as a special case of a more general theorem
+- a result in which the (usually short) proof relies heavily on a given
+  theorem
+- often say that "this is a corollary of Theorem A"
+
+------
+Claim:
+- an assertion that is then proved
+- often used like an informal lemma
+
+------------------------------
+Logical Statement/Proposition:
+- a declarative sentence that is either true or false
+
+-----------------------
+Propositional Function:
+- a declarative sentence 'P(x)' involving a variable 'x' that takes on
+  values in a set 'Delta' is said to be a "propositional function" if and
+  only if 'P(x)' has a well-defined truth value for each value of 'x' in
+  'Delta'
+- The set 'Delta' is called the "domain" of the propositional function 'P(x)'
+
+------------------
+Logical Operators:
+- Let 'P' and 'Q' be statements:
+  - 'P AND Q' is called the "conjunction" or "meet" of the statements 'P'
+    and 'Q'
+  - 'P OR Q' is called the "disjunction" or "join" of the statements 'P' and
+    'Q'
+  - 'NOT P' is called the "negation" of the statement 'P'
+
+----------
+Tautology:
+- a statement that is always true for all of its states of nature
+
+--------------
+Contradiction:
+- a statement that is always false for all of its states of nature
+
+---------
+Identity:
+- a mathematical expression giving the equality of two (often variable)
+  quantities
+- ex: (trigonometric identities, Euler's identity)
+
+--------
+Paradox:
+- a statement that can be shown, using a given set of axioms and
+  definitions, to be both true and false
+- often used to show the inconsistencies in a flawed theory (Russell's
+  paradox)
+- often used informally to describe a surprising or counterintuitive result
+  that follows from a given set of rules (Banach-Tarki paradox, Alabama
+  paradox, Gabriel's horn)
