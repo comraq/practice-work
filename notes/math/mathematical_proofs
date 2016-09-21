@@ -1,4 +1,9 @@
-Axiom -> Definition -> Conjecture -> Theorem -> Proof -> Generalization -> Extension
+   Axiom
+-> Definition
+-> Conjecture
+-> Theorem
+-> Proof
+-> Generalization and Extensions
 
 --------------------
 Inductive Reasoning:
@@ -69,7 +74,20 @@ Propositional Function:
   values in a set 'Delta' is said to be a "propositional function" if and
   only if 'P(x)' has a well-defined truth value for each value of 'x' in
   'Delta'
-- The set 'Delta' is called the "domain" of the propositional function 'P(x)'
+- the set 'Delta' is called the "domain" of the propositional function 'P(x)'
+
+-------------------------------------
+Variables in Propositional Functions:
+- any term in a propositional function whose value is not explicitly stated,
+  implied or understood and whose value is needed in order to determine the
+  truth or falsity of the propostion
+- the values of a variable is called the "domain" of the propositional
+  function and is denoted by 'Delta'
+
+-------------------
+Compound Statement:
+- combined from simple logical statements that is based on more than one
+  object and the use of logical operators
 
 ------------------
 Logical Operators:
@@ -92,6 +110,48 @@ Contradiction:
 Logically Equivalent:
 - two statements 'X' and 'Y' are "logically equivalent" when they have
   identitcal truth tables
+
+----------------------
+Conditional Statement:
+- let 'P' and 'Q' be statements, then the declarative sentence "P implies Q"
+  is called a "conditional statement"
+
+-------------------------
+Converse Statement:
+- the converse of the statement "P implies Q" is "Q implies P"
+- Note: a statement and its converse are not logically equivalent
+
+-------------------------
+Contrapositive Statement:
+- the contrapositive of the statement "P implies Q" is "not P implies not Q"
+- Note: a statement and its contrapositive are logically equivalent
+
+------------------------
+Biconditional Statement:
+- let 'P' and 'Q' be statements, the "biconditional statement" is "P if and
+  only if Q", or "P iff Q"
+- Note: "P iff Q" is only true if both "P implies Q" and its converse "Q
+        implies P" is true
+
+-------------------------
+Universal Quantification:
+- clauses for universal quantification include:
+  - for every
+  - for each
+  - for all
+- Note: negating a statement with an universal quantifier is a statement
+        with an existential quantifier with the associated propositional
+        function negated
+
+---------------------------
+Existential Quantification:
+- clauses for existential quantification include:
+  - there exists
+  - there is at least one
+  - there is some
+- Note: negating a statement with an existential quantifier is a statement
+        with an universal quantifier with the associated propositional function
+        negated
 
 ---------
 Identity:

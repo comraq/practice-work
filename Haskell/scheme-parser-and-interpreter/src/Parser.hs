@@ -1,7 +1,8 @@
-module Main where
+module Parser
+  ( readExpr
+  ) where
 
-import System.Environment
-import Text.ParserCombinators.Parsec hiding (spaces)
+import Text.ParserCombinators.Parsec
 
 import Numeric (readHex, readOct, readInt, readFloat, readDec)
 import Data.Char (digitToInt)
@@ -10,44 +11,18 @@ import Control.Monad (void)
 import Data.Ratio
 import Data.Complex
 
+import Definition
 
 
-------- Type Definitions -------
-
-data LispVal = LAtom       String
-             | LList       [LispVal]
-             | LDottedList [LispVal] LispVal
-             | LNumber     SchemeNumber
-             | LString     String
-             | LBool       Bool
-             | LChar       Char
-  deriving (Show, Eq, Read)
-
-data SchemeNumber = SInt      Integer
-                  | SDouble   Double
-                  | SRational Rational
-                  | SComplex  (Complex Double)
-  deriving (Show, Eq, Read)
-
-
-
-
------- Entry Point (Main) -------
-
-main :: IO ()
-main = do
-  args <- getArgs
-  putStrLn . readExpr . head $ args
-
-mainI :: IO ()
-mainI = do
-  input <- getLine
-  putStrLn $ readExpr input
 
 readExpr       :: String -> String
 readExpr input =  case parse parseExpr "lisp" input of
   Left err  -> "No match: " ++ show err
   Right val -> "Found value: " ++ show val
+
+
+
+------- Parsers -------
 
 parseExpr :: Parser LispVal
 parseExpr =  parseAtom
@@ -55,13 +30,9 @@ parseExpr =  parseAtom
   <|> parseNumber'
   <|> parseChar
   <|> parseBool
+  <|> parseQuasiQuoted
   <|> parseQuoted
   <|> parseAnyList
-
-
-
-
-------- Parsers -------
 
 parseAtom :: Parser LispVal
 parseAtom = do
@@ -192,9 +163,15 @@ parseSNumber = tryRational <|> tryComplex <|> noBase <|> withBase
 
 parseQuoted :: Parser LispVal
 parseQuoted = do
-  char '\''
+  oneOf "'`"
   x <- parseExpr
   return $ LList [LAtom "quote", x]
+
+parseQuasiQuoted :: Parser LispVal
+parseQuasiQuoted = try . between (string "`(") (char ')') $ do
+  quoted   <- concat <$> manyTill (parseExpr `endBy` spaces1) (char ',')
+  unquoted <- parseExpr `sepBy` spaces1
+  return . LList $ LAtom "quasiquote" :quoted ++ (LAtom "unquoted" : unquoted)
 
 parseAnyList :: Parser LispVal
 parseAnyList = between (char '(') (char ')') anyList
@@ -202,16 +179,14 @@ parseAnyList = between (char '(') (char ')') anyList
     anyList :: Parser LispVal
     anyList = try parseList <|> parseDottedList
 
-
 parseList :: Parser LispVal
-parseList = LList <$> sepBy parseExpr spaces
+parseList = LList <$> parseExpr `sepBy` spaces1
 
 parseDottedList :: Parser LispVal
 parseDottedList =
-  let head = endBy parseExpr spaces
-      tail = char '.' >> spaces >> parseExpr
+  let head = parseExpr `endBy` spaces1
+      tail = char '.' >> spaces1 >> parseExpr
   in  LDottedList <$> head <*> tail
-
 
 binChars :: String
 binChars = "01"
@@ -223,8 +198,8 @@ readBin = readInt 2 (`elem` binChars) digitToInt
 symbol :: Parser Char
 symbol =  oneOf "!$%&|*+/:<=?>@^_~"
 
-spaces :: Parser ()
-spaces =  skipMany1 space
+spaces1 :: Parser ()
+spaces1 =  skipMany1 space
 
 
 
