@@ -1,6 +1,4 @@
-module Parser
-  ( readExpr
-  ) where
+module Parser (readExpr) where
 
 import Text.ParserCombinators.Parsec
 
@@ -15,24 +13,26 @@ import Definition
 
 
 
-readExpr       :: String -> String
-readExpr input =  case parse parseExpr "lisp" input of
-  Left err  -> "No match: " ++ show err
-  Right val -> "Found value: " ++ show val
+readExpr :: String -> LispVal
+readExpr input = case parse parseExpr "lisp" input of
+  Left err  -> LString $ "No match: " ++ show err
+  Right val -> val
 
 
 
 ------- Parsers -------
 
 parseExpr :: Parser LispVal
-parseExpr =  parseAtom
-  <|> parseString
-  <|> parseNumber'
-  <|> parseChar
-  <|> parseBool
-  <|> parseQuasiQuoted
-  <|> parseQuoted
-  <|> parseAnyList
+parseExpr = parseAtom
+        <|> parseNumber
+        <|> parseChar
+        <|> parseBool
+        <|> parseString
+        <|> parseAnyQuoted
+        <|> parseAnyList
+
+
+------- Any Atom Parser -------
 
 parseAtom :: Parser LispVal
 parseAtom = do
@@ -40,13 +40,19 @@ parseAtom = do
   rest  <- many $ letter <|> digit <|> symbol
   return . LAtom $ first : rest
 
+
+------- Bool Parser -------
+
 parseBool :: Parser LispVal
-parseBool = do
+parseBool = try $ do
   char '#'
   boolChar <- oneOf "tf"
   return . LBool $ case boolChar of
     't' -> True
     'f' -> False
+
+
+------- Character Literal Parser -------
 
 parseChar :: Parser LispVal
 parseChar = try $ do
@@ -70,6 +76,9 @@ parseChar = try $ do
         "space"   -> ' '
         "newline" -> '\n'
 
+
+------- String Parser -------
+
 parseString :: Parser LispVal
 parseString = do
   char '"'
@@ -89,11 +98,14 @@ validString = many1 (noneOf "\\\"") <|> escaped
           'r' -> "\r"
           _   -> [x]
 
-parseNumber' :: Parser LispVal
-parseNumber' = LNumber <$> parseSNumber
+
+------- Number Parsers -------
+
+parseNumber :: Parser LispVal
+parseNumber = LNumber <$> parseSNumber
 
 parseSNumber :: Parser SchemeNumber
-parseSNumber = tryRational <|> tryComplex <|> noBase <|> withBase
+parseSNumber = tryRational <|> tryComplex <|> noBase <|> try withBase
   where
     maybeNeg :: Num a => Parser (a -> a)
     maybeNeg = maybe id (const negate) <$> optionMaybe (char '-')
@@ -161,17 +173,31 @@ parseSNumber = tryRational <|> tryComplex <|> noBase <|> withBase
     getNum = try getNumDouble <|> fmap fromIntegral getNumInt
 
 
+------- Quoted Parsers -------
+
+parseAnyQuoted :: Parser LispVal
+parseAnyQuoted = try parseQuasiQuoted <|> parseQuoted
+
 parseQuoted :: Parser LispVal
 parseQuoted = do
   oneOf "'`"
   x <- parseExpr
   return $ LList [LAtom "quote", x]
 
+-- TODO: Add support for ',@' to unquote and evaluate lists
 parseQuasiQuoted :: Parser LispVal
-parseQuasiQuoted = try . between (string "`(") (char ')') $ do
-  quoted   <- concat <$> manyTill (parseExpr `endBy` spaces1) (char ',')
-  unquoted <- parseExpr `sepBy` spaces1
-  return . LList $ LAtom "quasiquote" :quoted ++ (LAtom "unquoted" : unquoted)
+parseQuasiQuoted = between (string "`(") (char ')') quasiQuoted
+  where
+    quasiQuoted :: Parser LispVal
+    quasiQuoted = LList . (LAtom "quasiquote":) <$> ((unquoted <|> parseExpr) `sepBy` spaces1)
+
+    unquoted :: Parser LispVal
+    unquoted = fmap (LList . (LAtom "unquoted":) . (:[]))
+                  $ char ',' >> parseExpr
+
+
+
+------- List Parsers -------
 
 parseAnyList :: Parser LispVal
 parseAnyList = between (char '(') (char ')') anyList
@@ -188,6 +214,9 @@ parseDottedList =
       tail = char '.' >> spaces1 >> parseExpr
   in  LDottedList <$> head <*> tail
 
+
+------- Helper Parsers -------
+
 binChars :: String
 binChars = "01"
 
@@ -202,12 +231,10 @@ spaces1 :: Parser ()
 spaces1 =  skipMany1 space
 
 
-
-
 ------- Unused -------
 
-parseNumber :: Parser LispVal
-parseNumber =  LNumber . read <$> many1 digit
+parseNumber' :: Parser LispVal
+parseNumber' =  LNumber . read <$> many1 digit
 
 parseNumberDo :: Parser LispVal
 parseNumberDo =  do

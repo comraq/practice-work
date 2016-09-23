@@ -2,18 +2,17 @@ module Main where
 
 import System.Environment
 import Parser (readExpr)
+import Evaluator (eval)
 
 ------ Entry Point (Main) -------
 
 main :: IO ()
-main = do
-  args <- getArgs
-  putStrLn . readExpr . head $ args
+main = getArgs >>= print . eval . readExpr . head
 
 mainI :: IO ()
 mainI = do
   input <- getLine
-  putStrLn $ readExpr input
+  print . eval . readExpr $ input
 
 mainI' :: String -> IO ()
-mainI' = putStrLn . readExpr
+mainI' = print . eval . readExpr

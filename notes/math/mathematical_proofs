@@ -153,6 +153,177 @@ Existential Quantification:
         with an universal quantifier with the associated propositional function
         negated
 
+-------------
+Direct Proofs:
+- prove "If H then C", that is "H implies C"
+- Forward Direct Approach:
+  - assume that the hypothesis 'H' is true
+  - proceeds forward with a sequence of logical arguments that leads to
+    the conclusion 'C'
+- Proof By Contrapositive:
+  - state the contrapositive to prove; "If not C then not H",
+    "not C implies not H"
+  - assume the conclusion 'C' is false: ie "not C" is true
+  - proceeds forward using the forward directoy approach that
+    eventually leads to the negation of the hypothesis 'H'
+    ie: "not H" is true
+
+----------------
+Indirect Proofs:
+- also known as "the method of indirect proof", "reductio ad absurdum"
+- prove "If H then C", that is "H implies C"
+- assume the hypothesis 'H' is true and conclusion 'C' is false
+  ie: "H and not C", "not (H implies C)"
+- proceeds forward with a sequence of logical arguments until a
+  contradiction is formed
+- Note: that proving "not (H implies C)" is always false (a contradiction)
+        is logically equivalent to proving that "H implies C" is true
+- also known as "proof by contradiction"
+
+-----------------------
+Mathematical Induction:
+- a special type of direct proof that can often be used with theorems of the
+  nature:
+    - "The statement P(n) holds for every natural number n"
+    - ie: holds for a statement indexed by 'n' for all n in the set of
+          natural numbers
+- Weak Induction:
+  - prove "P(n) holds for all n in the set of natural numbers"
+  - Initial Step (Base Case):
+    - show P(1) is true
+  - Induction Step:
+    - if P(k) is true for an arbitrary but fixed (ABF) value of k in the set
+      of natural numbers, then it follows that P(k+1) is also true
+- Strong Induction:
+  - same as "Weak Induction" except in the Induction Step:
+    - instead of assuming only P(k) is true, assume that P(1), ..., P(k) are
+      all true for an arbitrary but fixed (ABF) value of k in the set of
+      natural numbers
+- Note: "Weak" and "Strong" inductions are logically equivalent to each
+        other
+- in general, attempt a proof with weak induction, if a stronger inductive
+  hypthothesis is required, use strong induction
+- it is important that the initial step must lead to the induction step
+  ie: P(1) leads to P(2), P(1) is true leads to P(2) being true
+
+------------------
+Uniqueness Proofs:
+- Uniqueness Theorem:
+  - a special theorem of the nature:
+      "Object A that is an element of the set C is the only (unique) object
+       having a property P"
+  - shows that one and only one object has the special property 'P'
+- uniqueness theorems in general can be proved via proof by contradiction:
+  - show object A in C has property P
+  - assume A is not unique
+    ie: another object B in C exists with property P
+        where B /= A
+  - using logical arguments, show that B = A
+
+-----------------
+Existence Proofs:
+- Existence Theorem:
+  - a special theorem of the nature:
+      "There exists an object A that is an element of the set C that has
+       property P"
+- proof of an existence theorem requires showing that there exists an object
+  A in C that has the property P
+  - simple as creating an object A in C with property P
+- Note: may require a great deal of creative thinking and mathematical
+        insight to construct/create the object required for the proof
+        - it is not unusual that a mathematical trick or an uncommon
+          approach is required to construct the object
+
+---------------
+Proof by Cases:
+- if the path of the logical arguments leads to a statement involving an
+  either/or statement such as conditions S1 or condition S2, it is often
+  useful to consider separate proofs for each of the cases
+- Note: there may be more than 2 cases
+- if the same arguments are used for proofs of two or more cases, then the
+  cases should be combined into a single case
+  - usually a "without loss of generality" (WLOG) statement is issued to
+    shorten the proof of a similar case
+
+-------------------------------
+Proving Biconditional Theorems:
+- biconditional theorems are of the form:
+    "H if and only if C"
+- to prove a biconditional theorem, both "H implies C" and "C implies H"
+  needs to be proved
+
+------------------------
+Disproving a Conjecture:
+- since conjectures are not yet proven, they can be disproved
+- a "counterexample" is used to disprove a conjecture
+- a "counterexample" to the conjecture "H implies C" is a specific example
+  where the hypothesis 'H' is ture, but conclusion 'C' is false
+- Note: only a single counterexample is needed to disprove a conjecture
+
+------------------------------------
+General Remarks on Proving Theorems:
+- no method of proof begins with the assumption that the conclusion 'C' is true
+- no method of proof begins with the assumption that the hypothesis 'H' is false
+- forward direct proofs begin with the assumption that 'H' is true
+- indirect proofs (proofs by contradiction) begin with the assumption that
+  'H' is true, 'C' is false
+- a proof may be broken down into distinct cases
+- mathematical induction is often useful in proving a mathematial result of
+  the natrue "P(n), for all n in the set of natural numbers"
+- both "H implies C" and "C implies H" must be proven for biconditional
+  theorems
+- if a conjecture cannot be proved, it may be false. To disprove, provide a
+  counterexample
+
+----------------
+Binary Operator:
+- a binary operator 'o' is a rule defined on a set 'Omega' that assigns to
+  the objects a, b in 'Omega' an object 'c'
+
+------------------------
+Commutative and Abelian:
+- a binary operator 'o' is said to be commutative on a set 'Omega' and is
+  called an "Abelian operator" if and only if:
+    a o b = b o a, for all a, b in 'Omega'
+- to prove:
+  - let a, b be arbitrary but fixed elements in 'Omega'
+  - compute "a o b" and "b o a"
+  - show that "a o b = b o a"
+
+------------
+Associative:
+- a binary operator 'o' is said to be an "associative operator" on a set
+  'Omega' if and only if:
+    (a o b) o c = a o (b o c), for all a, b, c in 'Omega'
+- to prove:
+  - let a, b, c be arbitrary but fixed elements in 'Omega'
+  - compute "(a o b) o c" and "a o (b o c)"
+  - show that "(a o b) o c = a o (b o c)"
+
+--------
+Closure:
+- a set 'Omega' is said to be "closed" under a binary operator 'o' if and
+  only if:
+    a o b is in 'Omega' whenever a and b are in 'Omega'
+- to prove:
+  - let a, b be arbitrary but fixed elements in 'Omega'
+  - compute "a o b"
+  - show that "a o b is in 'Omega'"
+
+---------------------------------------------------------------------
+Common/Useful Axioms for Addition and Multiplication of Real Numbers:
+- a + b       = b + a
+- a + (b + c) = (a + b) + c
+- a + 0       = a
+- a + (-a)    = 0
+- the set of naturals, integers and reals are closed under addition
+
+- a b     = b a
+- a (b c) = (a b) c1
+- a x 1   = a
+- the set of naturals, integers and reals are closed under multiplication
+
+
 ---------
 Identity:
 - a mathematical expression giving the equality of two (often variable)
