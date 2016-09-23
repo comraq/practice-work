@@ -323,6 +323,53 @@ Common/Useful Axioms for Addition and Multiplication of Real Numbers:
 - a x 1   = a
 - the set of naturals, integers and reals are closed under multiplication
 
+-----------------
+Identity Element:
+- an element 'e' in 'Omega' is said to be an "identity element" nder the
+  binary operator 'o' if and only if for every element 'a' in 'Omega':
+    "a o e = e o a = a"
+- in order for 'e' to be an identity element, 'e' must satisfy the following
+  three conditions:
+  1) e is in 'Omega'
+  2) a o e = a, for all a in 'Omega'
+  3) e o a = a, for all a in 'Omega'
+  ie: the identity element 'e' must be in 'Omega' and also commute with
+      every element in 'Omega'
+- Note: if the binary operator 'o' is "Abelian", only conditions '1)' and
+        '2)' or '3)' is necessary
+- to prove:
+  - let 'a' in 'Omega' be arbitrary but fixed
+  - compute "a o x" and "x o a"
+  - solve for 'x' where "a o x = a = x o a"
+  - show that 'x' in 'Omega' does not depend on 'a'
+  - conclude "e = x' is an identity element in 'Omega' under the binary
+    operator 'o'
+- Theorem:
+  - if 'Omega' is closed under the 'o' binary operation and 'e' is an
+    identity element under 'o', then the identity element 'e' is unique
+
+----------------
+Inverse Element:
+- an element 'a' in 'Omega' is said to have an "inverse element" 'a^(-1)' in
+  'Omega' under the binary operator 'o' if and only if:
+    "a o a^(-1) = a^(-1) o a = e"
+    where 'e' is the identity element in 'Omega'
+- to prove:
+  - determine the identity element 'e'
+  - let 'a' in 'Omega' be arbitrary but fixed
+  - compute "a o x" and "x o a"
+  - solve for 'x' where "a o x = e = x o a"
+  - show that 'x' is in 'Omega'
+  - conclude that "a^(-1) = x" is the inverse of the element 'a' under the
+    binary operator 'o'
+- Theorem:
+  - let 'o' be an associative binary operator
+  - if 'Omega' is closed under 'o' and 'a^(-1)' is in 'Omega' whenever 'a'
+    is in 'Omega', then 'a^(-1)' is unique
+- Theorem:
+  - if 'Omega' is closed under 'o' and 'a^(-1)' is in 'Omega' whenever 'a'
+    is in 'Omega', then "(a^(-1))^(-1) = a"
+
 
 ---------
 Identity:
