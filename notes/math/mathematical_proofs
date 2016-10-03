@@ -370,6 +370,19 @@ Inverse Element:
   - if 'Omega' is closed under 'o' and 'a^(-1)' is in 'Omega' whenever 'a'
     is in 'Omega', then "(a^(-1))^(-1) = a"
 
+---------
+Function:
+- a function 'f' defined on a subset 'D' of the set of real numbers is
+  called a "real valued function" if and only if 'f' is a rule that assigns
+  to each 'x' in 'D' one and only on real number 'y'
+- the set 'D' is called the "domain" of the function 'f'
+- Equality:
+  - two functions 'f' and 'g' are said to be equal if and only if they have
+    the same domain 'D' and "f(x) = f(x) for all x in D"
+- Composition:
+  - the composition of the functions 'f' and 'g' is defined to be the
+    function "f o g" and "f o g (x) = f(g(x))"
+
 
 ---------
 Identity:

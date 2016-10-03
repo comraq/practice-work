@@ -14,7 +14,7 @@ instance Functor Parser where
 
 instance Applicative Parser where
   pure    = return
-  f <*> a = f >>= \f' -> fmap f' a 
+  f <*> a = f >>= \f' -> fmap f' a
 
 instance Monad Parser where
   return a = Parser $ \cs -> [(a, cs)]
@@ -64,7 +64,7 @@ instance MonadPlus Parser where
 -- Due to the non-deterministic nature of list monoidal multiplication,
 -- only retrieve the first parsed choice from result
 (+++)   :: Parser a -> Parser a -> Parser a
-p +++ q =  Parser $ \cs -> case parse (p `mplus` q) cs of 
+p +++ q =  Parser $ \cs -> case parse (p `mplus` q) cs of
                              []     -> []
                              (x:xs) -> [x]
 
@@ -230,7 +230,7 @@ relop =  do
 
 {-
  - Parsers for Commands
- - 
+ -
  - Never forget the following:
  - - This kind of parsers did not consume the blanks from the beginning of
  -   the text

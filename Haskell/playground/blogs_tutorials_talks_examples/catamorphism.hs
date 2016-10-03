@@ -1,3 +1,5 @@
+{-# LANGUAGE RankNTypes #-}
+
 {- Algebras -}
 
 -- Iteration
@@ -27,7 +29,7 @@ foldrList (nil, merge) (Cons x xs) =  merge x $ foldrList (nil, merge) xs
 type TreeAlgebra a b = (a -> b, b -> b -> b)
 data Tree a = Leaf a | Branch (Tree a) (Tree a)
 
-foldTree                            :: TreeAlgebra a b -> (Tree a -> b) 
+foldTree                            :: TreeAlgebra a b -> (Tree a -> b)
 foldTree (f, g) (Leaf x)            =  f x
 foldTree (f, g) (Branch left right) =  g (foldTree (f, g) left) (foldTree (f, g) right)
 
@@ -207,8 +209,6 @@ zF =  InF Z
 
 sF :: NatFT -> NatFT
 sF =  InF . S
-
-{-# LANGUAGE RankNTypes #-}
 
 type MendlerAlgebra f c = forall a. (a -> c) -> f a -> c
 
