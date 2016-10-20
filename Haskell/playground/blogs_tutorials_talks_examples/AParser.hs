@@ -37,7 +37,7 @@ data Stmt = Seq [Stmt]
           | Skip
   deriving Show
 
-languageDef :: LanguageDef st
+languageDef :: LanguageDef ()
 languageDef = emptyDef {
   Token.commentStart    = "/*"
 , Token.commentEnd      = "*/"
@@ -69,7 +69,7 @@ languageDef = emptyDef {
                           ]
 }
 
-lexer :: Token.TokenParser st
+lexer :: Token.TokenParser ()
 lexer = Token.makeTokenParser languageDef
 
 identifier, semi :: Parser String

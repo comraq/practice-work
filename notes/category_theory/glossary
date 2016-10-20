@@ -1,0 +1,22 @@
+------------------
+Inclusion Function
+- if S is a subset of a set T, then there is an inclusion function:
+    "i: S -> T"
+  for which
+    "i(x) = x"
+  for all x in S
+
+-----------------------------
+Restriction and Corestriction
+- let 'f' be a function "f: S -> T"
+- Restriction:
+  - if A is a subset of S, then the restriction of 'f' to A is
+    the composite:
+      "f o i: A -> T"
+    where "i: A -> S" is the inclusion function
+- Corestriction
+  - if T is a subset of B, 'f' is the corestriction of the composite
+    function:
+      "j o f: S -> B"
+    where "j: T -> B" is the inclusion function
+
