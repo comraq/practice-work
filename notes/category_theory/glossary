@@ -20,3 +20,28 @@ Restriction and Corestriction
       "j o f: S -> B"
     where "j: T -> B" is the inclusion function
 
+----------------------------------
+Discrete and Indiscrete Categories
+- Discrete:
+  - a category in which every arrow is an identity arrow
+  - a category 'A' is discrete if and only if for every set function
+      "F: A_0 -> B_0" where 'B' is any category,
+    is the object part of a unique functor from 'A' to 'B'
+- Indiscrete:
+  - a category in which there is exactly one arrow between any two objects
+  - a category 'B' is indiscrete if and only if for every set function
+      "F: A_0 -> B_0" where 'A' is any category,
+    is the object part of a unique functor from 'A' to 'B'
+
+-----------------
+Idempotent Arrows
+- an arrow "f: A -> A" in a category is idempotent if "f o f = f"
+
+-------------------
+Groupoid Categories
+- a category in which every arrow is an isomorphism
+- ie: every arrow 'f: A -> B' has an inverse arrow 'g: B -> A' for objects
+      'A' and 'B' such that:
+        f o g = id_B
+        g o f = id_A
+        
