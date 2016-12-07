@@ -1,5 +1,6 @@
 {-# LANGUAGE DeriveFunctor
            , TypeFamilies
+           , ScopedTypeVariables
   #-}
 
 module RecursionSchemes2 where
@@ -25,13 +26,15 @@ instance Recursive (MyList a) where
   project (MyCons a b) = BCons a b
   project _            = BNil
 
-myMap :: (a -> b) -> MyList a -> MyList b
+myMap :: forall a b. (a -> b) -> MyList a -> MyList b
 myMap f = cata mapper where
+  mapper :: Base (MyList a) (MyList b) -> MyList b
   mapper (BCons a b) = f a `MyCons` b
   mapper _           = MyNil
 
-myFilter :: (a -> Bool) -> MyList a -> MyList a
+myFilter :: forall a. (a -> Bool) -> MyList a -> MyList a
 myFilter p = cata filterer where
+  filterer :: Base (MyList a) (MyList a) -> MyList a
   filterer (BCons a b)
     | p a       = MyCons a b
     | otherwise = b
@@ -52,8 +55,9 @@ myFilter p = cata filterer where
          cases (corresponding to the different constructors)
  -}
 
-sumTails :: Num a => [a] -> [a]
+sumTails :: forall a. Num a => [a] -> [a]
 sumTails = para summer where
+  summer :: Base [a] ([a], [a]) -> [a]
   summer (Cons a (list, rest)) = a + sum list : rest
   summer _                     = []
 
@@ -146,17 +150,19 @@ instance Corecursive (MyList a) where
 
 myBetween' :: (Eq a, Enum a) => a -> a -> MyList a
 myBetween' a b | a == b    = MyNil
-             | otherwise = succ a `MyCons` myBetween' (succ a) b
+               | otherwise = succ a `MyCons` myBetween' (succ a) b
 
-myBetween :: (Eq a, Enum a) => a -> a -> MyList a
+myBetween :: forall a. (Eq a, Enum a) => a -> a -> MyList a
 myBetween low high = ana builder low where
+  builder :: a -> Base (MyList a) a
   builder a | a == high = BNil
          -- | otherwise = let next = succ a
          --               in  BCons next next
             | otherwise = join BCons (succ a)
 
-between :: (Eq a, Enum a) => a -> a -> [a]
+between :: forall a. (Eq a, Enum a) => a -> a -> [a]
 between low high = ana builder low where
+  builder :: a -> Base [a] a
   builder a | a == high = Nil
             | otherwise = join Cons (succ a)
 
@@ -204,7 +210,54 @@ collapse = cata folder
 folder :: BBin a [a] -> [a]
 folder (NodeB a l r)     = a : interleave l r
   where
+    interleave :: [a] -> [a] -> [a]
     interleave (x:xs) (y:ys) = x : y : interleave xs ys
 
 allRats :: [Rational]
 allRats = hylo folder builder (1 % 1)
+
+
+-- Sliding Window Problem
+sliding :: forall a. Int -> [a] -> [[a]]
+sliding n = para alg where
+  alg :: Base [a] ([a], [[a]]) -> [[a]]
+  alg (Cons a (as, rss)) = take n (a:as) : rss
+  alg _                  = []
+
+
+-- Coinductive Streams
+
+data StreamF a r = StreamF a r
+  deriving Functor
+
+data Stream a    = Stream a (Stream a)
+  deriving Show
+
+type instance Base (Stream a) = StreamF a
+
+instance Corecursive (Stream a) where
+  embed (StreamF a r) = Stream a r
+
+consS :: a -> Stream a -> Stream a
+consS = Stream
+
+headS :: Stream a -> a
+headS (Stream x _ ) = x
+
+tailS :: Stream a -> Stream a
+tailS (Stream _ xs) = xs
+
+takeS :: Int -> Stream a -> [a]
+takeS 0 _             = []
+takeS n (Stream x xs) = x : takeS (n - 1) xs
+
+iterateS :: forall a. (a -> a) -> a -> Stream a
+iterateS f = ana coalg where
+  coalg :: a -> Base (Stream a) a
+  coalg x = StreamF x (f x)
+
+stream1 :: Stream Int
+stream1 = iterateS (+1) 1
+
+-- > takeS 6 stream1
+-- > [1, 2, 3, 4, 5, 6]
