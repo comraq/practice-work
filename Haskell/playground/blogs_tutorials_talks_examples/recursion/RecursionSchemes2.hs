@@ -10,6 +10,7 @@ import Data.Functor.Foldable
 import Data.List (delete)
 import GHC.Real
 
+
 -- @link - http://jozefg.bitbucket.org/posts/2014-05-19-like-recursion-but-cooler.html
 
 data MyList a  = MyCons a (MyList a) | MyNil
@@ -58,8 +59,8 @@ myFilter p = cata filterer where
 sumTails :: forall a. Num a => [a] -> [a]
 sumTails = para summer where
   summer :: Base [a] ([a], [a]) -> [a]
-  summer (Cons a (list, rest)) = a + sum list : rest
-  summer _                     = []
+  summer (Cons hd (tl, result)) = hd + sum tl : result
+  summer _                      = []
 
 
 -- Example with an 'Foo' Language AST
