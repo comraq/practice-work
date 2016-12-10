@@ -10,6 +10,8 @@
 module Expression where
 
 import Control.Arrow (first, second, app, (>>>), (&&&), (***), (|||))
+import Control.Monad ((<=<))
+import Control.Monad.Reader
 import Data.Bool (bool)
 import qualified Data.Foldable as F (fold)
 import Data.Functor.Foldable
@@ -181,3 +183,18 @@ cataTrace alg = para phi where
                                                --   then apply 'alg' to obtain new value
           m' = F.fold m                        -- Fold nested M.Maps underneath the current structure into one
 
+
+-- Since "recursion-schemes" does not provide 'Monad' variants for
+-- 'Recursive' types:
+
+cataM :: (Recursive t, Base t ~ f, Monad m, Traversable f) => (f a -> m a) -> t -> m a
+cataM algM = algM <=< traverse (cataM algM) . project
+
+evalM :: Env -> Expr -> Maybe Int
+evalM env = (`runReaderT` env) . cataM algM where
+  algM :: Base Expr Int -> ReaderT Env Maybe Int
+  algM (ConstF n)     = return n
+  algM (VarF v)       = ask >>= lift . M.lookup v
+  algM (AddF a b)     = return $ a + b
+  algM (MulF a b)     = return $ a * b
+  algM (IfNegF a b c) = return $ bool b c (a < 0)
