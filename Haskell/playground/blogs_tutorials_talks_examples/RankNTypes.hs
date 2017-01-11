@@ -13,6 +13,26 @@ import System.Random
 
 -- @link - https://ocharles.org.uk/blog/guest-posts/2014-12-18-rank-n-types.html
 
+{-
+ - Gist:
+ - > rank-1 polymorphic function f:
+ -   - caller of f picks the polymorphic types in the signature of f
+ -
+ - > rank-2 polymorphic function f:
+ -   - f gets to pick the rank-2 polymoprhic types in its signatures
+ -}
+
+-- The forall x. makes x opaque to callers of T such as test, thus callers
+-- of test cannot assume anything about T's input type and the value of T
+-- passed in must also be unaware of the type x (hence the use of const)
+type T y = forall x. x -> y
+
+-- test (const False) True [(),()]
+-- > ("False", "False")
+--
+test :: Show y => T y -> a -> b -> (String, String)
+test f a b = (show (f a), show (f b))
+
 -- Monomorphic functions
 intId :: Integer -> Integer
 intId x = x
