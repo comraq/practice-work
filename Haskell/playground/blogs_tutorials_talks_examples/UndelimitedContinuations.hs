@@ -74,3 +74,20 @@ throwC k x = C $ \_ -> k x
 
 ex :: C b
 ex = throwC (const undefined) "any value"
+
+loop :: Monad m => (a -> m a) -> a -> m b
+loop g = \x -> g x >>= loop g
+
+fix :: Monad m => ((a -> m b) -> a -> m b) -> a -> m b
+fix f = \x -> f (fix f) x
+
+fact2 :: Monad m => (Int -> m Int) -> Int -> m Int
+fact2 self n
+  | n == 0    = return 1
+  | otherwise = fmap (n *) $ self (n - 1)
+
+fact2r :: Monad m => Int -> m Int
+fact2r = fix fact2
+
+loop' :: Monad m => (a -> m a) -> a -> m b
+loop' g = fix $ \s x -> g x >>= s
